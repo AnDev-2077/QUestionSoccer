@@ -2,11 +2,15 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="Ligas"
+        android:id="@+id/leagues"
         android:icon="@drawable/ic_trophy_solid" />
     <item android:title="Equipos"
-        android:icon="@drawable/ic_trophy_solid"/>
+        android:id="@+id/teams"
+        android:icon="@drawable/ic_people_group_solid"/>
     <item android:title="Jugadores"
-        android:icon="@drawable/ic_trophy_solid"/>
+        android:id="@+id/players"
+        android:icon="@drawable/ic_shirt_solid"/>
     <item android:title="Mis Favoritos"
-        android:icon="@drawable/ic_star_regular"/>
+        android:id="@+id/favorites"
+        android:icon="@drawable/ic_star_solid"/>
 </menu>
