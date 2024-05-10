@@ -12,6 +12,6 @@ interface LeagueService {
         "x-rapidapi-key: dd437e2fa630f435fb208f72d9cad76b",
         "x-rapidapi-host: v3.football.api-sports.io"
     )
-    @GET("fixtures?date=2024-04-27&league=39&season=2023")
+    @GET("leagues")
     suspend fun getLeagues(): Response<LeagueResponse>
 }

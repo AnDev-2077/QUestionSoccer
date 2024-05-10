@@ -2,11 +2,11 @@ package com.devapps.questionsoccer.items
 
 data class LeagueResponse(
     val get: String,
-    val parameters: List<Any>,
-    val errors: List<Any>,
+    val parameters: Any,
+    val errors: Any,
     val results: Int,
     val paging: lPaging,
-    val response: List<ResponseItem>
+    val response: List<LeagueResponseItem>
 )
 
 data class lPaging(
