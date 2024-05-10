@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".Players">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Players Fragment"
+        android:text="Statistics Fragment"
         android:textSize="26dp"
         android:layout_gravity="center" />
 

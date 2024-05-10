@@ -13,7 +13,6 @@ class LeaguesDetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLeaguesDetailsBinding
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

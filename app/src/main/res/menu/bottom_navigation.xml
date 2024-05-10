@@ -7,9 +7,9 @@
     <item android:title="Equipos"
         android:id="@+id/teams"
         android:icon="@drawable/ic_people_group_solid"/>
-    <item android:title="Jugadores"
+    <item android:title="Estadisticas"
         android:id="@+id/players"
-        android:icon="@drawable/ic_shirt_solid"/>
+        android:icon="@drawable/chart_simple_solid"/>
     <item android:title="Mis Favoritos"
         android:id="@+id/favorites"
         android:icon="@drawable/ic_star_solid"/>
