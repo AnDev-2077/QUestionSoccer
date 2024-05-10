@@ -23,7 +23,7 @@ data class fixtureResponse(
     val fixture: Fixture,
     val league: League,
     val teams: Teams,
-    val goals: Goals,
+    val goals: sGoals,
     val score: Score
 )
 
@@ -84,7 +84,7 @@ data class Away(
     val winner: Any?
 )
 
-data class Goals(
+data class sGoals(
     val home: Any?,
     val away: Any?
 )
@@ -93,7 +93,7 @@ data class Score(
     val halftime: Halftime,
     val fulltime: Fulltime,
     val extratime: Extratime,
-    val penalty: Penalty
+    val penalty: sPenalty
 )
 
 data class Halftime(
@@ -111,7 +111,7 @@ data class Extratime(
     val away: Any?
 )
 
-data class Penalty(
+data class sPenalty(
     val home: Any?,
     val away: Any?
 )

@@ -5,21 +5,34 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.devapps.questionsoccer.adapters.StatisticsAdapter
+import com.devapps.questionsoccer.databinding.FragmentLeaguesBinding
+import com.devapps.questionsoccer.databinding.FragmentPlayersBinding
+import com.devapps.questionsoccer.databinding.ItemFixtureBinding
+import com.devapps.questionsoccer.interfaces.StatisticsService
+import com.devapps.questionsoccer.items.StaticResponse
+import com.devapps.questionsoccer.items.StatisticsResponse
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [Players.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class Players : Fragment() {
-    // TODO: Rename and change types of parameters
+
     private var param1: String? = null
     private var param2: String? = null
+
+    private lateinit var binding: FragmentPlayersBinding
+    private lateinit var adapter: StatisticsAdapter
+    private var StatisticsFragmentResponse = mutableListOf<StaticResponse>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,20 +46,43 @@ class Players : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_players, container, false)
+
+        binding = FragmentPlayersBinding.inflate(inflater, container,false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        adapter = StatisticsAdapter(StatisticsFragmentResponse)
+        binding.rvStatistisFragment.layoutManager = LinearLayoutManager(context)
+        binding.rvStatistisFragment.adapter = adapter
+        getStatistics()
+    }
+
+    private fun getRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl("https://v3.football.api-sports.io/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    private fun getStatistics(){
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = getRetrofit().create(StatisticsService::class.java).getStatistics()
+            val statisticResponse = call.body()
+            if (call.isSuccessful){
+                val statistics = statisticResponse?.response ?: emptyList()
+                withContext(Dispatchers.Main){
+                    StatisticsFragmentResponse.clear()
+                    StatisticsFragmentResponse.addAll(statistics)
+                    adapter.notifyDataSetChanged()
+                }
+            }
+        }
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Players.
-         */
-        // TODO: Rename and change types and number of parameters
+
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             Players().apply {

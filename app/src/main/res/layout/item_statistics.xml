@@ -1,0 +1,226 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1"
+        android:id="@+id/item_statistics">
+
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dato"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Valor"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Liga"/>
+            <TextView
+                android:id="@+id/sLiga"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="País"/>
+            <TextView
+                android:id="@+id/sPais"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Premier League"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Temporada"/>
+            <TextView
+                android:id="@+id/sTemporada"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Premier League"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Equipo"/>
+            <TextView
+                android:id="@+id/sEquipo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Premier League"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Partidos Jugados"/>
+            <TextView
+                android:id="@+id/sPartidos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Premier League"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Victorias"/>
+            <TextView
+                android:id="@+id/sVictorias"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Premier League"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Empates"/>
+            <TextView
+                android:id="@+id/sEmpates"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Premier League"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Derrotas"/>
+            <TextView
+                android:id="@+id/sDerrotas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Premier League"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Goles a favor"/>
+            <TextView
+                android:id="@+id/sGolesfavor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Premier League"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Goles en contra"/>
+            <TextView
+                android:id="@+id/sGolescontra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Premier League"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mayor Racha"/>
+            <TextView
+                android:id="@+id/sMayorR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Premier League"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mayor Victoria"/>
+            <TextView
+                android:id="@+id/sMayorV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Premier League"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mayor Derrota"/>
+            <TextView
+                android:id="@+id/sMayorD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Premier League"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fallos al marcar"/>
+            <TextView
+                android:id="@+id/sFallosM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Premier League"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Penales anotados"/>
+            <TextView
+                android:id="@+id/sPenalesA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Premier League"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Penales fallados"/>
+            <TextView
+                android:id="@+id/sPenalesF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Premier League"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Targetas amarillas"/>
+            <TextView
+                android:id="@+id/sTargetaA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Premier League"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Targetas Rojas"/>
+            <TextView
+                android:id="@+id/sTargetaR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Premier League"/>
+        </TableRow>
+
+
+    </TableLayout>
+
+</androidx.cardview.widget.CardView>
