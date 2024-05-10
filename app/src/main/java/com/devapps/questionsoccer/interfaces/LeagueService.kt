@@ -9,7 +9,7 @@ import retrofit2.http.Headers
 interface LeagueService {
     @Headers(
         //"x-rapidapi-key: aafd07163d4457eaf7a9dc45aece51a2",
-        "x-rapidapi-key: dd437e2fa630f435fb208f72d9cad76b",
+        //"x-rapidapi-key: dd437e2fa630f435fb208f72d9cad76b",
         "x-rapidapi-host: v3.football.api-sports.io"
     )
     @GET("leagues")

@@ -10,13 +10,16 @@ import com.devapps.questionsoccer.items.LeagueResponseItem
 import com.squareup.picasso.Picasso
 
 
-class LeaguesAdapter (var responseLeagues: List<LeagueResponseItem>) : RecyclerView.Adapter<LeaguesAdapter.LeaguesViewHolder>(){
+class LeaguesAdapter (var responseLeagues: List<LeagueResponseItem>, private val onLeagueClick: (LeagueResponseItem) -> Unit) : RecyclerView.Adapter<LeaguesAdapter.LeaguesViewHolder>(){
     class LeaguesViewHolder(view: View):RecyclerView.ViewHolder(view){
         private val binding = ItemLeagueBinding.bind(view)
-        fun bind(responseLeagues: LeagueResponseItem){
+        fun bind(responseLeagues: LeagueResponseItem, onLeagueClick: (LeagueResponseItem) -> Unit){
             binding.tvLeagueName.text = responseLeagues.league.name
             binding.tvLeagueType.text = responseLeagues.league.type
             Picasso.get().load(responseLeagues.league.logo).into(binding.ivLeagueLogo)
+            binding.LinearLayoutLeagues.setOnClickListener {
+                onLeagueClick(responseLeagues)
+            }
         }
     }
 
@@ -31,6 +34,6 @@ class LeaguesAdapter (var responseLeagues: List<LeagueResponseItem>) : RecyclerV
 
     override fun onBindViewHolder(holder: LeaguesViewHolder, position: Int) {
         val item = responseLeagues[position]
-        holder.bind(item)
+        holder.bind(item, onLeagueClick)
     }
 }

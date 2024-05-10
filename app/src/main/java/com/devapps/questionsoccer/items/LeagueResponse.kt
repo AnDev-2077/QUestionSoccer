@@ -1,5 +1,8 @@
 package com.devapps.questionsoccer.items
 
+import java.io.Serializable
+
+
 data class LeagueResponse(
     val get: String,
     val parameters: Any,
@@ -14,11 +17,12 @@ data class lPaging(
     val total: Int
 )
 
+
 data class LeagueResponseItem(
     val league: lLeague,
     val country: Country,
     val seasons: List<Season>
-)
+) : Serializable
 
 data class lLeague(
     val id: Int,

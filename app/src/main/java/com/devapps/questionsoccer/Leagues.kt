@@ -1,5 +1,6 @@
 package com.devapps.questionsoccer
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -45,7 +46,16 @@ class Leagues : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = LeaguesAdapter(LeaguesFragmentResponse)
+        adapter = LeaguesAdapter(LeaguesFragmentResponse) {onLeagueClick ->
+            val detailLeagueFragment = DetailLeagueFragment.newInstance("param1", "param2") // reemplaza "param1" y "param2" con tus parámetros
+            val bundle = Bundle()
+            bundle.putSerializable("leagueData", onLeagueClick )
+            detailLeagueFragment.arguments = bundle
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, detailLeagueFragment) // reemplaza "fragmentContainer" con el ID de tu contenedor de fragmentos
+                .addToBackStack(null)
+                .commit()
+        }
         binding.rvLeaguesFragment.layoutManager = LinearLayoutManager(context)
         binding.rvLeaguesFragment.adapter = adapter
         getLeagues()
