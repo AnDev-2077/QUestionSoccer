@@ -46,15 +46,13 @@ class Leagues : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = LeaguesAdapter(LeaguesFragmentResponse) {onLeagueClick ->
-            val detailLeagueFragment = DetailLeagueFragment.newInstance("param1", "param2") // reemplaza "param1" y "param2" con tus parámetros
-            val bundle = Bundle()
-            bundle.putSerializable("leagueData", onLeagueClick )
-            detailLeagueFragment.arguments = bundle
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, detailLeagueFragment) // reemplaza "fragmentContainer" con el ID de tu contenedor de fragmentos
-                .addToBackStack(null)
-                .commit()
+        adapter = LeaguesAdapter(LeaguesFragmentResponse) { onLeagueClick ->
+            val intent = Intent(activity, LeaguesDetailsActivity::class.java)
+            intent.putExtra("leagueName", onLeagueClick.league.name)
+            intent.putExtra("leagueType", onLeagueClick.league.type)
+            intent.putExtra("leagueCountry", onLeagueClick.country.name)
+            intent.putExtra("leagueLogo", onLeagueClick.league.logo)
+            startActivity(intent)
         }
         binding.rvLeaguesFragment.layoutManager = LinearLayoutManager(context)
         binding.rvLeaguesFragment.adapter = adapter
