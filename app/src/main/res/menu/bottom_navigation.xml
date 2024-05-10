@@ -10,7 +10,7 @@
     <item android:title="Estadisticas"
         android:id="@+id/players"
         android:icon="@drawable/chart_simple_solid"/>
-    <item android:title="Mis Favoritos"
+    <item android:title="Partidos"
         android:id="@+id/favorites"
-        android:icon="@drawable/ic_star_solid"/>
+        android:icon="@drawable/ic_soccer_field"/>
 </menu>

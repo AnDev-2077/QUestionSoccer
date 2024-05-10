@@ -7,7 +7,7 @@ import retrofit2.http.Headers
 
 interface FixtureService {
     @Headers(
-        //"x-rapidapi-key: aafd07163d4457eaf7a9dc45aece51a2",
+        "x-rapidapi-key: 1d63a493af62503a34eee5919e8ea2cd",
         //"x-rapidapi-key: dd437e2fa630f435fb208f72d9cad76b",
         "x-rapidapi-host: v3.football.api-sports.io"
     )
