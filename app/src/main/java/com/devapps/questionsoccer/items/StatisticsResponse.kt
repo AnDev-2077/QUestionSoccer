@@ -6,7 +6,7 @@ data class StatisticsResponse(
     val errors: Any,
     val results: Int,
     val paging: sPaging,
-    val response: List<StaticResponse>
+    val response: StaticResponse
 )
 
 data class sParameters(

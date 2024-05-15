@@ -5,16 +5,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutTeamDetails"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:background="@drawable/fondo2"
+    android:layout_height="match_parent"
+    android:paddingTop="?attr/actionBarSize">
 
     <LinearLayout
         android:layout_width="272dp"
         android:layout_height="126dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="392dp"
+        android:gravity="center"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/frameLayout">
+        app:layout_constraintTop_toTopOf="@+id/frameLayout"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -22,21 +28,15 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tvVenueNameTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="serif"
-                android:text="Nombre del Estadio: "
-                android:textSize="12sp" />
-
-            <TextView
                 android:id="@+id/tvVenueName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="serif"
+                android:fontFamily="@font/rubik_medium"
                 android:text="BAYER"
-                android:textSize="12sp"
-                />
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -48,18 +48,22 @@
                 android:id="@+id/tvVenueAddressTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="serif"
-                android:text="Dirección del estadio: "
+                android:fontFamily="@font/rubik_medium"
+                android:textColor="@color/white"
+                android:layout_marginBottom="6dp"
+                android:textStyle="bold"
+                android:text="Dirección: "
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tvVenueAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="serif"
+                android:fontFamily="@font/rubik_medium"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:text="asdasd"
-                android:textSize="12sp"
-                />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -71,18 +75,22 @@
                 android:id="@+id/tvVenueCityTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="serif"
-                android:text="Ciudad del estadio: "
+                android:fontFamily="@font/rubik_medium"
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:text="Ciudad: "
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tvVenueCity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="serif"
+                android:fontFamily="@font/rubik_medium"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:text="Manchester"
-                android:textSize="12sp"
-                />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -94,18 +102,21 @@
                 android:id="@+id/tvVenueCapacityTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="serif"
-                android:text="Capacidad del estadio: "
+                android:fontFamily="@font/rubik_medium"
+                android:text="Capacidad: "
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tvVenueCapacity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="serif"
+                android:fontFamily="@font/rubik_medium"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:text="76212"
-                android:textSize="12sp"
-                />
+                android:textSize="12sp" />
         </LinearLayout>
 
     </LinearLayout>
@@ -126,13 +137,14 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
+
             android:id="@+id/textView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-condensed-medium"
             android:gravity="center"
-            android:text="IMAGEN DEL ESTADIO"
-
+            android:fontFamily="@font/rubik_black"
+            android:text="ESTADIO"
+            android:textColor="@color/white"
             android:textSize="26sp"
             android:textStyle="bold" />
 
@@ -160,9 +172,14 @@
         android:layout_marginStart="168dp"
         android:orientation="vertical"
         android:padding="15dp"
-        app:layout_constraintStart_toStartOf="@+id/ivTeamLogo"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="16dp">
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.44"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.062"
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -170,27 +187,14 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tvTeamNameTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="serif"
-                android:text="Nombre del estadio"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/colon1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" : "
-                android:textSize="12sp" />
-
-            <TextView
                 android:id="@+id/tvTeamName"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="serif"
+                android:fontFamily="@font/rubik_black"
+                android:textStyle="bold"
                 android:text="MUNICH"
-                android:textSize="10sp" />
+                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -202,22 +206,31 @@
                 android:id="@+id/tvTeamCountryTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="serif"
-                android:text="País del equipo"
+                android:fontFamily="@font/rubik_medium"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:text="País"
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/colon2"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:fontFamily="@font/rubik_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" : "
+                android:layout_marginBottom="6dp"
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tvTeamCountry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="serif"
+                android:fontFamily="@font/rubik_medium"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_marginBottom="6dp"
                 android:text="ALEMANIA"
                 android:textSize="10sp" />
         </LinearLayout>
@@ -231,8 +244,10 @@
                 android:id="@+id/tvTeamCodeTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="serif"
-                android:text="Código del equipo"
+                android:fontFamily="@font/rubik_medium"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:text="Código"
                 android:textSize="12sp" />
 
             <TextView
@@ -240,13 +255,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" : "
+                android:textStyle="bold"
+                android:fontFamily="@font/rubik_medium"
+                android:textColor="@color/white"
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tvTeamCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="serif"
+                android:fontFamily="@font/rubik_medium"
+                android:textStyle="bold"
+                android:textColor="@color/white"
                 android:text="1234"
                 android:textSize="10sp" />
         </LinearLayout>

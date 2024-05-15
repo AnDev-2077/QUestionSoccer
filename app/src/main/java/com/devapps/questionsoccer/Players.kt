@@ -1,6 +1,7 @@
 package com.devapps.questionsoccer
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -32,7 +33,7 @@ class Players : Fragment() {
 
     private lateinit var binding: FragmentPlayersBinding
     private lateinit var adapter: StatisticsAdapter
-    private var StatisticsFragmentResponse = mutableListOf<StaticResponse>()
+    private var StatisticsFragmentResponse: MutableList<StaticResponse> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,8 +55,8 @@ class Players : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = StatisticsAdapter(StatisticsFragmentResponse)
-        binding.rvStatistisFragment.layoutManager = LinearLayoutManager(context)
-        binding.rvStatistisFragment.adapter = adapter
+        binding.rvStatisticsFragment.layoutManager = LinearLayoutManager(context)
+        binding.rvStatisticsFragment.adapter = adapter
         getStatistics()
     }
 
@@ -71,12 +72,15 @@ class Players : Fragment() {
             val call = getRetrofit().create(StatisticsService::class.java).getStatistics()
             val statisticResponse = call.body()
             if (call.isSuccessful){
-                val statistics = statisticResponse?.response ?: emptyList()
+                val statistics = statisticResponse?.response
                 withContext(Dispatchers.Main){
                     StatisticsFragmentResponse.clear()
-                    StatisticsFragmentResponse.addAll(statistics)
+                    if (statistics != null) {
+                        StatisticsFragmentResponse.add(statistics)
+                    }
                     adapter.notifyDataSetChanged()
                 }
+                Log.d("MyFavorites", "JSON data: $statistics")
             }
         }
     }

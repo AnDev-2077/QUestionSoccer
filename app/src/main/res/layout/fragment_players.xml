@@ -5,9 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".Players">
 
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvStatistisFragment"
+        android:id="@+id/rvStatisticsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

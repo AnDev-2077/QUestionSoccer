@@ -1,53 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/LinearLayoutLeagues"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
-    app:cardCornerRadius="8dp"
-    android:layout_margin="16dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <FrameLayout
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true"
+    android:clickable="true"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:focusable="true">
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="70dp"
+        android:background="@drawable/enfrentamiento"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
 
-
-        <ImageView
-            android:id="@+id/ivTeamLogoA"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="86dp"
-            android:layout_marginTop="10dp"
-            android:scaleType="centerCrop" />
-
-        <ImageView
-            android:id="@+id/ivTeamLogoB"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="centerCrop"
-            android:layout_marginStart="266dp"
-            android:layout_marginTop="10dp"/>
-
-        <TextView
-            android:id="@+id/tvTeamNameA"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="76dp"
-            android:layout_marginTop="28dp"/>
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:padding="6dp">
 
-        <TextView
-            android:id="@+id/tvTeamNameB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="336dp"
-            android:layout_marginTop="28dp"/>
+            <ImageView
+                android:id="@+id/ivTeamLogoA"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"/>
 
-        <TextView
-            android:id="@+id/tvFixtureDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="-34dp"/>
-    </FrameLayout>
+            <ImageView
+                android:id="@+id/ivTeamLogoB"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"/>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/ivTeamLogoA"
+                android:layout_toStartOf="@id/ivTeamLogoB">
 
+                <TextView
+                    android:id="@+id/tvTeamNameB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="8dp"
+                    android:textSize="10dp"
+                    android:fontFamily="@font/rubik_medium"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:maxWidth="60dp"
+                    android:text="nombre"/>
 
+                <TextView
+                    android:id="@+id/tvFixtureDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10dp"
+                    android:fontFamily="@font/rubik_black"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:maxWidth="80dp"
+                    android:layout_centerHorizontal="true"
+                    android:text="Fecha" />
+
+                <TextView
+                    android:id="@+id/tvTeamNameA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10dp"
+                    android:fontFamily="@font/rubik_medium"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:maxWidth="60dp"
+                    android:layout_marginStart="8dp"
+                    android:text="nombreA" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
 </androidx.cardview.widget.CardView>

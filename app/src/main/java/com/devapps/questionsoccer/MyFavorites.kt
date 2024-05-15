@@ -1,6 +1,7 @@
 package com.devapps.questionsoccer
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -78,7 +79,9 @@ class MyFavorites : Fragment() {
                     FixturesFragmentResponse.addAll(fixtures)
                     adapter.notifyDataSetChanged()
                 }
+                Log.d("MyFavorites", "JSON data: $fixtures")
             }
+
         }
     }
 

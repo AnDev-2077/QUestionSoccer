@@ -26,6 +26,7 @@ class StatisticsAdapter (var responseStatistics: List<StaticResponse>) : Recycle
             binding.sMayorR.text = responseStatistics.biggest.streak.loses.toString()
             binding.sMayorV.text = responseStatistics.biggest.wins.away
             binding.sMayorD.text = responseStatistics.biggest.loses.away
+            binding.sFallosM.text = responseStatistics.failed_to_score.total.toString()
             binding.sPenalesA.text = responseStatistics.penalty.scored.total.toString()
             binding.sPenalesF.text = responseStatistics.penalty.missed.total.toString()
             binding.sTargetaA.text = responseStatistics.cards.yellow.`91-105`.percentage.toString()
