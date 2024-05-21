@@ -15,7 +15,6 @@ class LeaguesDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityLeaguesDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val teamLogo = intent.getStringExtra("leagueLogo")

@@ -4,11 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="?attr/actionBarSize"
-    tools:context=".Teams">
+    tools:context=".Countries">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvTeamsFragment"
+        android:id="@+id/rvCountriesFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
+        android:layout_height="match_parent" />
 </FrameLayout>

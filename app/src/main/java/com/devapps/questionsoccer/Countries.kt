@@ -7,14 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.devapps.questionsoccer.adapters.FixtureAdapter
-import com.devapps.questionsoccer.adapters.SoccerAdapter
-import com.devapps.questionsoccer.databinding.FragmentLeaguesBinding
-import com.devapps.questionsoccer.databinding.FragmentMyFavoritesBinding
-import com.devapps.questionsoccer.databinding.ItemFixtureBinding
-import com.devapps.questionsoccer.interfaces.FixtureService
-import com.devapps.questionsoccer.items.fixtureResponse
+import com.devapps.questionsoccer.adapters.CountryAdapter
+import com.devapps.questionsoccer.databinding.FragmentCountriesBinding
+import com.devapps.questionsoccer.interfaces.CountryService
+import com.devapps.questionsoccer.items.ItemCountry
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,15 +21,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class MyFavorites : Fragment() {
+class Countries : Fragment() {
 
     private var param1: String? = null
     private var param2: String? = null
 
-    private lateinit var binding: FragmentMyFavoritesBinding
-    private lateinit var adapter: FixtureAdapter
-    //private lateinit var recyclerView: RecyclerView
-    private var FixturesFragmentResponse = mutableListOf<fixtureResponse>()
+    private lateinit var binding: FragmentCountriesBinding
+    private lateinit var adapter: CountryAdapter
+    private var CountriesFragmentResponse = mutableListOf<ItemCountry>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,16 +42,16 @@ class MyFavorites : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentMyFavoritesBinding.inflate(inflater, container, false)
+        binding = FragmentCountriesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = FixtureAdapter(FixturesFragmentResponse)
-        binding.rvFixturesFragment.layoutManager = LinearLayoutManager(context)
-        binding.rvFixturesFragment.adapter = adapter
-        getFixtures()
+        adapter = CountryAdapter(CountriesFragmentResponse)
+        binding.rvCountriesFragment.layoutManager = LinearLayoutManager(context)
+        binding.rvCountriesFragment.adapter = adapter
+        getCountries()
     }
 
     private fun getRetrofit(): Retrofit {
@@ -66,27 +61,26 @@ class MyFavorites : Fragment() {
             .build()
     }
 
-    private fun getFixtures(){
+    private fun getCountries(){
         CoroutineScope(Dispatchers.IO).launch {
-            val call = getRetrofit().create(FixtureService::class.java).getFixtureByLeague()
-            val fixtureResponse = call.body()
-            if (call.isSuccessful){
-                val fixtures = fixtureResponse?.response ?: emptyList()
+            val call = getRetrofit().create(CountryService::class.java).getCountries()
+            val countriesResponse = call.body()
+            if(call.isSuccessful){
+                val countries = countriesResponse?.response ?: emptyList()
                 withContext(Dispatchers.Main){
-                    FixturesFragmentResponse.clear()
-                    FixturesFragmentResponse.addAll(fixtures)
+                    CountriesFragmentResponse.clear()
+                    CountriesFragmentResponse.addAll(countries)
                     adapter.notifyDataSetChanged()
                 }
-                Log.d("MyFavorites", "JSON data: $fixtures")
+                Log.d("MyFavorites", "JSON data: $countries")
             }
-
         }
     }
 
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            MyFavorites().apply {
+            Countries().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

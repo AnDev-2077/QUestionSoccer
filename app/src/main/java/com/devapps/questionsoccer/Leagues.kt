@@ -4,8 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devapps.questionsoccer.adapters.LeaguesAdapter
@@ -28,8 +31,8 @@ class Leagues : Fragment() {
     private var param2: String? = null
 
     private lateinit var binding: FragmentLeaguesBinding
-    private lateinit var adapter: LeaguesAdapter
-    private lateinit var recyclerView: RecyclerView
+    lateinit var adapter: LeaguesAdapter
+    //private lateinit var recyclerView: RecyclerView
     private var LeaguesFragmentResponse = mutableListOf<LeagueResponseItem>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,7 +84,6 @@ class Leagues : Fragment() {
             }
         }
     }
-
     companion object {
 
         @JvmStatic
@@ -93,7 +95,4 @@ class Leagues : Fragment() {
                 }
             }
     }
-
-
-
 }

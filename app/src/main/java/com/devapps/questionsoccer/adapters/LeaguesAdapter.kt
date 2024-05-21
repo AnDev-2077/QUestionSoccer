@@ -10,7 +10,9 @@ import com.devapps.questionsoccer.items.LeagueResponseItem
 import com.squareup.picasso.Picasso
 
 
-class LeaguesAdapter (var responseLeagues: List<LeagueResponseItem>, private val onLeagueClick: (LeagueResponseItem) -> Unit) : RecyclerView.Adapter<LeaguesAdapter.LeaguesViewHolder>(){
+class LeaguesAdapter (private var responseLeagues: List<LeagueResponseItem>, private val onLeagueClick: (LeagueResponseItem) -> Unit) : RecyclerView.Adapter<LeaguesAdapter.LeaguesViewHolder>(){
+    //Varible para filtrar la lista de List<LeagueResponseItem>
+    var filteredLeagues: List<LeagueResponseItem> = responseLeagues
     class LeaguesViewHolder(view: View):RecyclerView.ViewHolder(view){
         private val binding = ItemLeagueBinding.bind(view)
         fun bind(responseLeagues: LeagueResponseItem, onLeagueClick: (LeagueResponseItem) -> Unit){
@@ -29,11 +31,20 @@ class LeaguesAdapter (var responseLeagues: List<LeagueResponseItem>, private val
     }
 
     override fun getItemCount(): Int {
-        return responseLeagues.size
+        return filteredLeagues.size
     }
 
     override fun onBindViewHolder(holder: LeaguesViewHolder, position: Int) {
-        val item = responseLeagues[position]
+        val item = filteredLeagues[position]
         holder.bind(item, onLeagueClick)
+    }
+
+    fun filter(query: String){
+        filteredLeagues = if (query.isEmpty()){
+            responseLeagues
+        }else{
+            responseLeagues.filter { it.league.name.contains(query, ignoreCase = true) }
+        }
+        notifyDataSetChanged()
     }
 }
