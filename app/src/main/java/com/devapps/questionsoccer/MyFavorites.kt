@@ -1,5 +1,6 @@
 package com.devapps.questionsoccer
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,12 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.devapps.questionsoccer.adapters.FixtureAdapter
-import com.devapps.questionsoccer.adapters.SoccerAdapter
-import com.devapps.questionsoccer.databinding.FragmentLeaguesBinding
 import com.devapps.questionsoccer.databinding.FragmentMyFavoritesBinding
-import com.devapps.questionsoccer.databinding.ItemFixtureBinding
 import com.devapps.questionsoccer.interfaces.FixtureService
 import com.devapps.questionsoccer.items.fixtureResponse
 import kotlinx.coroutines.CoroutineScope
@@ -53,7 +50,11 @@ class MyFavorites : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = FixtureAdapter(FixturesFragmentResponse)
+        adapter = FixtureAdapter(FixturesFragmentResponse) { onFixtureClick ->
+            val intent = Intent(activity, FixtureDetailsActivity::class.java)
+            intent.putExtra("id", onFixtureClick.fixture.id)
+            startActivity(intent)
+        }
         binding.rvFixturesFragment.layoutManager = LinearLayoutManager(context)
         binding.rvFixturesFragment.adapter = adapter
         getFixtures()

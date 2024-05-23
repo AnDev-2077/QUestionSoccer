@@ -8,4 +8,9 @@
         android:title="Search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/Auth"
+        android:icon="@drawable/ic_user"
+        android:title="LogIn"
+        app:showAsAction="ifRoom"/>
 </menu>

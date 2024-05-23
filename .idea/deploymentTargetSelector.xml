@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="QestionSoccer">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-05-15T07:16:43.630654Z">
+        <DropdownSelection timestamp="2024-05-22T21:40:57.702330300Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\carlo\.android\avd\Pixel_7a.avd" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=ZY22FH5V4S" />
             </handle>
           </Target>
         </DropdownSelection>

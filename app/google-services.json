@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "55345170500",
+    "project_id": "questionsoccer-97eb3",
+    "storage_bucket": "questionsoccer-97eb3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:55345170500:android:429d74e3548b87951b5411",
+        "android_client_info": {
+          "package_name": "com.devapps.questionsoccer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8jIySvezb5qK_qQf0W2OyUmkRbsEy_i0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

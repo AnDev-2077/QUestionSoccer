@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".subfragments.Lineup">
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1"
+        android:id="@+id/table_home">
+
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Equipo"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvHomeTeamName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Team Name"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Coach"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvHomeCoach"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/homePlayerQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Quantity"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvHomePlayerNumber1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Number1"/>
+            <TextView
+                android:id="@+id/tvHomePlayerName1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name1"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvHomePlayerNumber2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Number2"/>
+            <TextView
+                android:id="@+id/tvHomePlayerName2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name2"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvHomePlayerNumber3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Number3"/>
+            <TextView
+                android:id="@+id/tvHomePlayerName3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name3"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvHomePlayerNumber4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Number4"/>
+            <TextView
+                android:id="@+id/tvHomePlayerName4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name4"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvHomePlayerNumber5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Number5"/>
+            <TextView
+                android:id="@+id/tvHomePlayerName5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name5"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvHomePlayerNumber6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Number6"/>
+            <TextView
+                android:id="@+id/tvHomePlayerName6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name6"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvHomePlayerNumber7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Number7"/>
+            <TextView
+                android:id="@+id/tvHomePlayerName7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name7"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvHomePlayerNumber8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Number8"/>
+            <TextView
+                android:id="@+id/tvHomePlayerName8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name8"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvHomePlayerNumber9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Number9"/>
+            <TextView
+                android:id="@+id/tvHomePlayerName9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name9"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvHomePlayerNumber10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Number10"/>
+            <TextView
+                android:id="@+id/tvHomePlayerName10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name10"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvHomePlayerNumber11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Number11"/>
+            <TextView
+                android:id="@+id/tvHomePlayerName11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name11"/>
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1"
+        android:id="@+id/table_away">
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Equipo"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvAwayTeamName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Team Name"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Coach"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvAwayCoach"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Neme"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvAwayPlayerQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Quantity"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvAwayPlayerNumber1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Number1"/>
+            <TextView
+                android:id="@+id/tvAwayPlayerName1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name1"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvAwayPlayerNumber2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Number2"/>
+            <TextView
+                android:id="@+id/tvAwayPlayerName2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name2"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvAwayPlayerNumber3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Number3"/>
+            <TextView
+                android:id="@+id/tvAwayPlayerName3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name3"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvAwayPlayerNumber4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Number4"/>
+            <TextView
+                android:id="@+id/tvAwayPlayerName4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name4"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvAwayPlayerNumber5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Number5"/>
+            <TextView
+                android:id="@+id/tvAwayPlayerName5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name5"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvAwayPlayerNumber6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Number6"/>
+            <TextView
+                android:id="@+id/tvAwayPlayerName6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name6"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvAwayPlayerNumber7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Number7"/>
+            <TextView
+                android:id="@+id/tvAwayPlayerName7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name7"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvAwayPlayerNumber8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Number8"/>
+            <TextView
+                android:id="@+id/tvAwayPlayerName8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name8"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvAwayPlayerNumber9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Number9"/>
+            <TextView
+                android:id="@+id/tvAwayPlayerName9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name9"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvAwayPlayerNumber10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Number10"/>
+            <TextView
+                android:id="@+id/tvAwayPlayerName10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name10"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/tvAwayPlayerNumber11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Number11"/>
+            <TextView
+                android:id="@+id/tvAwayPlayerName11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player Name11"/>
+        </TableRow>
+
+
+
+    </TableLayout>
+
+</LinearLayout>

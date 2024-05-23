@@ -1,15 +1,17 @@
 package com.devapps.questionsoccer
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import com.devapps.questionsoccer.databinding.ActivityMainBinding
 
-
+enum class ProviderType{
+    BASIC
+}
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,6 +19,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         //enableEdgeToEdge()
         setContentView(binding.root)
+        val usernameTest = intent.getStringExtra("email")
+        title = usernameTest
         replaceFragment(Leagues())
 
         binding.bottomNavigationView.setOnItemSelectedListener {
@@ -32,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-        
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -57,6 +61,17 @@ class MainActivity : AppCompatActivity() {
 
         return super.onCreateOptionsMenu(menu)
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId){
+            R.id.Auth ->{
+                navigateToAuthenticationActivity()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     private var leaguesFragment: Leagues? = null
     private fun replaceFragment(fragment: Fragment){
         if (fragment is Leagues) {
@@ -67,4 +82,10 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.replace(R.id.frameLayout,fragment)
         fragmentTransaction.commit()
     }
+
+     private fun navigateToAuthenticationActivity(){
+        val intent = Intent(this, AuthActivity::class.java)
+        startActivity(intent)
+    }
+
 }

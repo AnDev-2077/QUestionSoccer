@@ -15,6 +15,12 @@
         android:theme="@style/Theme.QuestionSoccer"
         tools:targetApi="31">
         <activity
+            android:name=".AuthActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FixtureDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".TeamsDetailsActivity"
             android:exported="false" />
         <activity
