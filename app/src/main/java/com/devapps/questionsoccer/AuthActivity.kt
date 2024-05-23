@@ -23,7 +23,9 @@ class AuthActivity : AppCompatActivity() {
                  FirebaseAuth.getInstance().createUserWithEmailAndPassword(binding.etEmailAddress.text.toString(),
                      binding.etPassword.text.toString()).addOnCompleteListener{
                          if (it.isSuccessful){
-                            showHome(it.result?.user?.email ?: "", ProviderType.BASIC)
+                             val user = FirebaseAuth.getInstance().currentUser
+                             val photoUrl = user?.photoUrl
+                             showHome(it.result?.user?.email ?: "", ProviderType.BASIC)
                          }else{
                              showAlert()
                          }
@@ -36,6 +38,8 @@ class AuthActivity : AppCompatActivity() {
                  FirebaseAuth.getInstance().signInWithEmailAndPassword(binding.etEmailAddress.text.toString(),
                      binding.etPassword.text.toString()).addOnCompleteListener{
                      if (it.isSuccessful){
+                         val user = FirebaseAuth.getInstance().currentUser
+                         val photoUrl = user?.photoUrl
                          showHome(it.result?.user?.email ?: "", ProviderType.BASIC)
                      }else{
                          showAlert()
@@ -45,7 +49,6 @@ class AuthActivity : AppCompatActivity() {
              }
          }
      }
-
     private fun showAlert(){
         val builder = AlertDialog.Builder( this)
         builder.setTitle("Error")

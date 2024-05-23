@@ -6,8 +6,12 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import com.devapps.questionsoccer.databinding.ActivityMainBinding
+import com.google.firebase.auth.FirebaseAuth
+
 
 enum class ProviderType{
     BASIC
@@ -20,7 +24,8 @@ class MainActivity : AppCompatActivity() {
         //enableEdgeToEdge()
         setContentView(binding.root)
         val usernameTest = intent.getStringExtra("email")
-        title = usernameTest
+        title = usernameTest ?: "QuestionSoccer"
+
         replaceFragment(Leagues())
 
         binding.bottomNavigationView.setOnItemSelectedListener {
@@ -45,6 +50,14 @@ class MainActivity : AppCompatActivity() {
         val search = menu?.findItem(R.id.svGeneral)
         val searchView = search?.actionView as SearchView
 
+        val authItem = menu?.findItem(R.id.Auth)
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            // The user is signed in, change the icon color to green
+            val wrappedDrawable = authItem?.icon?.let { DrawableCompat.wrap(it) }
+            wrappedDrawable?.let { DrawableCompat.setTint(it, ContextCompat.getColor(this, R.color.colorGreen)) }
+            authItem?.icon = wrappedDrawable
+        }
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrEmpty()) {
@@ -58,7 +71,6 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-
         return super.onCreateOptionsMenu(menu)
     }
 
