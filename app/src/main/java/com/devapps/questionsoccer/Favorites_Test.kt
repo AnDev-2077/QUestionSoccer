@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devapps.questionsoccer.adapters.LeaguesAdapter
+import com.devapps.questionsoccer.adapters.SoccerAdapter
 import com.devapps.questionsoccer.databinding.FragmentFavoritesTestBinding
 import com.devapps.questionsoccer.items.LeagueResponseItem
+import com.devapps.questionsoccer.items.ResponseItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObject
@@ -21,8 +23,8 @@ class Favorites_Test : Fragment() {
     private var param2: String? = null
 
     private lateinit var binding: FragmentFavoritesTestBinding
-    private lateinit var adapter: LeaguesAdapter
-    var favoritesList = mutableListOf<LeagueResponseItem>()
+    private lateinit var teamsAdapter: SoccerAdapter
+    var favoritesTeamsList = mutableListOf<ResponseItem>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -41,11 +43,12 @@ class Favorites_Test : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = LeaguesAdapter(favoritesList) { onLeagueClick ->
-            // Handle league click
+
+        teamsAdapter = SoccerAdapter(favoritesTeamsList) { onTeamClick ->
+
         }
-        binding.rvFavorites.layoutManager = LinearLayoutManager(context)
-        binding.rvFavorites.adapter = adapter
+        binding.rvTeamsFavorites.layoutManager = LinearLayoutManager(context)
+        binding.rvTeamsFavorites.adapter = teamsAdapter
         getFavorites()
     }
 
@@ -56,10 +59,10 @@ class Favorites_Test : Fragment() {
             db.collection("users").document(user.uid).collection("favorites").get()
                 .addOnSuccessListener { documents ->
                     for (document in documents) {
-                        val league = document.toObject(LeagueResponseItem::class.java)
-                        favoritesList.add(league)
+                        val team = document.toObject(ResponseItem::class.java)
+                        favoritesTeamsList.add(team)
                     }
-                    adapter.notifyDataSetChanged()
+                    teamsAdapter.notifyDataSetChanged()
                 }
         }
     }

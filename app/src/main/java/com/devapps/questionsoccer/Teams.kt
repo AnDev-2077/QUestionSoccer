@@ -30,7 +30,7 @@ class Teams : Fragment() {
     private var param2: String? = null
 
     private lateinit var binding: FragmentTeamsBinding
-    private lateinit var adapter: SoccerAdapter
+    lateinit var adapter: SoccerAdapter
     private lateinit var recyclerView: RecyclerView
     private var TeamsFragmentResponse = mutableListOf<ResponseItem>()
 

@@ -7,7 +7,7 @@
     tools:context=".Favorites_Test">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvFavorites"
+        android:id="@+id/rvTeamsFavorites"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -11,6 +11,12 @@
     <item
         android:id="@+id/Auth"
         android:icon="@drawable/ic_user"
+        android:title="Usuario"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/Favorites"
+        android:icon="@drawable/ic_star_solid"
         android:title="LogIn"
+        
         app:showAsAction="ifRoom"/>
 </menu>

@@ -20,21 +20,13 @@ class LeaguesAdapter (private var responseLeagues: List<LeagueResponseItem>, pri
         fun bind(responseLeagues: LeagueResponseItem, onLeagueClick: (LeagueResponseItem) -> Unit){
             binding.tvLeagueName.text = responseLeagues.league.name
             binding.tvLeagueType.text = responseLeagues.league.type
+
             Picasso.get().load(responseLeagues.league.logo).into(binding.ivLeagueLogo)
             binding.LinearLayoutLeagues.setOnClickListener {
                 onLeagueClick(responseLeagues)
             }
-            binding.ivFavorites.setOnClickListener {
-                addToFavorites(responseLeagues)
-            }
         }
-        private fun addToFavorites(league: LeagueResponseItem) {
-            val user = FirebaseAuth.getInstance().currentUser
-            if (user != null) {
-                val db = FirebaseFirestore.getInstance()
-                db.collection("users").document(user.uid).collection("favorites").document(league.league.id.toString()).set(league)
-            }
-        }
+
     }
 
 

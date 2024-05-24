@@ -73,6 +73,14 @@
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
+            <ImageView
+                android:id="@+id/ivTeamFavorites"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                app:srcCompat="@drawable/ic_star_regular" />
         </RelativeLayout>
     </LinearLayout>
 

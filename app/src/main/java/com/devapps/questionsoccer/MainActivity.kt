@@ -11,6 +11,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import com.devapps.questionsoccer.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
+import org.checkerframework.common.returnsreceiver.qual.This
 
 
 enum class ProviderType{
@@ -32,10 +33,10 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.leagues -> replaceFragment(Leagues())
                 R.id.teams -> replaceFragment(Teams())
-                //R.id.players -> replaceFragment(Players())
+                R.id.players -> replaceFragment(Players())
                 R.id.favorites -> replaceFragment(MyFavorites())
                 R.id.countries -> replaceFragment(Countries())
-                R.id.favorites_test -> replaceFragment(Favorites_Test())
+                //R.id.favorites_test -> replaceFragment(Favorites_Test())
 
                 else ->{
                 }
@@ -53,8 +54,8 @@ class MainActivity : AppCompatActivity() {
 
         val authItem = menu?.findItem(R.id.Auth)
         val user = FirebaseAuth.getInstance().currentUser
-        if (user != null) {
 
+        if (user != null) {
             val wrappedDrawable = authItem?.icon?.let { DrawableCompat.wrap(it) }
             wrappedDrawable?.let { DrawableCompat.setTint(it, ContextCompat.getColor(this, R.color.colorGreen)) }
             authItem?.icon = wrappedDrawable
@@ -63,6 +64,8 @@ class MainActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrEmpty()) {
                     leaguesFragment?.adapter?.filter(query.toLowerCase())
+                    teamsFragment?.adapter?.filterTeams(query.toLowerCase())
+
                 }
                 return true
             }
@@ -81,22 +84,30 @@ class MainActivity : AppCompatActivity() {
                 navigateToAuthenticationActivity()
                 true
             }
+            R.id.Favorites ->{
+                replaceFragment(Favorites_Test())
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
     private var leaguesFragment: Leagues? = null
+    private var teamsFragment: Teams? = null
     private fun replaceFragment(fragment: Fragment){
         if (fragment is Leagues) {
             leaguesFragment = fragment
+        } else if( fragment is Teams){
+            teamsFragment = fragment
         }
+
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frameLayout,fragment)
         fragmentTransaction.commit()
     }
 
-     private fun navigateToAuthenticationActivity(){
+    private fun navigateToAuthenticationActivity(){
         val intent = Intent(this, AuthActivity::class.java)
         startActivity(intent)
     }
