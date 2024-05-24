@@ -6,14 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.devapps.questionsoccer.adapters.LeaguesAdapter
 import com.devapps.questionsoccer.adapters.SoccerAdapter
 import com.devapps.questionsoccer.databinding.FragmentFavoritesTestBinding
-import com.devapps.questionsoccer.items.LeagueResponseItem
 import com.devapps.questionsoccer.items.ResponseItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.toObject
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
