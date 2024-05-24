@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutTeamDetails"
     android:layout_width="match_parent"
-    android:background="@drawable/fondo2"
+    android:background="@drawable/fondo"
     android:layout_height="match_parent"
     android:paddingTop="?attr/actionBarSize">
 
@@ -34,7 +34,7 @@
                 android:fontFamily="@font/rubik_medium"
                 android:text="BAYER"
                 android:layout_marginBottom="6dp"
-                android:textColor="@color/white"
+                android:textColor="#25282A"
                 android:textStyle="bold"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -49,9 +49,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
-                android:textColor="@color/white"
+                android:textColor="#25282A"
                 android:layout_marginBottom="6dp"
-                android:textStyle="bold"
                 android:text="Dirección: "
                 android:textSize="12sp" />
 
@@ -60,9 +59,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:text="asdasd"
+                android:textColor="#25282A"
+                android:text="Dirección: "
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -77,8 +75,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
                 android:layout_marginBottom="6dp"
-                android:textColor="@color/white"
-                android:textStyle="bold"
+                android:textColor="#25282A"
                 android:text="Ciudad: "
                 android:textSize="12sp" />
 
@@ -87,8 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
-                android:textColor="@color/white"
-                android:textStyle="bold"
+                android:textColor="#25282A"
                 android:text="Manchester"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -104,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
                 android:text="Capacidad: "
-                android:textColor="@color/white"
+                android:textColor="#25282A"
                 android:textStyle="bold"
                 android:textSize="12sp" />
 
@@ -113,7 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
-                android:textColor="@color/white"
+                android:textColor="#25282A"
                 android:textStyle="bold"
                 android:text="76212"
                 android:textSize="12sp" />
@@ -144,9 +140,8 @@
             android:gravity="center"
             android:fontFamily="@font/rubik_black"
             android:text="ESTADIO"
-            android:textColor="@color/white"
-            android:textSize="26sp"
-            android:textStyle="bold" />
+            android:textColor="#25282A"
+            android:textSize="26sp"/>
 
     </FrameLayout>
 
@@ -188,11 +183,10 @@
 
             <TextView
                 android:id="@+id/tvTeamName"
-                android:textColor="@color/white"
+                android:textColor="#25282A"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_black"
-                android:textStyle="bold"
                 android:text="MUNICH"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -207,14 +201,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
-                android:textStyle="bold"
-                android:textColor="@color/white"
+                android:textColor="#25282A"
                 android:text="País"
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/colon2"
-                android:textColor="@color/white"
+                android:textColor="#25282A"
                 android:textStyle="bold"
                 android:fontFamily="@font/rubik_medium"
                 android:layout_width="wrap_content"
@@ -229,7 +222,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
                 android:textStyle="bold"
-                android:textColor="@color/white"
+                android:textColor="#25282A"
                 android:layout_marginBottom="6dp"
                 android:text="ALEMANIA"
                 android:textSize="10sp" />
@@ -245,8 +238,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
-                android:textStyle="bold"
-                android:textColor="@color/white"
+                android:textColor="#25282A"
                 android:text="Código"
                 android:textSize="12sp" />
 
@@ -255,9 +247,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" : "
-                android:textStyle="bold"
                 android:fontFamily="@font/rubik_medium"
-                android:textColor="@color/white"
+                android:textColor="#25282A"
                 android:textSize="12sp" />
 
             <TextView
@@ -265,8 +256,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
-                android:textStyle="bold"
-                android:textColor="@color/white"
+                android:textColor="#25282A"
                 android:text="1234"
                 android:textSize="10sp" />
         </LinearLayout>

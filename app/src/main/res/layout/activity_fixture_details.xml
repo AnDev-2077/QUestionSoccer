@@ -9,12 +9,12 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rlHeader"
         app:layout_constraintVertical_bias="0.117"
         app:tabIndicatorColor="#02A676"
         app:tabTextColor="#02A676">
@@ -40,6 +40,7 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <RelativeLayout
+        android:id="@+id/rlHeader"
         android:layout_width="409dp"
         android:layout_height="80dp"
         android:layout_marginEnd="2dp"
@@ -56,14 +57,14 @@
             android:layout_centerInParent="true"/>
         <TextView
             android:id="@+id/tvHome"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/ivHome"
             android:layout_marginRight="6dp"
             android:layout_centerInParent="true"/>
         <TextView
             android:id="@+id/tvAway"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/ivAway"
             android:layout_marginLeft="6dp"
@@ -72,7 +73,7 @@
         <ImageView
             android:id="@+id/ivHome"
             android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:layout_toLeftOf="@+id/tvVS"
             android:layout_marginRight="6dp"
             tools:srcCompat="@tools:sample/avatars" />
@@ -80,7 +81,7 @@
         <ImageView
             android:id="@+id/ivAway"
             android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:layout_toRightOf="@+id/tvVS"
             android:layout_marginLeft="6dp"
             tools:srcCompat="@tools:sample/avatars" />

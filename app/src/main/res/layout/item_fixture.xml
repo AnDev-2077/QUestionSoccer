@@ -34,26 +34,24 @@
                 app:layout_constraintTop_toTopOf="parent">
                 <TextView
                     android:id="@+id/tvTeamNameA"
-                    android:layout_width="wrap_content"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:textSize="10dp"
                     android:fontFamily="@font/rubik_medium"
                     android:maxWidth="60dp"
                     android:layout_toLeftOf="@+id/ivTeamLogoA"
                     android:layout_marginRight="6dp"
-                    android:layout_centerInParent="true"
-                    android:text="nombreA" />
+                    android:layout_centerInParent="true"/>
                 <TextView
                     android:id="@+id/tvTeamNameB"
-                    android:layout_width="wrap_content"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:textSize="10dp"
                     android:fontFamily="@font/rubik_medium"
                     android:maxWidth="60dp"
                     android:layout_toRightOf="@+id/ivTeamLogoB"
                     android:layout_marginLeft="6dp"
-                    android:layout_centerInParent="true"
-                    android:text="nombre" />
+                    android:layout_centerInParent="true"/>
                 <TextView
                     android:id="@+id/tvFixtureDate"
                     android:layout_width="wrap_content"

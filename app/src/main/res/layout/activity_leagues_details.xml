@@ -46,11 +46,11 @@
                 android:id="@+id/tvLeagueName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:fontFamily="@font/rubik_black"
-                android:textStyle="bold"
-                android:text="Premiere"
-                android:textSize="40sp" />
+                android:fontFamily="@font/rubik_extrabold"
+                android:text="Confederations CUP"
+                android:textColor="#25282A"
+                android:textSize="40sp"
+                android:gravity="center"/>
         </LinearLayout>
 
         <LinearLayout
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
-                android:textColor="@android:color/white"
+                android:textColor="#25282A"
                 android:textStyle="bold"
                 android:layout_marginBottom="6dp"
                 android:text="País"
@@ -71,19 +71,18 @@
 
             <TextView
                 android:id="@+id/colon2"
-                android:textColor="@android:color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" : "
                 android:fontFamily="@font/rubik_medium"
-                android:textStyle="bold"
+                android:textColor="#25282A"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tvLeagueCountry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
+                android:textColor="#25282A"
                 android:fontFamily="@font/rubik_medium"
                 android:text="Inglaterra"
                 android:textStyle="bold"
@@ -99,7 +98,7 @@
                 android:id="@+id/tvTeamCodeTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
+                android:textColor="#25282A"
                 android:fontFamily="@font/rubik_medium"
                 android:text="Tipo"
                 android:textStyle="bold"
@@ -112,7 +111,7 @@
                 android:text=" : "
                 android:fontFamily="@font/rubik_medium"
                 android:textStyle="bold"
-                android:textColor="@android:color/white"
+                android:textColor="#25282A"
                 android:textSize="18sp" />
 
             <TextView
@@ -120,7 +119,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
-                android:textColor="@android:color/white"
+                android:textColor="#25282A"
                 android:text="Cup"
                 android:textStyle="bold"
                 android:textSize="18sp" />
