@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devapps.questionsoccer.R
 import com.devapps.questionsoccer.databinding.ItemLeagueBinding
 import com.devapps.questionsoccer.items.LeagueResponseItem
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 
 
@@ -22,8 +24,20 @@ class LeaguesAdapter (private var responseLeagues: List<LeagueResponseItem>, pri
             binding.LinearLayoutLeagues.setOnClickListener {
                 onLeagueClick(responseLeagues)
             }
+            binding.ivFavorites.setOnClickListener {
+                addToFavorites(responseLeagues)
+            }
+        }
+        private fun addToFavorites(league: LeagueResponseItem) {
+            val user = FirebaseAuth.getInstance().currentUser
+            if (user != null) {
+                val db = FirebaseFirestore.getInstance()
+                db.collection("users").document(user.uid).collection("favorites").document(league.league.id.toString()).set(league)
+            }
         }
     }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LeaguesViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

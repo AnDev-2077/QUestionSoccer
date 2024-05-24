@@ -19,47 +19,47 @@ data class lPaging(
 
 
 data class LeagueResponseItem(
-    val league: lLeague,
-    val country: Country,
-    val seasons: List<Season>
+    val league: lLeague = lLeague(),
+    val country: Country = Country(),
+    val seasons: List<Season> =listOf()
 ) : Serializable
 
 data class lLeague(
-    val id: Int,
-    val name: String,
-    val type: String,
-    val logo: String
+    val id: Int =  0,
+    val name: String = "",
+    val type: String = "",
+    val logo: String = ""
 )
 
 data class Country(
-    val name: String,
-    val code: Any?,
-    val flag: Any?
+    val name: String = "",
+    val code: Any? = null,
+    val flag: Any? = null
 )
 
 data class Season(
-    val year: Int,
-    val start: String,
-    val end: String,
-    val current: Boolean,
-    val coverage: Coverage
+    val year: Int = 0,
+    val start: String = "",
+    val end: String = "",
+    val current: Boolean = false,
+    val coverage: Coverage = Coverage()
 )
 
 data class Coverage(
-    val fixtures: Fixtures,
-    val standings: Boolean,
-    val players: Boolean,
-    val top_scorers: Boolean,
-    val top_assists: Boolean,
-    val top_cards: Boolean,
-    val injuries: Boolean,
-    val predictions: Boolean,
-    val odds: Boolean
+    val fixtures: Fixtures = Fixtures(),
+    val standings: Boolean = false,
+    val players: Boolean = false,
+    val top_scorers: Boolean = false,
+    val top_assists: Boolean = false,
+    val top_cards: Boolean = false,
+    val injuries: Boolean = false,
+    val predictions: Boolean = false,
+    val odds: Boolean = false
 )
 
 data class Fixtures(
-    val events: Boolean,
-    val lineups: Boolean,
-    val statistics_fixtures: Boolean,
-    val statistics_players: Boolean
+    val events: Boolean = false,
+    val lineups: Boolean = false,
+    val statistics_fixtures: Boolean = false,
+    val statistics_players: Boolean = false
 )

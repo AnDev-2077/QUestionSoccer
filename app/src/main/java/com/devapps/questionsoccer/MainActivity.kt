@@ -32,9 +32,10 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.leagues -> replaceFragment(Leagues())
                 R.id.teams -> replaceFragment(Teams())
-                R.id.players -> replaceFragment(Players())
+                //R.id.players -> replaceFragment(Players())
                 R.id.favorites -> replaceFragment(MyFavorites())
                 R.id.countries -> replaceFragment(Countries())
+                R.id.favorites_test -> replaceFragment(Favorites_Test())
 
                 else ->{
                 }
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         val authItem = menu?.findItem(R.id.Auth)
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null) {
-            // The user is signed in, change the icon color to green
+
             val wrappedDrawable = authItem?.icon?.let { DrawableCompat.wrap(it) }
             wrappedDrawable?.let { DrawableCompat.setTint(it, ContextCompat.getColor(this, R.color.colorGreen)) }
             authItem?.icon = wrappedDrawable
