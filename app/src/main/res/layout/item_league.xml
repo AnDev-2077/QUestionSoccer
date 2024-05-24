@@ -30,8 +30,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
                 android:layout_alignParentLeft="true"/>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -66,6 +66,15 @@
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                app:srcCompat="@drawable/ic_star_regular" />
         </RelativeLayout>
     </LinearLayout>
 
