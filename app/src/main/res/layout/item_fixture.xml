@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/LinearLayoutLeagues"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,55 +17,43 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="@drawable/enfrentamiento"
         android:animateLayoutChanges="true"
         android:orientation="vertical">
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center_vertical"
             android:padding="6dp">
-
-            <ImageView
-                android:id="@+id/ivTeamLogoA"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center"/>
-
-            <ImageView
-                android:id="@+id/ivTeamLogoB"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center"/>
-
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@id/ivTeamLogoA"
-                android:layout_toStartOf="@id/ivTeamLogoB">
-
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <TextView
+                    android:id="@+id/tvTeamNameA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10dp"
+                    android:fontFamily="@font/rubik_medium"
+                    android:maxWidth="60dp"
+                    android:layout_toLeftOf="@+id/ivTeamLogoA"
+                    android:layout_marginRight="6dp"
+                    android:layout_centerInParent="true"
+                    android:text="nombreA" />
                 <TextView
                     android:id="@+id/tvTeamNameB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginEnd="8dp"
                     android:textSize="10dp"
                     android:fontFamily="@font/rubik_medium"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:gravity="center"
                     android:maxWidth="60dp"
-                    android:text="nombre"/>
-
+                    android:layout_toRightOf="@+id/ivTeamLogoB"
+                    android:layout_marginLeft="6dp"
+                    android:layout_centerInParent="true"
+                    android:text="nombre" />
                 <TextView
                     android:id="@+id/tvFixtureDate"
                     android:layout_width="wrap_content"
@@ -72,25 +61,22 @@
                     android:textSize="10dp"
                     android:fontFamily="@font/rubik_black"
                     android:gravity="center"
-                    android:textColor="@color/white"
-                    android:maxWidth="80dp"
-                    android:layout_centerHorizontal="true"
-                    android:text="Fecha" />
 
-                <TextView
-                    android:id="@+id/tvTeamNameA"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="10dp"
-                    android:fontFamily="@font/rubik_medium"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:maxWidth="60dp"
-                    android:layout_marginStart="8dp"
-                    android:text="nombreA" />
+                    android:maxWidth="80dp"
+                    android:layout_centerInParent="true"
+                    android:text="Fecha" />
+                <ImageView
+                    android:id="@+id/ivTeamLogoA"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_toLeftOf="@+id/tvFixtureDate"
+                    android:layout_marginRight="6dp"/>
+                <ImageView
+                    android:id="@+id/ivTeamLogoB"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_toRightOf="@+id/tvFixtureDate"
+                    android:layout_marginLeft="6dp"/>
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>

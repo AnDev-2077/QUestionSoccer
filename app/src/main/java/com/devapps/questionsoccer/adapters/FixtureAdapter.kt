@@ -8,13 +8,21 @@ import com.devapps.questionsoccer.R
 import com.devapps.questionsoccer.databinding.ItemFixtureBinding
 import com.devapps.questionsoccer.items.fixtureResponse
 import com.squareup.picasso.Picasso
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class FixtureAdapter (var responseFixtureByLeague: List<fixtureResponse>, private val onFixtureClick:(fixtureResponse) -> Unit): RecyclerView.Adapter<FixtureAdapter.FixtureViewHolder>() {
 
     class FixtureViewHolder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ItemFixtureBinding.bind(view)
         fun bind(responseFixtureByLeague: fixtureResponse, onFixtureClick: (fixtureResponse) -> Unit){
-            binding.tvFixtureDate.text = responseFixtureByLeague.fixture.date
+
+            val originalFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.US)
+            val targetFormat = SimpleDateFormat("hh:mm a", Locale("es", "PE"))
+            val date = originalFormat.parse(responseFixtureByLeague.fixture.date)
+            val formattedDate = targetFormat.format(date)
+
+            binding.tvFixtureDate.text = formattedDate
             binding.tvTeamNameA.text = responseFixtureByLeague.teams.home.name
             binding.tvTeamNameB.text = responseFixtureByLeague.teams.away.name
             Picasso.get().load(responseFixtureByLeague.teams.home.logo).into(binding.ivTeamLogoA)

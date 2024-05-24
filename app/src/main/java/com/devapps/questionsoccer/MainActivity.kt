@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.ActionMenuView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import com.devapps.questionsoccer.databinding.ActivityMainBinding
+import com.google.android.play.integrity.internal.i
 import com.google.firebase.auth.FirebaseAuth
 import org.checkerframework.common.returnsreceiver.qual.This
 
@@ -37,7 +39,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.favorites -> replaceFragment(MyFavorites())
                 R.id.countries -> replaceFragment(Countries())
                 //R.id.favorites_test -> replaceFragment(Favorites_Test())
-
                 else ->{
                 }
             }
@@ -106,6 +107,7 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.replace(R.id.frameLayout,fragment)
         fragmentTransaction.commit()
     }
+
 
     private fun navigateToAuthenticationActivity(){
         val intent = Intent(this, AuthActivity::class.java)
