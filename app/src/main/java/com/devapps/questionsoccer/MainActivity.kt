@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         title = usernameTest ?: "QuestionSoccer"
 
         replaceFragment(Leagues())
-
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.leagues -> replaceFragment(Leagues())
