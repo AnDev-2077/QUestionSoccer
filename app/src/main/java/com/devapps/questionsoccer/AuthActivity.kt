@@ -48,6 +48,10 @@ class AuthActivity : AppCompatActivity() {
 
              }
          }
+         binding.btLogOut.setOnClickListener(){
+             FirebaseAuth.getInstance().signOut()
+             onBackPressed()
+         }
      }
     private fun showAlert(){
         val builder = AlertDialog.Builder( this)
