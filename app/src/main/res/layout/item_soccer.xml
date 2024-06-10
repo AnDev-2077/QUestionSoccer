@@ -73,14 +73,16 @@
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
-            <ImageView
-                android:id="@+id/ivTeamFavorites"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+
+            <CheckBox
+                android:id="@+id/ivFavorites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/selector_favorites"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:layout_centerInParent="true"
-                app:srcCompat="@drawable/ic_star_regular" />
+                android:layout_centerInParent="true"/>
+
         </RelativeLayout>
     </LinearLayout>
 

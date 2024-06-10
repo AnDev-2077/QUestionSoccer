@@ -2,6 +2,7 @@ package com.devapps.questionsoccer
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
@@ -16,6 +17,7 @@ import com.devapps.questionsoccer.databinding.FragmentLeaguesBinding
 import com.devapps.questionsoccer.interfaces.LeagueService
 import com.devapps.questionsoccer.items.LeagueResponse
 import com.devapps.questionsoccer.items.LeagueResponseItem
+import com.devapps.questionsoccer.league_fragments.TeamsByLeague
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -50,12 +52,15 @@ class Leagues : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = LeaguesAdapter(LeaguesFragmentResponse) { onLeagueClick ->
+
             val intent = Intent(activity, LeaguesDetailsActivity::class.java)
+            intent.putExtra("leagueId", onLeagueClick.league.id)
             intent.putExtra("leagueName", onLeagueClick.league.name)
             intent.putExtra("leagueType", onLeagueClick.league.type)
             intent.putExtra("leagueCountry", onLeagueClick.country.name)
             intent.putExtra("leagueLogo", onLeagueClick.league.logo)
             startActivity(intent)
+
         }
         binding.rvLeaguesFragment.layoutManager = LinearLayoutManager(context)
         binding.rvLeaguesFragment.adapter = adapter

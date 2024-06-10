@@ -3,6 +3,7 @@ package com.devapps.questionsoccer.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.devapps.questionsoccer.R
 import com.devapps.questionsoccer.databinding.ItemSoccerBinding
@@ -31,16 +32,30 @@ class SoccerAdapter (var responseTeamsByLeague: List<ResponseItem>, private val 
             binding.LinearLayoutTeams.setOnClickListener {
                 onTeamClick(responseItem)
             }
-            binding.ivTeamFavorites.setOnClickListener{
-                addToFavorites(responseItem)
+
+
+            binding.ivFavorites.setOnCheckedChangeListener{checkBox, isChecked ->
+                if(isChecked){
+                    addToFavorites(responseItem)
+                    showAlert("Equipo añadido a favoritos")
+                }else{
+                    showAlert("Equipo eliminado de favoritos")
+                }
             }
 
         }
+        private fun showAlert(str: String) {
+            Toast.makeText(itemView.context,str,Toast.LENGTH_SHORT).show()
+        }
+
         private fun addToFavorites(team: ResponseItem) {
             val user = FirebaseAuth.getInstance().currentUser
             if (user != null) {
                 val db = FirebaseFirestore.getInstance()
                 db.collection("users").document(user.uid).collection("favorites").document(team.team.teamId).set(team)
+            }else {
+                Toast.makeText(itemView.context, "Funcion disponible cuando inicies sesión", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }

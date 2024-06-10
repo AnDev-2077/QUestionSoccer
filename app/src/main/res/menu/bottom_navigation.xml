@@ -4,9 +4,6 @@
     <item android:title="Ligas"
         android:id="@+id/leagues"
         android:icon="@drawable/ic_trophy_solid" />
-    <item android:title="Equipos"
-        android:id="@+id/teams"
-        android:icon="@drawable/ic_people_group_solid"/>
     <item android:title="Paises"
         android:id="@+id/countries"
         android:icon="@drawable/ic_countries"/>

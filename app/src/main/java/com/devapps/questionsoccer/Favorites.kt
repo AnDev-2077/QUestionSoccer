@@ -19,6 +19,7 @@ class Favorites_Test : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var binding: FragmentFavoritesTestBinding
     private lateinit var teamsAdapter: SoccerAdapter
     var favoritesTeamsList = mutableListOf<ResponseItem>()
@@ -62,6 +63,7 @@ class Favorites_Test : Fragment() {
                     teamsAdapter.notifyDataSetChanged()
                 }
         }
+
     }
 
 

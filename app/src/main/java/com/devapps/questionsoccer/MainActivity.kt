@@ -26,14 +26,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         //enableEdgeToEdge()
         setContentView(binding.root)
-        val usernameTest = intent.getStringExtra("email")
-        title = usernameTest ?: "QuestionSoccer"
 
         replaceFragment(Leagues())
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.leagues -> replaceFragment(Leagues())
-                R.id.teams -> replaceFragment(Teams())
+                //R.id.teams -> replaceFragment(Teams())
                 R.id.players -> replaceFragment(Players())
                 R.id.favorites -> replaceFragment(MyFavorites())
                 R.id.countries -> replaceFragment(Countries())
@@ -64,8 +62,6 @@ class MainActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrEmpty()) {
                     leaguesFragment?.adapter?.filter(query.toLowerCase())
-                    teamsFragment?.adapter?.filterTeams(query.toLowerCase())
-
                 }
                 return true
             }
@@ -93,12 +89,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private var leaguesFragment: Leagues? = null
-    private var teamsFragment: Teams? = null
     private fun replaceFragment(fragment: Fragment){
         if (fragment is Leagues) {
             leaguesFragment = fragment
-        } else if( fragment is Teams){
-            teamsFragment = fragment
         }
 
         val fragmentManager = supportFragmentManager

@@ -1,130 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layoutTeamDetails"
+    android:id="@+id/layoutLeagueDetails"
     android:layout_width="match_parent"
-    android:background="@drawable/fondo"
-    android:layout_height="match_parent"
-    android:paddingTop="?attr/actionBarSize">
-
-    <ImageView
-        android:id="@+id/ivLeagueLogo"
-        android:layout_width="323dp"
-        android:layout_height="317dp"
-        android:layout_alignParentStart="true"
-        android:foregroundGravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.548"
-
-        tools:srcCompat="@tools:sample/avatars" />
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical"
-        android:padding="15dp"
-        android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/ivLeagueLogo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvLeagueName"
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/ivLeagueLogo"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/rubik_extrabold"
-                android:text="Confederations CUP"
-                android:textColor="#25282A"
-                android:textSize="40sp"
-                android:gravity="center"/>
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvLeagueName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Liga" />
+
+                <TextView
+                    android:id="@+id/tvLeagueCountry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pais" />
+
+                <TextView
+                    android:id="@+id/tvLeagueType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tipo" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" />
+            </LinearLayout>
+
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
 
-            <TextView
-                android:id="@+id/tvTeamCountryTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/rubik_medium"
-                android:textColor="#25282A"
-                android:textStyle="bold"
-                android:layout_marginBottom="6dp"
-                android:text="País"
-                android:textSize="18sp" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLeagues"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:tabMode="fixed"
+            app:tabIndicatorGravity="bottom"
+            app:tabIndicatorAnimationMode="elastic"
+            app:tabSelectedTextColor="#02A676"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-            <TextView
-                android:id="@+id/colon2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" : "
-                android:fontFamily="@font/rubik_medium"
-                android:textColor="#25282A"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tvLeagueCountry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#25282A"
-                android:fontFamily="@font/rubik_medium"
-                android:text="Inglaterra"
-                android:textStyle="bold"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvTeamCodeTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#25282A"
-                android:fontFamily="@font/rubik_medium"
-                android:text="Tipo"
-                android:textStyle="bold"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/colon3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" : "
-                android:fontFamily="@font/rubik_medium"
-                android:textStyle="bold"
-                android:textColor="#25282A"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tvLeagueType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/rubik_medium"
-                android:textColor="#25282A"
-                android:text="Cup"
-                android:textStyle="bold"
-                android:textSize="18sp" />
-        </LinearLayout>
-
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPagerLeagues"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabLeagues"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

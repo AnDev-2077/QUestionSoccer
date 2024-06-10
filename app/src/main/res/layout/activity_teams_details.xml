@@ -1,266 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutTeamDetails"
     android:layout_width="match_parent"
-    android:background="@drawable/fondo"
-    android:layout_height="match_parent"
-    android:paddingTop="?attr/actionBarSize">
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="272dp"
-        android:layout_height="126dp"
-        android:layout_marginTop="392dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/frameLayout"
-        app:layout_constraintVertical_bias="0.0">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvVenueName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/rubik_medium"
-                android:text="BAYER"
-                android:layout_marginBottom="6dp"
-                android:textColor="#25282A"
-                android:textStyle="bold"
-                android:textSize="20sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvVenueAddressTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/rubik_medium"
-                android:textColor="#25282A"
-                android:layout_marginBottom="6dp"
-                android:text="Dirección: "
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tvVenueAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/rubik_medium"
-                android:textColor="#25282A"
-                android:text="Dirección: "
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvVenueCityTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/rubik_medium"
-                android:layout_marginBottom="6dp"
-                android:textColor="#25282A"
-                android:text="Ciudad: "
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tvVenueCity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/rubik_medium"
-                android:textColor="#25282A"
-                android:text="Manchester"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvVenueCapacityTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/rubik_medium"
-                android:text="Capacidad: "
-                android:textColor="#25282A"
-                android:textStyle="bold"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tvVenueCapacity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/rubik_medium"
-                android:textColor="#25282A"
-                android:textStyle="bold"
-                android:text="76212"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="410dp"
-        android:layout_height="380dp"
-        app:layout_constraintTop_toBottomOf="@+id/ivTeamLogo"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp">
-
-        <ImageView
-            android:id="@+id/ivVenueImage"
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="286dp"
-            android:layout_gravity="center"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:layout_height="8dp" />
 
-        <TextView
-
-            android:id="@+id/textView5"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:fontFamily="@font/rubik_black"
-            android:text="ESTADIO"
-            android:textColor="#25282A"
-            android:textSize="26sp"/>
-
-    </FrameLayout>
-
-    <ImageView
-        android:id="@+id/ivTeamLogo"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_alignParentStart="true"
-        android:foregroundGravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.072"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.027"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="168dp"
-        android:orientation="vertical"
-        android:padding="15dp"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.44"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.062"
-        tools:ignore="MissingConstraints">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvTeamName"
-                android:textColor="#25282A"
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/ivTeamLogo"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/rubik_black"
-                android:text="MUNICH"
-                android:textSize="18sp" />
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvTeamName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Equipo" />
+
+                <TextView
+                    android:id="@+id/tvTeamCountry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pais" />
+
+                <TextView
+                    android:id="@+id/tvTeamCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Codigo" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" />
+            </LinearLayout>
+
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
 
-            <TextView
-                android:id="@+id/tvTeamCountryTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/rubik_medium"
-                android:textColor="#25282A"
-                android:text="País"
-                android:textSize="12sp" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabTeams"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:tabMode="fixed"
+            app:tabIndicatorGravity="bottom"
+            app:tabIndicatorAnimationMode="elastic"
+            app:tabSelectedTextColor="#02A676"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-            <TextView
-                android:id="@+id/colon2"
-                android:textColor="#25282A"
-                android:textStyle="bold"
-                android:fontFamily="@font/rubik_medium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" : "
-                android:layout_marginBottom="6dp"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tvTeamCountry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/rubik_medium"
-                android:textStyle="bold"
-                android:textColor="#25282A"
-                android:layout_marginBottom="6dp"
-                android:text="ALEMANIA"
-                android:textSize="10sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvTeamCodeTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/rubik_medium"
-                android:textColor="#25282A"
-                android:text="Código"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/colon3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" : "
-                android:fontFamily="@font/rubik_medium"
-                android:textColor="#25282A"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tvTeamCode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/rubik_medium"
-                android:textColor="#25282A"
-                android:text="1234"
-                android:textSize="10sp" />
-        </LinearLayout>
-
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPagerTeams"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabLeagues"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
