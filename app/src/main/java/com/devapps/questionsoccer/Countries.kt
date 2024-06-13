@@ -1,11 +1,14 @@
 package com.devapps.questionsoccer
 
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devapps.questionsoccer.adapters.CountryAdapter
 import com.devapps.questionsoccer.databinding.FragmentCountriesBinding
@@ -62,19 +65,35 @@ class Countries : Fragment() {
     }
 
     private fun getCountries(){
-        CoroutineScope(Dispatchers.IO).launch {
-            val call = getRetrofit().create(CountryService::class.java).getCountries()
-            val countriesResponse = call.body()
-            if(call.isSuccessful){
-                val countries = countriesResponse?.response ?: emptyList()
-                withContext(Dispatchers.Main){
-                    CountriesFragmentResponse.clear()
-                    CountriesFragmentResponse.addAll(countries)
-                    adapter.notifyDataSetChanged()
+        if (isOnline()){
+            CoroutineScope(Dispatchers.IO).launch {
+                val call = getRetrofit().create(CountryService::class.java).getCountries()
+                val countriesResponse = call.body()
+                if(call.isSuccessful){
+                    val countries = countriesResponse?.response ?: emptyList()
+                    withContext(Dispatchers.Main){
+                        CountriesFragmentResponse.clear()
+                        CountriesFragmentResponse.addAll(countries)
+                        adapter.notifyDataSetChanged()
+                    }
+                    Log.d("MyFavorites", "JSON data: $countries")
                 }
-                Log.d("MyFavorites", "JSON data: $countries")
             }
+        } else{
+            CountriesFragmentResponse.clear()
+            adapter.notifyDataSetChanged()
+            showError()
         }
+    }
+
+    private fun isOnline():Boolean {
+        val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+        return networkInfo != null && networkInfo.isConnected
+    }
+
+    private fun showError() {
+        Toast.makeText(requireContext(), "Error: Sin conección a internet", Toast.LENGTH_SHORT).show()
     }
 
     companion object {

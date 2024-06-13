@@ -38,8 +38,6 @@ class LeaguesDetailsActivity : AppCompatActivity() {
         tabLayout = binding.tabLeagues
         viewPager2 = binding.viewPagerLeagues
 
-
-
         adapter = LeaguesPagerAdapter(supportFragmentManager, lifecycle, leagueId)
         tabLayout.addTab(tabLayout.newTab().setText("Equipos"))
         tabLayout.addTab(tabLayout.newTab().setText("Partidos"))

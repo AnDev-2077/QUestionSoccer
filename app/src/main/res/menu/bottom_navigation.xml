@@ -7,9 +7,6 @@
     <item android:title="Paises"
         android:id="@+id/countries"
         android:icon="@drawable/ic_countries"/>
-    <item android:title="Estadisticas"
-        android:id="@+id/players"
-        android:icon="@drawable/chart_simple_solid"/>
     <item android:title="Partidos"
         android:id="@+id/favorites"
         android:icon="@drawable/ic_soccer_field"/>

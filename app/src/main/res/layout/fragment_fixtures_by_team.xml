@@ -5,11 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".team_fragments.FixturesByTeam">
 
-
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFixturesFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Partidos"
-        android:gravity="center"/>
+        android:layout_height="match_parent"/>
 
 </FrameLayout>

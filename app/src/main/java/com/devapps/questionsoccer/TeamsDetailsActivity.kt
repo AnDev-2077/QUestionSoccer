@@ -1,6 +1,7 @@
 package com.devapps.questionsoccer
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -34,6 +35,11 @@ class TeamsDetailsActivity : AppCompatActivity() {
         val venueCapacity = intent.getIntExtra("venueCapacity",0)
         val venueImage = intent.getStringExtra("venueImage")
 
+        val leagueId = intent.getIntExtra("leagueId", 0)
+        val teamId = intent.getIntExtra("teamId", 0)
+
+        Log.d("TeamsDetailsActivity", "Envied leagueId and teamId: $leagueId, $teamId")
+
         Picasso.get().load(teamLogo).into(binding.ivTeamLogo)
         //Picasso.get().load(venueImage).into(binding.ivVenueImage)
 
@@ -44,7 +50,7 @@ class TeamsDetailsActivity : AppCompatActivity() {
         tabLayout = binding.tabTeams
         viewPager2 = binding.viewPagerTeams
 
-        adapter = TeamsPagerAdapter(supportFragmentManager, lifecycle)
+        adapter = TeamsPagerAdapter(supportFragmentManager, lifecycle, leagueId, teamId)
         tabLayout.addTab(tabLayout.newTab().setText("Partidos"))
         tabLayout.addTab(tabLayout.newTab().setText("Estadisticas"))
 

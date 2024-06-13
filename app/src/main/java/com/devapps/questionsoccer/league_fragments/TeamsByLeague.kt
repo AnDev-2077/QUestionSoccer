@@ -54,11 +54,13 @@ class TeamsByLeague : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //recibir el dato del adapter leagues
 
         Log.d("TeamsByLeague", "Received leagueId in onViewCreated: $leagueId")
         adapter = SoccerAdapter(TeamsFragmentResponse){ onTeamClick ->
+            Log.d("TeamsByLeague", "Clicked on team with teamId: ${onTeamClick.team.teamId}")
             val intent = Intent(activity, TeamsDetailsActivity::class.java)
+            intent.putExtra("leagueId", leagueId ?: 0)
+            intent.putExtra("teamId", onTeamClick.team.teamId.toInt()) //super importante pasar a to int
             intent.putExtra("teamLogo", onTeamClick.team.teamLogo)
             intent.putExtra("teamName", onTeamClick.team.teamName)
             intent.putExtra("teamCode", onTeamClick.team.teamCode)
@@ -68,6 +70,9 @@ class TeamsByLeague : Fragment() {
             intent.putExtra("venueCity", onTeamClick.venue.venueCity)
             intent.putExtra("venueCapacity", onTeamClick.venue.venueCapacity)
             intent.putExtra("venueImage", onTeamClick.venue.venueImage)
+
+            Log.d("TeamsByLeague", "Sending leagueId and teamId: ${leagueId ?: 0}, ${onTeamClick.team.teamId}")
+
             startActivity(intent)
         }
         binding.rvTeamsFragment.layoutManager = LinearLayoutManager(context)

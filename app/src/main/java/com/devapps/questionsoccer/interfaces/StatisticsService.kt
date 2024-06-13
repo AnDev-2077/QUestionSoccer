@@ -5,6 +5,7 @@ import com.devapps.questionsoccer.items.StatisticsResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Query
 
 interface StatisticsService {
 
@@ -15,6 +16,10 @@ interface StatisticsService {
         "x-rapidapi-host: v3.football.api-sports.io"
     )
 
-    @GET("teams/statistics?league=39&team=33&season=2023")
-    suspend fun getStatistics(): Response<StatisticsResponse>
+    @GET("teams/statistics")
+    suspend fun getStatistics(
+        @Query("league") leagueId: Int,
+        @Query("team") teamId: Int,
+        @Query("season") season: Int,
+    ): Response<StatisticsResponse>
 }

@@ -1,6 +1,8 @@
 package com.devapps.questionsoccer
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,7 +11,10 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.getSystemService
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devapps.questionsoccer.adapters.LeaguesAdapter
@@ -75,20 +80,42 @@ class Leagues : Fragment() {
     }
 
     private fun getLeagues() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val call = getRetrofit().create(LeagueService::class.java).getLeagues()
-            val leaguesResponse = call.body()
-            if (call.isSuccessful){
-                val leagues = leaguesResponse?.response ?: emptyList()
-                withContext(Dispatchers.Main) {
-                    LeaguesFragmentResponse.clear()
-                    LeaguesFragmentResponse.addAll(leagues)
-                    adapter.notifyDataSetChanged()
-                }
+        if(isOnline()){
+            CoroutineScope(Dispatchers.IO).launch {
+                val call = getRetrofit().create(LeagueService::class.java).getLeagues()
+                val leaguesResponse = call.body()
+                if (call.isSuccessful){
+                    val leagues = leaguesResponse?.response ?: emptyList()
+                    withContext(Dispatchers.Main) {
+                        LeaguesFragmentResponse.clear()
+                        LeaguesFragmentResponse.addAll(leagues)
+                        adapter.notifyDataSetChanged()
+                    }
 
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context, "Error: Sin conexión a internet", Toast.LENGTH_SHORT).show()
+                        Log.d("Leagues", "Error: ${call.message()}")
+                    }
+                }
             }
+        } else{
+            LeaguesFragmentResponse.clear()
+            adapter.notifyDataSetChanged()
+            showError()
         }
     }
+
+    private fun isOnline():Boolean {
+        val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+        return networkInfo != null && networkInfo.isConnected
+    }
+
+    private fun showError() {
+        Toast.makeText(requireContext(), "Error: Sin conección a internet", Toast.LENGTH_SHORT).show()
+    }
+
     companion object {
 
         @JvmStatic

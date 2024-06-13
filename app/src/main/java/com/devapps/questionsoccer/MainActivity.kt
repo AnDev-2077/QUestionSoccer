@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.leagues -> replaceFragment(Leagues())
                 //R.id.teams -> replaceFragment(Teams())
-                R.id.players -> replaceFragment(Players())
+                //R.id.players -> replaceFragment(Players())
                 R.id.favorites -> replaceFragment(MyFavorites())
                 R.id.countries -> replaceFragment(Countries())
                 //R.id.favorites_test -> replaceFragment(Favorites_Test())
