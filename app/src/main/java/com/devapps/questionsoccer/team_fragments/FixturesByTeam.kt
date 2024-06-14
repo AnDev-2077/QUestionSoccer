@@ -91,7 +91,7 @@ class FixturesByTeam : Fragment() {
                     }
                 }  else {
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "Error: Sin conexión a internet", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Error: Sin conexión a la API", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

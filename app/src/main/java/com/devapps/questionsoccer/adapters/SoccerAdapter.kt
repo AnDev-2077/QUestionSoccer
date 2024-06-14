@@ -7,12 +7,10 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.devapps.questionsoccer.R
 import com.devapps.questionsoccer.databinding.ItemSoccerBinding
-import com.devapps.questionsoccer.items.LeagueResponseItem
 import com.devapps.questionsoccer.items.ResponseItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
-import retrofit2.http.Query
 
 class SoccerAdapter (var responseTeamsByLeague: List<ResponseItem>, private val onTeamClick: (ResponseItem) -> Unit) : RecyclerView.Adapter<SoccerAdapter.SoccerViewHolder>(){
     var filteredTeams: List<ResponseItem> = responseTeamsByLeague

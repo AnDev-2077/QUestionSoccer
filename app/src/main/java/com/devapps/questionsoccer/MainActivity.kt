@@ -5,15 +5,15 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.ActionMenuView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import com.devapps.questionsoccer.databinding.ActivityMainBinding
-import com.google.android.play.integrity.internal.i
 import com.google.firebase.auth.FirebaseAuth
-import org.checkerframework.common.returnsreceiver.qual.This
+import com.google.firebase.firestore.firestoreSettings
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 enum class ProviderType{
@@ -23,6 +23,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val settings = firestoreSettings {
+            isPersistenceEnabled = true
+        }
+
+        Firebase.firestore.firestoreSettings = settings
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         //enableEdgeToEdge()
         setContentView(binding.root)
@@ -33,7 +40,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.leagues -> replaceFragment(Leagues())
                 //R.id.teams -> replaceFragment(Teams())
                 //R.id.players -> replaceFragment(Players())
-                R.id.favorites -> replaceFragment(MyFavorites())
+                R.id.favorites -> replaceFragment(LiveFixtures())
                 R.id.countries -> replaceFragment(Countries())
                 //R.id.favorites_test -> replaceFragment(Favorites_Test())
                 else ->{

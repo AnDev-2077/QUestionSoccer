@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.devapps.questionsoccer.R
+import android.content.Context
 import com.devapps.questionsoccer.TeamsDetailsActivity
 import com.devapps.questionsoccer.adapters.SoccerAdapter
 import com.devapps.questionsoccer.databinding.FragmentTeamsByLeagueBinding
@@ -59,6 +59,7 @@ class TeamsByLeague : Fragment() {
         adapter = SoccerAdapter(TeamsFragmentResponse){ onTeamClick ->
             Log.d("TeamsByLeague", "Clicked on team with teamId: ${onTeamClick.team.teamId}")
             val intent = Intent(activity, TeamsDetailsActivity::class.java)
+
             intent.putExtra("leagueId", leagueId ?: 0)
             intent.putExtra("teamId", onTeamClick.team.teamId.toInt()) //super importante pasar a to int
             intent.putExtra("teamLogo", onTeamClick.team.teamLogo)
@@ -115,8 +116,5 @@ class TeamsByLeague : Fragment() {
                     putInt("leagueId", leagueId)
                 }
             }
-
-
-
     }
 }

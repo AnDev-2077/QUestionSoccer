@@ -9,7 +9,7 @@ data class LeagueResponse(
     val errors: Any,
     val results: Int,
     val paging: lPaging,
-    val response: List<LeagueResponseItem>
+    val response: List<LeagueResponseItem>,
 )
 
 data class lPaging(
@@ -21,7 +21,7 @@ data class lPaging(
 data class LeagueResponseItem(
     val league: lLeague = lLeague(),
     val country: Country = Country(),
-    val seasons: List<Season> =listOf()
+    val seasons: List<Season> =listOf(),
 ) : Serializable
 
 data class lLeague(

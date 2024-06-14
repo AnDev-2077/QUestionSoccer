@@ -22,10 +22,18 @@ import com.devapps.questionsoccer.databinding.FragmentLeaguesBinding
 import com.devapps.questionsoccer.interfaces.LeagueService
 import com.devapps.questionsoccer.items.LeagueResponse
 import com.devapps.questionsoccer.items.LeagueResponseItem
+import com.devapps.questionsoccer.items.TeamsByLeagueResponse
 import com.devapps.questionsoccer.league_fragments.TeamsByLeague
+import com.google.firebase.database.GenericTypeIndicator
+import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -39,8 +47,8 @@ class Leagues : Fragment() {
 
     private lateinit var binding: FragmentLeaguesBinding
     lateinit var adapter: LeaguesAdapter
-    //private lateinit var recyclerView: RecyclerView
     private var LeaguesFragmentResponse = mutableListOf<LeagueResponseItem>()
+    private val db = Firebase.firestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -65,7 +73,6 @@ class Leagues : Fragment() {
             intent.putExtra("leagueCountry", onLeagueClick.country.name)
             intent.putExtra("leagueLogo", onLeagueClick.league.logo)
             startActivity(intent)
-
         }
         binding.rvLeaguesFragment.layoutManager = LinearLayoutManager(context)
         binding.rvLeaguesFragment.adapter = adapter
@@ -82,29 +89,55 @@ class Leagues : Fragment() {
     private fun getLeagues() {
         if(isOnline()){
             CoroutineScope(Dispatchers.IO).launch {
-                val call = getRetrofit().create(LeagueService::class.java).getLeagues()
-                val leaguesResponse = call.body()
-                if (call.isSuccessful){
-                    val leagues = leaguesResponse?.response ?: emptyList()
-                    withContext(Dispatchers.Main) {
-                        LeaguesFragmentResponse.clear()
-                        LeaguesFragmentResponse.addAll(leagues)
-                        adapter.notifyDataSetChanged()
+                try{
+                    val call = getRetrofit().create(LeagueService::class.java).getLeagues()
+                    val leaguesResponse = call.body()
+                    if (call.isSuccessful){
+                        val leagues = leaguesResponse?.response ?: emptyList()
+                        withContext(Dispatchers.Main) {
+                            LeaguesFragmentResponse.clear()
+                            LeaguesFragmentResponse.addAll(leagues)
+                            adapter.notifyDataSetChanged()
+                        }
+                        saveLeaguesToRealtimeDatabase(leagues)
+                    } else{
+                        showError()
                     }
-
-                } else {
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "Error: Sin conexión a internet", Toast.LENGTH_SHORT).show()
-                        Log.d("Leagues", "Error: ${call.message()}")
-                    }
+                }catch (e: Exception){
+                    Log.d("Leagues", "Error: ${e.message}")
                 }
+
             }
         } else{
-            LeaguesFragmentResponse.clear()
-            adapter.notifyDataSetChanged()
+            loadLeaguesFromRealtimeDatabase()
+        }
+    }
+
+    private suspend fun saveLeaguesToRealtimeDatabase(leagues: List<LeagueResponseItem>) {
+        try {
+            val limitedLeagues = leagues.take(10)
+            Firebase.database.reference.child("leagues").setValue(limitedLeagues)
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                showError()
+            }
+        }
+    }
+
+    private fun loadLeaguesFromRealtimeDatabase() {
+        Firebase.database.reference.child("leagues").get().addOnSuccessListener { dataSnapshot ->
+            val leagues = dataSnapshot.getValue(object : GenericTypeIndicator<List<LeagueResponseItem>>() {})
+            if (leagues != null) {
+                LeaguesFragmentResponse.clear()
+                LeaguesFragmentResponse.addAll(leagues)
+                adapter.notifyDataSetChanged()
+            }
+        }.addOnFailureListener {
             showError()
         }
     }
+
+
 
     private fun isOnline():Boolean {
         val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

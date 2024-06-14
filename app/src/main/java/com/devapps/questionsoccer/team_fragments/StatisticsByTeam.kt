@@ -1,5 +1,7 @@
 package com.devapps.questionsoccer.team_fragments
 
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowId
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devapps.questionsoccer.R
 import com.devapps.questionsoccer.adapters.StatisticsAdapter
@@ -39,8 +42,8 @@ class StatisticsByTeam : Fragment() {
             leagueId = it.getInt("leagueId")
             teamId = it.getInt("teamId")
 
-            Log.d("StatisticsByTeam", "Received leagueId and teamId in onCreate: $leagueId")
-            Log.d("StatisticsByTeam", "Received leagueId and teamId in onCreate: $teamId")
+            Log.d("StatisticsByTeam", "Received leagueId: $leagueId")
+            Log.d("StatisticsByTeam", "Received teamId: $teamId")
         }
     }
 
@@ -73,20 +76,40 @@ class StatisticsByTeam : Fragment() {
     }
 
     private fun getStatistics(leagueId: Int, teamId: Int){
-        CoroutineScope(Dispatchers.IO).launch {
-            val call = getRetrofit().create(StatisticsService::class.java).getStatistics(leagueId, teamId, 2023)
-            val statisticResponse = call.body()
-            if (call.isSuccessful){
-                val statistics = statisticResponse?.response
-                withContext(Dispatchers.Main){
-                    StatisticsFragmentResponse.clear()
-                    if (statistics != null) {
-                        StatisticsFragmentResponse.add(statistics)
+        if(isOnline()){
+            CoroutineScope(Dispatchers.IO).launch {
+                val call = getRetrofit().create(StatisticsService::class.java).getStatistics(leagueId, teamId, 2023)
+                val statisticResponse = call.body()
+                if (call.isSuccessful){
+                    val statistics = statisticResponse?.response
+                    withContext(Dispatchers.Main){
+                        StatisticsFragmentResponse.clear()
+                        if (statistics != null) {
+                            StatisticsFragmentResponse.add(statistics)
+                        }
+                        adapter.notifyDataSetChanged()
                     }
-                    adapter.notifyDataSetChanged()
+                }else {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context, "Error: Sin conexión a la API", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
+        }else{
+            StatisticsFragmentResponse.clear()
+            adapter.notifyDataSetChanged()
+            showError()
         }
+    }
+
+    private fun showError() {
+        Toast.makeText(requireContext(), "Error: Sin coneccion a internet", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun isOnline(): Boolean {
+        val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+        return networkInfo != null && networkInfo.isConnected
     }
 
     companion object {
