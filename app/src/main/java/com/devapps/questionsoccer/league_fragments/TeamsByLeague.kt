@@ -10,11 +10,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.content.Context
+import android.net.ConnectivityManager
+import android.widget.Toast
 import com.devapps.questionsoccer.TeamsDetailsActivity
 import com.devapps.questionsoccer.adapters.SoccerAdapter
 import com.devapps.questionsoccer.databinding.FragmentTeamsByLeagueBinding
 import com.devapps.questionsoccer.interfaces.SoccerService
 import com.devapps.questionsoccer.items.ResponseItem
+import com.google.common.reflect.TypeToken
+import com.google.firebase.database.GenericTypeIndicator
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,8 +31,8 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val PREFS_NAME = "com.devapps.questionsoccer.PREFS"
+private const val TEAMS_KEY_PREFIX = "com.devapps.questionsoccer.TEAMS"
 
 class TeamsByLeague : Fragment() {
 
@@ -35,6 +42,8 @@ class TeamsByLeague : Fragment() {
     lateinit var adapter: SoccerAdapter
     private lateinit var recyclerView: RecyclerView
     private var TeamsFragmentResponse = mutableListOf<ResponseItem>()
+
+    private val db = Firebase.database
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,19 +102,64 @@ class TeamsByLeague : Fragment() {
             .build()
     }
 
-    private fun getTeams(leagueId: Int){
-        CoroutineScope(Dispatchers.IO).launch {
-            val call = getRetrofit().create(SoccerService::class.java).getTeamsByLeague(leagueId, 2023)
-            val teamsByLeagueResponse = call.body()
-            if(call.isSuccessful){
-                val teams = teamsByLeagueResponse?.response ?: emptyList()
-                withContext(Dispatchers.Main){
-                    TeamsFragmentResponse.clear()
-                    TeamsFragmentResponse.addAll(teams)
-                    adapter.notifyDataSetChanged()
+    private fun getTeams(leagueId: Int) {
+        if (isOnline()) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val call = getRetrofit().create(SoccerService::class.java).getTeamsByLeague(leagueId, 2023)
+                val teamsByLeagueResponse = call.body()
+                if (call.isSuccessful) {
+                    val teams = teamsByLeagueResponse?.response ?: emptyList()
+                    withContext(Dispatchers.Main) {
+                        TeamsFragmentResponse.clear()
+                        TeamsFragmentResponse.addAll(teams)
+                        adapter.notifyDataSetChanged()
+                    }
+                    saveTeamsToSharedPreferences(requireContext(), leagueId, teams)
+                } else {
+                    showError()
                 }
             }
+        } else {
+            loadTeamsFromSharedPreferences(requireContext(), leagueId)?.let { teams ->
+                TeamsFragmentResponse.clear()
+                TeamsFragmentResponse.addAll(teams)
+                adapter.notifyDataSetChanged()
+            } ?: showError()
         }
+    }
+
+    private fun saveTeamsToSharedPreferences(context: Context, leagueId: Int, teams: List<ResponseItem>) {
+        val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val gson = Gson()
+        val json = gson.toJson(teams)
+        editor.putString("$TEAMS_KEY_PREFIX$leagueId", json)
+        editor.apply()
+    }
+
+    private fun loadTeamsFromSharedPreferences(context: Context, leagueId: Int): List<ResponseItem>? {
+        val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val gson = Gson()
+        val json = sharedPreferences.getString("$TEAMS_KEY_PREFIX$leagueId", null)
+        return if (json != null) {
+            val type = object : TypeToken<List<ResponseItem>>() {}.type
+            gson.fromJson(json, type)
+        } else {
+            null
+        }
+    }
+
+    private fun isOnline():Boolean {
+        val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+        return networkInfo != null && networkInfo.isConnected
+    }
+
+    private fun showError() {
+        Toast.makeText(requireContext(), "Error: Sin conección a internet", Toast.LENGTH_SHORT).show()
+    }
+    private fun showError0() {
+        Toast.makeText(requireContext(), "Error 0: Sin conección a internet, pasando a modo sin conección", Toast.LENGTH_SHORT).show()
     }
 
     companion object {

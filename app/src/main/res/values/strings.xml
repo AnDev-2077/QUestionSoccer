@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">QuestionSoccer</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="default_web_client_id">55345170500-h3q0c0mqfn3kp7aq90od1kc9pqk5c2n8.apps.googleusercontent.com</string>
+
+    <string name="prefs_file">com.devapps.questionsoccer.PREFERENCE_FILE_KEY</string>
 </resources>

@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".AuthActivity">
 
-
     <LinearLayout
+        android:id="@+id/button_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -46,12 +46,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btSingUp"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Registrar" />
@@ -62,7 +62,7 @@
 
             <Button
                 android:id="@+id/btLogIn"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Acceder" />
@@ -73,10 +73,21 @@
 
             <Button
                 android:id="@+id/btLogOut"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Salir" />
+
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
+
+        <Button
+            android:id="@+id/btGoogle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Iniciar secion con Google" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

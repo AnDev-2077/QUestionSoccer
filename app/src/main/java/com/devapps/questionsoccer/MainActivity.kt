@@ -11,23 +11,25 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import com.devapps.questionsoccer.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.firestoreSettings
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
 enum class ProviderType{
-    BASIC
+    BASIC,
+    GOOGLE
 }
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true)
         val settings = firestoreSettings {
             isPersistenceEnabled = true
         }
-
         Firebase.firestore.firestoreSettings = settings
 
         binding = ActivityMainBinding.inflate(layoutInflater)

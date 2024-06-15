@@ -14,6 +14,8 @@ import com.devapps.questionsoccer.adapters.FixtureAdapter
 import com.devapps.questionsoccer.databinding.FragmentLiveFixturesBinding
 import com.devapps.questionsoccer.interfaces.FixtureService
 import com.devapps.questionsoccer.items.fixtureResponse
+import com.google.common.reflect.TypeToken
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,6 +27,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+
+private const val PREFS_NAME = "com.devapps.questionsoccer.PREFS"
+private const val FIXTURES_KEY = "com.devapps.questionsoccer.FIXTURES"
 
 class LiveFixtures : Fragment() {
 
@@ -73,7 +78,7 @@ class LiveFixtures : Fragment() {
             .build()
     }
 
-    private fun getFixtures(){
+    /*private fun getFixtures(){
         if (isOnline()){
             CoroutineScope(Dispatchers.IO).launch {
                 val call = getRetrofit().create(FixtureService::class.java).getFixtureByLeague()
@@ -98,7 +103,60 @@ class LiveFixtures : Fragment() {
             showError()
         }
 
+    }*/
+    private fun getFixtures(){
+        if (isOnline()){
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val call = getRetrofit().create(FixtureService::class.java).getFixtureByLeague()
+                    val fixtureResponse = call.body()
+                    if (call.isSuccessful) {
+                        val fixtures = fixtureResponse?.response ?: emptyList()
+                        withContext(Dispatchers.Main) {
+                            FixturesFragmentResponse.clear()
+                            FixturesFragmentResponse.addAll(fixtures)
+                            adapter.notifyDataSetChanged()
+                        }
+                        saveFixturesToSharedPreferences(requireContext(), fixtures)
+                    } else {
+                        showError()
+                    }
+                } catch (e: Exception) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        } else {
+            loadFixturesFromSharedPreferences(requireContext())?.let { fixtures ->
+                FixturesFragmentResponse.clear()
+                FixturesFragmentResponse.addAll(fixtures)
+                adapter.notifyDataSetChanged()
+            } ?: showError()
+        }
     }
+
+    private fun saveFixturesToSharedPreferences(context: Context, fixtures: List<fixtureResponse>) {
+        val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val gson = Gson()
+        val json = gson.toJson(fixtures)
+        editor.putString(FIXTURES_KEY, json)
+        editor.apply()
+    }
+
+    private fun loadFixturesFromSharedPreferences(context: Context): List<fixtureResponse>? {
+        val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val gson = Gson()
+        val json = sharedPreferences.getString(FIXTURES_KEY, null)
+        return if (json != null) {
+            val type = object : TypeToken<List<fixtureResponse>>() {}.type
+            gson.fromJson(json, type)
+        } else {
+            null
+        }
+    }
+
 
     private fun showError() {
         Toast.makeText(requireContext(), "Error: Sin conección a internet", Toast.LENGTH_SHORT).show()

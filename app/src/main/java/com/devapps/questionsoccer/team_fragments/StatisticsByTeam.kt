@@ -16,6 +16,8 @@ import com.devapps.questionsoccer.adapters.StatisticsAdapter
 import com.devapps.questionsoccer.databinding.FragmentStatisticsByTeamBinding
 import com.devapps.questionsoccer.interfaces.StatisticsService
 import com.devapps.questionsoccer.items.StaticResponse
+import com.google.common.reflect.TypeToken
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,8 +27,8 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val PREFS_NAME = "com.devapps.questionsoccer.PREFS"
+private const val STATISTICS_KEY_PREFIX = "com.devapps.questionsoccer.STATISTICS"
 
 class StatisticsByTeam : Fragment() {
     private var leagueId: Int? = null
@@ -75,7 +77,7 @@ class StatisticsByTeam : Fragment() {
             .build()
     }
 
-    private fun getStatistics(leagueId: Int, teamId: Int){
+    /*private fun getStatistics(leagueId: Int, teamId: Int){
         if(isOnline()){
             CoroutineScope(Dispatchers.IO).launch {
                 val call = getRetrofit().create(StatisticsService::class.java).getStatistics(leagueId, teamId, 2023)
@@ -99,6 +101,55 @@ class StatisticsByTeam : Fragment() {
             StatisticsFragmentResponse.clear()
             adapter.notifyDataSetChanged()
             showError()
+        }
+    }*/
+
+    private fun getStatistics(leagueId: Int, teamId: Int) {
+        if (isOnline()) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val call = getRetrofit().create(StatisticsService::class.java).getStatistics(leagueId, teamId, 2023)
+                val statisticResponse = call.body()
+                if (call.isSuccessful) {
+                    val statistics = statisticResponse?.response
+                    withContext(Dispatchers.Main) {
+                        StatisticsFragmentResponse.clear()
+                        if (statistics != null) {
+                            StatisticsFragmentResponse.add(statistics)
+                        }
+                        adapter.notifyDataSetChanged()
+                    }
+                    saveStatisticsToSharedPreferences(requireContext(), leagueId, teamId, statistics)
+                } else {
+                    showError()
+                }
+            }
+        } else {
+            loadStatisticsFromSharedPreferences(requireContext(), leagueId, teamId)?.let { statistics ->
+                StatisticsFragmentResponse.clear()
+                StatisticsFragmentResponse.add(statistics)
+                adapter.notifyDataSetChanged()
+            } ?: showError()
+        }
+    }
+
+    private fun saveStatisticsToSharedPreferences(context: Context, leagueId: Int, teamId: Int, statistics: StaticResponse?) {
+        val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val gson = Gson()
+        val json = gson.toJson(statistics)
+        editor.putString("$STATISTICS_KEY_PREFIX$leagueId$teamId", json)
+        editor.apply()
+    }
+
+    private fun loadStatisticsFromSharedPreferences(context: Context, leagueId: Int, teamId: Int): StaticResponse? {
+        val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val gson = Gson()
+        val json = sharedPreferences.getString("$STATISTICS_KEY_PREFIX$leagueId$teamId", null)
+        return if (json != null) {
+            val type = object : TypeToken<StaticResponse>() {}.type
+            gson.fromJson(json, type)
+        } else {
+            null
         }
     }
 

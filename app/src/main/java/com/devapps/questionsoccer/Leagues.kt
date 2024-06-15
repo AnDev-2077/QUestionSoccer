@@ -2,6 +2,7 @@ package com.devapps.questionsoccer
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
@@ -24,12 +25,14 @@ import com.devapps.questionsoccer.items.LeagueResponse
 import com.devapps.questionsoccer.items.LeagueResponseItem
 import com.devapps.questionsoccer.items.TeamsByLeagueResponse
 import com.devapps.questionsoccer.league_fragments.TeamsByLeague
+import com.google.common.reflect.TypeToken
 import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,6 +43,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+
+private const val PREFS_NAME = "com.devapps.questionsoccer.PREFS"
+private const val LEAGUES_KEY = "com.devapps.questionsoccer.LEAGUES"
 class Leagues : Fragment() {
 
     private var param1: String? = null
@@ -86,7 +92,7 @@ class Leagues : Fragment() {
             .build()
     }
 
-    private fun getLeagues() {
+    /*private fun getLeagues() {
         if(isOnline()){
             CoroutineScope(Dispatchers.IO).launch {
                 try{
@@ -110,12 +116,13 @@ class Leagues : Fragment() {
             }
         } else{
             loadLeaguesFromRealtimeDatabase()
+            showError0()
         }
-    }
+    }*/
 
-    private suspend fun saveLeaguesToRealtimeDatabase(leagues: List<LeagueResponseItem>) {
+    /*private suspend fun saveLeaguesToRealtimeDatabase(leagues: List<LeagueResponseItem>) {
         try {
-            val limitedLeagues = leagues.take(10)
+            val limitedLeagues = leagues.take(20)
             Firebase.database.reference.child("leagues").setValue(limitedLeagues)
         } catch (e: Exception) {
             withContext(Dispatchers.Main) {
@@ -126,7 +133,7 @@ class Leagues : Fragment() {
 
     private fun loadLeaguesFromRealtimeDatabase() {
         Firebase.database.reference.child("leagues").get().addOnSuccessListener { dataSnapshot ->
-            val leagues = dataSnapshot.getValue(object : GenericTypeIndicator<List<LeagueResponseItem>>() {})
+            val leagues = dataSnapshot.getValue(object : GenericTypeIndicator<ArrayList<LeagueResponseItem>>() {})
             if (leagues != null) {
                 LeaguesFragmentResponse.clear()
                 LeaguesFragmentResponse.addAll(leagues)
@@ -135,22 +142,72 @@ class Leagues : Fragment() {
         }.addOnFailureListener {
             showError()
         }
+    }*/
+
+    private fun getLeagues() {
+        if (isOnline()) {
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val call = getRetrofit().create(LeagueService::class.java).getLeagues()
+                    val leaguesResponse = call.body()
+                    if (call.isSuccessful) {
+                        val leagues = leaguesResponse?.response ?: emptyList()
+                        withContext(Dispatchers.Main) {
+                            LeaguesFragmentResponse.clear()
+                            LeaguesFragmentResponse.addAll(leagues)
+                            adapter.notifyDataSetChanged()
+                        }
+                        saveLeaguesToSharedPreferences(requireContext(), leagues)
+                    } else {
+                        showError()
+                    }
+                } catch (e: Exception) {
+                    Log.d("Leagues", "Error: ${e.message}")
+                }
+            }
+        } else {
+            loadLeaguesFromSharedPreferences(requireContext())?.let { leagues ->
+                LeaguesFragmentResponse.clear()
+                LeaguesFragmentResponse.addAll(leagues)
+                adapter.notifyDataSetChanged()
+            } ?: showError()
+        }
     }
 
+    private fun saveLeaguesToSharedPreferences(context: Context, leagues: List<LeagueResponseItem>) {
+        val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val gson = Gson()
+        val json = gson.toJson(leagues)
+        editor.putString(LEAGUES_KEY, json)
+        editor.apply()
+    }
 
+    private fun loadLeaguesFromSharedPreferences(context: Context): List<LeagueResponseItem>? {
+        val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val gson = Gson()
+        val json = sharedPreferences.getString(LEAGUES_KEY, null)
+        return if (json != null) {
+            val type = object : TypeToken<List<LeagueResponseItem>>() {}.type
+            gson.fromJson(json, type)
+        } else {
+            null
+        }
+    }
 
     private fun isOnline():Boolean {
         val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connectivityManager.activeNetworkInfo
         return networkInfo != null && networkInfo.isConnected
     }
-
     private fun showError() {
         Toast.makeText(requireContext(), "Error: Sin conección a internet", Toast.LENGTH_SHORT).show()
     }
+    private fun showError0() {
+        Toast.makeText(requireContext(), "Error 0: Sin conección a internet, pasando a modo sin conección", Toast.LENGTH_SHORT).show()
+    }
 
     companion object {
-
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             Leagues().apply {

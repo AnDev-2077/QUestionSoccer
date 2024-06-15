@@ -14,6 +14,8 @@ import com.devapps.questionsoccer.adapters.CountryAdapter
 import com.devapps.questionsoccer.databinding.FragmentCountriesBinding
 import com.devapps.questionsoccer.interfaces.CountryService
 import com.devapps.questionsoccer.items.ItemCountry
+import com.google.common.reflect.TypeToken
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,6 +25,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+
+private const val PREFS_NAME = "com.devapps.questionsoccer.PREFS"
+private const val COUNTRIES_KEY = "com.devapps.questionsoccer.COUNTRIES"
 
 class Countries : Fragment() {
 
@@ -64,7 +69,7 @@ class Countries : Fragment() {
             .build()
     }
 
-    private fun getCountries(){
+    /*private fun getCountries(){
         if (isOnline()){
             CoroutineScope(Dispatchers.IO).launch {
                 val call = getRetrofit().create(CountryService::class.java).getCountries()
@@ -83,6 +88,57 @@ class Countries : Fragment() {
             CountriesFragmentResponse.clear()
             adapter.notifyDataSetChanged()
             showError()
+        }
+    }*/
+
+    private fun getCountries() {
+        if (isOnline()) {
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val call = getRetrofit().create(CountryService::class.java).getCountries()
+                    val countriesResponse = call.body()
+                    if (call.isSuccessful) {
+                        val countries = countriesResponse?.response ?: emptyList()
+                        withContext(Dispatchers.Main) {
+                            CountriesFragmentResponse.clear()
+                            CountriesFragmentResponse.addAll(countries)
+                            adapter.notifyDataSetChanged()
+                        }
+                        saveCountriesToSharedPreferences(requireContext(), countries)
+                    } else {
+                        showError()
+                    }
+                } catch (e: Exception) {
+                    Log.d("Countries", "Error: ${e.message}")
+                }
+            }
+        } else {
+            loadCountriesFromSharedPreferences(requireContext())?.let { countries ->
+                CountriesFragmentResponse.clear()
+                CountriesFragmentResponse.addAll(countries)
+                adapter.notifyDataSetChanged()
+            } ?: showError()
+        }
+    }
+
+    private fun saveCountriesToSharedPreferences(context: Context, countries: List<ItemCountry>) {
+        val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val gson = Gson()
+        val json = gson.toJson(countries)
+        editor.putString(COUNTRIES_KEY, json)
+        editor.apply()
+    }
+
+    private fun loadCountriesFromSharedPreferences(context: Context): List<ItemCountry>? {
+        val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val gson = Gson()
+        val json = sharedPreferences.getString(COUNTRIES_KEY, null)
+        return if (json != null) {
+            val type = object : TypeToken<List<ItemCountry>>() {}.type
+            gson.fromJson(json, type)
+        } else {
+            null
         }
     }
 

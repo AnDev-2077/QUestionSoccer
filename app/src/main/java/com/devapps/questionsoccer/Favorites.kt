@@ -2,21 +2,26 @@ package com.devapps.questionsoccer
 
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devapps.questionsoccer.adapters.SoccerAdapter
 import com.devapps.questionsoccer.databinding.FragmentFavoritesTestBinding
 import com.devapps.questionsoccer.items.ResponseItem
+import com.google.common.reflect.TypeToken
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.gson.Gson
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val PREFS_NAME = "com.devapps.questionsoccer.PREFS"
+private const val FAVORITES_KEY = "com.devapps.questionsoccer.FAVORITES"
+
 
 class Favorites_Test : Fragment() {
 
@@ -44,15 +49,24 @@ class Favorites_Test : Fragment() {
 
         teamsAdapter = SoccerAdapter(favoritesTeamsList) { onTeamClick ->
             val intent = Intent(activity, TeamsDetailsActivity::class.java)
+            intent.putExtra("teamId", onTeamClick.team.teamId.toInt())
+            intent.putExtra("teamLogo", onTeamClick.team.teamLogo)
+            intent.putExtra("teamName", onTeamClick.team.teamName)
+            intent.putExtra("teamCode", onTeamClick.team.teamCode)
+            intent.putExtra("teamCountry", onTeamClick.team.teamCountry)
+            intent.putExtra("venueName", onTeamClick.venue.venueName)
+            intent.putExtra("venueAddress", onTeamClick.venue.venueAddress)
+            intent.putExtra("venueCity", onTeamClick.venue.venueCity)
+            intent.putExtra("venueCapacity", onTeamClick.venue.venueCapacity)
+            intent.putExtra("venueImage", onTeamClick.venue.venueImage)
             startActivity(intent)
-
         }
         binding.rvTeamsFavorites.layoutManager = LinearLayoutManager(context)
         binding.rvTeamsFavorites.adapter = teamsAdapter
         getFavorites()
     }
 
-    private fun getFavorites() {
+    /*private fun getFavorites() {
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null) {
             val db = FirebaseFirestore.getInstance()
@@ -66,6 +80,62 @@ class Favorites_Test : Fragment() {
                 }
         }
 
+    }*/
+
+    private fun getFavorites() {
+        if (isOnline()) {
+            val user = FirebaseAuth.getInstance().currentUser
+            if (user != null) {
+                val db = FirebaseFirestore.getInstance()
+                db.collection("users").document(user.uid).collection("favorites").get()
+                    .addOnSuccessListener { documents ->
+                        favoritesTeamsList.clear()
+                        for (document in documents) {
+                            val team = document.toObject(ResponseItem::class.java)
+                            favoritesTeamsList.add(team)
+                        }
+                        teamsAdapter.notifyDataSetChanged()
+                        saveFavoritesToSharedPreferences(requireContext(), favoritesTeamsList)
+                    }
+            }
+        } else {
+            loadFavoritesFromSharedPreferences(requireContext())?.let { favorites ->
+                favoritesTeamsList.clear()
+                favoritesTeamsList.addAll(favorites)
+                teamsAdapter.notifyDataSetChanged()
+            } ?: showError()
+        }
+    }
+
+    private fun saveFavoritesToSharedPreferences(context: Context, favorites: List<ResponseItem>) {
+        val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val gson = Gson()
+        val json = gson.toJson(favorites)
+        editor.putString(FAVORITES_KEY, json)
+        editor.apply()
+    }
+
+    private fun loadFavoritesFromSharedPreferences(context: Context): List<ResponseItem>? {
+        val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val gson = Gson()
+        val json = sharedPreferences.getString(FAVORITES_KEY, null)
+        return if (json != null) {
+            val type = object : TypeToken<List<ResponseItem>>() {}.type
+            gson.fromJson(json, type)
+        } else {
+            null
+        }
+    }
+
+    private fun isOnline(): Boolean {
+        val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+        return networkInfo != null && networkInfo.isConnected
+    }
+
+    private fun showError() {
+        Toast.makeText(requireContext(), "Error: Sin conexión a internet", Toast.LENGTH_SHORT).show()
     }
 
 

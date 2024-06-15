@@ -18,6 +18,8 @@ import com.devapps.questionsoccer.databinding.FragmentFixturesByTeamBinding
 import com.devapps.questionsoccer.interfaces.FixtureService
 import com.devapps.questionsoccer.interfaces.FixturesByTeamService
 import com.devapps.questionsoccer.items.fixtureResponse
+import com.google.common.reflect.TypeToken
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,8 +29,8 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val PREFS_NAME = "com.devapps.questionsoccer.PREFS"
+private const val FIXTURES_KEY_PREFIX = "com.devapps.questionsoccer.FIXTURES"
 
 class FixturesByTeam : Fragment() {
 
@@ -69,7 +71,6 @@ class FixturesByTeam : Fragment() {
 
         val logging = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
         val client = OkHttpClient.Builder().addInterceptor(logging).build()
-
         return Retrofit.Builder()
             .baseUrl("https://v3.football.api-sports.io/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -77,7 +78,7 @@ class FixturesByTeam : Fragment() {
             .build()
     }
 
-    private fun getFixtures(teamId: Int) {
+    /*private fun getFixtures(teamId: Int) {
         if (isOnline()){
             CoroutineScope(Dispatchers.IO).launch {
                 val call = getRetrofit().create(FixturesByTeamService::class.java).getFixtureByTeam(teamId, 2023)
@@ -101,6 +102,53 @@ class FixturesByTeam : Fragment() {
             showError()
         }
 
+    }*/
+
+    private fun getFixtures(teamId: Int) {
+        if (isOnline()) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val call = getRetrofit().create(FixturesByTeamService::class.java).getFixtureByTeam(teamId, 2023)
+                val fixtureResponse = call.body()
+                if (call.isSuccessful) {
+                    val fixtures = fixtureResponse?.response ?: emptyList()
+                    withContext(Dispatchers.Main) {
+                        FixturesFragmentResponse.clear()
+                        FixturesFragmentResponse.addAll(fixtures)
+                        adapter.notifyDataSetChanged()
+                    }
+                    saveFixturesToSharedPreferences(requireContext(), teamId, fixtures)
+                } else {
+                    showError()
+                }
+            }
+        } else {
+            loadFixturesFromSharedPreferences(requireContext(), teamId)?.let { fixtures ->
+                FixturesFragmentResponse.clear()
+                FixturesFragmentResponse.addAll(fixtures)
+                adapter.notifyDataSetChanged()
+            } ?: showError()
+        }
+    }
+
+    private fun saveFixturesToSharedPreferences(context: Context, teamId: Int, fixtures: List<fixtureResponse>) {
+        val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val gson = Gson()
+        val json = gson.toJson(fixtures)
+        editor.putString("$FIXTURES_KEY_PREFIX$teamId", json)
+        editor.apply()
+    }
+
+    private fun loadFixturesFromSharedPreferences(context: Context, teamId: Int): List<fixtureResponse>? {
+        val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val gson = Gson()
+        val json = sharedPreferences.getString("$FIXTURES_KEY_PREFIX$teamId", null)
+        return if (json != null) {
+            val type = object : TypeToken<List<fixtureResponse>>() {}.type
+            gson.fromJson(json, type)
+        } else {
+            null
+        }
     }
 
     private fun showError() {

@@ -1,8 +1,11 @@
 package com.devapps.questionsoccer.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import com.devapps.questionsoccer.R
 import com.devapps.questionsoccer.databinding.ItemLeagueBinding
@@ -15,7 +18,7 @@ import com.squareup.picasso.Picasso
 class LeaguesAdapter (private var responseLeagues: List<LeagueResponseItem>, private val onLeagueClick: (LeagueResponseItem) -> Unit) : RecyclerView.Adapter<LeaguesAdapter.LeaguesViewHolder>(){
     //Varible para filtrar la lista de List<LeagueResponseItem>
     var filteredLeagues: List<LeagueResponseItem> = responseLeagues
-    class LeaguesViewHolder(view: View):RecyclerView.ViewHolder(view){
+    /*class LeaguesViewHolder(view: View):RecyclerView.ViewHolder(view){
         private val binding = ItemLeagueBinding.bind(view)
         fun bind(responseLeagues: LeagueResponseItem, onLeagueClick: (LeagueResponseItem) -> Unit){
             binding.tvLeagueName.text = responseLeagues.league.name
@@ -27,6 +30,38 @@ class LeaguesAdapter (private var responseLeagues: List<LeagueResponseItem>, pri
             }
         }
 
+    }*/
+
+    /*class LeaguesViewHolder(view: View):RecyclerView.ViewHolder(view){
+        private val binding = ItemLeagueBinding.bind(view)
+        fun bind(responseLeagues: LeagueResponseItem?, onLeagueClick: (LeagueResponseItem) -> Unit){
+            responseLeagues?.let {
+                binding.tvLeagueName.text = it.league.name
+                binding.tvLeagueType.text = it.league.type
+                Picasso.get().load(it.league.logo).into(binding.ivLeagueLogo)
+                binding.LinearLayoutLeagues.setOnClickListener {
+                    onLeagueClick(responseLeagues)
+                }
+            }
+        }
+    }*/
+
+    class LeaguesViewHolder(view: View):RecyclerView.ViewHolder(view){
+        private val binding = ItemLeagueBinding.bind(view)
+        fun bind(responseLeagues: LeagueResponseItem?, onLeagueClick: (LeagueResponseItem) -> Unit){
+            responseLeagues?.let {
+                binding.tvLeagueName.text = it.league.name
+                binding.tvLeagueType.text = it.league.type
+                if (!it.league.logo.isNullOrEmpty()) {
+                    Picasso.get().load(it.league.logo).into(binding.ivLeagueLogo)
+                } else {
+
+                }
+                binding.LinearLayoutLeagues.setOnClickListener {
+                    onLeagueClick(responseLeagues)
+                }
+            }
+        }
     }
 
 
