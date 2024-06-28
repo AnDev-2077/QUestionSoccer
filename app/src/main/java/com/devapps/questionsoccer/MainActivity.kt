@@ -1,18 +1,29 @@
 package com.devapps.questionsoccer
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import com.devapps.questionsoccer.databinding.ActivityMainBinding
 import com.devapps.questionsoccer.interfaces.FixturesByTeamService
+import com.devapps.questionsoccer.items.fixtureResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
@@ -33,20 +44,11 @@ enum class ProviderType{
 }
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true)
-        val settings = firestoreSettings {
-            isPersistenceEnabled = true
-        }
-        Firebase.firestore.firestoreSettings = settings
-
         binding = ActivityMainBinding.inflate(layoutInflater)
-        //enableEdgeToEdge()
         setContentView(binding.root)
 
         replaceFragment(Leagues())
@@ -64,45 +66,134 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-
-
-        val user = FirebaseAuth.getInstance().currentUser
-        if(user != null){
-            // El usuario ha iniciado sesión
-            // Verificar si el usuario tiene equipos en sus favoritos
-            val db = FirebaseFirestore.getInstance()
-            db.collection("users").document(user.uid).collection("favorites").get()
-                .addOnSuccessListener { documents ->
-                    if(!documents.isEmpty){
-                        Log.d("Firestore", "Favoritos encontrados para el usuario: ${user.uid}")
-                        // El usuario tiene equipos en sus favoritos
-                        // Hacer peticiones a la API para obtener la información de los equipos, sus partidos y estadísticas
-                        for (document in documents){
-                            val teamId = document.id as? String
-                            val retrofit = getRetrofit()
-                            Log.d("TeamId", "El ID del equipo es: ${teamId}")
-
-
-                        }
-                    } else{
-                        Log.d("Firestore", "No se encontraron favoritos para el usuario: ${user.uid}")
-                    }
-                }.addOnFailureListener { exception ->
-                    Log.e("Firestore", "Error al obtener favoritos", exception)
+        networkChangeReceiver = NetworkChangeReceiver{ isConnected ->
+            if (isOnline()) {
+                showOnlineLayout()
+                FirebaseDatabase.getInstance().setPersistenceEnabled(true)
+                val settings = firestoreSettings {
+                    isPersistenceEnabled = true
                 }
-        }else{
-            // El usuario no ha iniciado sesión
-            // Mostrar un pop up que mencione que deves crear una cuenta o iniciar sesión para agregar a favoritos
+                Firebase.firestore.firestoreSettings = settings
+
+                val user = FirebaseAuth.getInstance().currentUser
+                if(user != null){
+                    // El usuario ha iniciado sesión
+                    // Verificar si el usuario tiene equipos en sus favoritos
+                    val db = FirebaseFirestore.getInstance()
+                    db.collection("users").document(user.uid).collection("favorites").get()
+                        .addOnSuccessListener { documents ->
+                            if(!documents.isEmpty){
+                                Log.d("Firestore", "Favoritos encontrados para el usuario: ${user.uid}")
+                                // El usuario tiene equipos en sus favoritos
+                                // Hacer peticiones a la API para obtener la información de los equipos, sus partidos y estadísticas
+
+                                for (document in documents){
+                                    val teamId = document.id as? String
+                                    if (teamId != null) {
+                                        Log.d("TeamId", "El ID del equipo es: $teamId")
+                                        CoroutineScope(Dispatchers.IO).launch {
+                                            val fixtures = getFixturesByTeam(teamId)
+                                            if (fixtures != null) {
+                                                // Guardar las fixtures en Firestore
+                                                withContext(Dispatchers.Main) {
+                                                    saveFixturesToFirestore(teamId, fixtures)
+                                                }
+                                            } else {
+                                                Log.e("API", "Error al obtener las fixtures del equipo: $teamId")
+                                            }
+                                        }
+                                    } else {
+                                        Log.e("TeamId", "El ID del equipo es null")
+                                    }
+                                }
+
+                            } else{
+                                Log.d("Firestore", "No se encontraron favoritos para el usuario: ${user.uid}")
+                            }
+                        }.addOnFailureListener { exception ->
+                            Log.e("Firestore", "Error al obtener favoritos", exception)
+                        }
+                }else{
+                    // El usuario no ha iniciado sesión
+                    // Mostrar un pop up que mencione que deves crear una cuenta o iniciar sesión para agregar a favoritos
+                }
+            } else {
+                showError()
+                showOfflineLayout()
+            }
         }
 
-
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(networkChangeReceiver)
+    }
+
+    private fun showOnlineLayout() {
+        binding.layoutOnline.visibility = View.VISIBLE
+        binding.layoutOffline.visibility = View.GONE
+        Handler(Looper.getMainLooper()).postDelayed({
+            binding.layoutOnline.visibility = View.GONE
+        }, 3000)
+    }
+
+    private fun showOfflineLayout() {
+        binding.layoutOnline.visibility = View.GONE
+        binding.layoutOffline.visibility = View.VISIBLE
+        Handler(Looper.getMainLooper()).postDelayed({
+            binding.layoutOffline.visibility = View.GONE
+        }, 5000)
+    }
+
+    private fun showError() {
+        Toast.makeText(this, "Error: Sin conección a internet", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun isOnline(): Boolean {
+        val connectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = connectivityManager.activeNetwork ?: return false
+        val networkCapabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+        return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+    }
+
     private fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://v3.football.api-sports.io/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
+
+    private suspend fun getFixturesByTeam(teamId: String): List<fixtureResponse>? {
+        val fixturesService = getRetrofit().create(FixturesByTeamService::class.java)
+        val fixturesResponse = fixturesService.getFixtureByTeam(teamId.toInt(), 2023)
+        return if (fixturesResponse.isSuccessful) {
+            fixturesResponse.body()?.response
+        } else {
+            null
+        }
+    }
+
+    private fun saveFixturesToFirestore(teamId: String, fixtures: List<fixtureResponse>) {
+        val db = FirebaseFirestore.getInstance()
+        val teamDocument = db.collection("teams").document(teamId)
+        val fixturesCollection = teamDocument.collection("fixtures")
+
+        for (fixture in fixtures) {
+            // Aquí asumimos que cada fixture tiene un id único
+            val fixtureDocument = fixturesCollection.document(fixture.fixture.id.toString())
+            Log.d("Firestore", "Guardando fixture con id ${fixture.fixture.id} para el equipo $teamId")
+            fixtureDocument.set(fixture)
+                .addOnSuccessListener {
+                    Log.d("Firestore", "Fixture guardado con éxito")
+                }
+                .addOnFailureListener { e ->
+                    Log.e("Firestore", "Error al guardar fixture", e)
+                }
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.top_navigation, menu)
 

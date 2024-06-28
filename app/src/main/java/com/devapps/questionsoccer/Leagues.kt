@@ -1,9 +1,12 @@
 package com.devapps.questionsoccer
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -56,11 +59,29 @@ class Leagues : Fragment() {
     lateinit var adapter: LeaguesAdapter
     private var LeaguesFragmentResponse = mutableListOf<LeagueResponseItem>()
     private val db = Firebase.firestore
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+        }
+
+        networkChangeReceiver = NetworkChangeReceiver{ isConnected ->
+            if (isConnected) {
+                getLeagues()
+            } else {
+                loadLeaguesFromSharedPreferences(requireContext())?.let { leagues ->
+                    LeaguesFragmentResponse.clear()
+                    LeaguesFragmentResponse.addAll(leagues)
+                    adapter.notifyDataSetChanged()
+                } ?: run {
+                    showError()
+                    binding.rvLeaguesFragment.visibility = View.GONE
+                    binding.ivNoInternet.visibility = View.VISIBLE
+                }
+            }
         }
     }
 
@@ -85,6 +106,17 @@ class Leagues : Fragment() {
         binding.rvLeaguesFragment.layoutManager = LinearLayoutManager(context)
         binding.rvLeaguesFragment.adapter = adapter
         getLeagues()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        requireContext().registerReceiver(networkChangeReceiver, filter)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        requireContext().unregisterReceiver(networkChangeReceiver)
     }
 
     private fun getRetrofit(): Retrofit {
@@ -140,11 +172,11 @@ class Leagues : Fragment() {
     }*/
 
     private fun saveLeaguesToSharedPreferences(context: Context, leagues: List<LeagueResponseItem>) {
-        val limitedLeagues = leagues.take(30) // Only take the first 30 leagues
+        val limitedLeagues = leagues.take(30)
         val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         val gson = Gson()
-        val json = gson.toJson(limitedLeagues) // Save only the first 30 leagues
+        val json = gson.toJson(limitedLeagues)
         editor.putString(LEAGUES_KEY, json)
         editor.apply()
     }
@@ -168,6 +200,17 @@ class Leagues : Fragment() {
     }
     private fun showError() {
         Toast.makeText(requireContext(), "Error: Sin conección a internet", Toast.LENGTH_SHORT).show()
+    }
+
+    inner class NetworkChangeReceiver(private val onNetworkChange: (Boolean) -> Unit) : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val connectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val network = connectivityManager.activeNetwork
+            val networkCapabilities = connectivityManager.getNetworkCapabilities(network)
+            val isConnected = networkCapabilities != null &&
+                    (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR))
+            onNetworkChange(isConnected)
+        }
     }
 
     companion object {
