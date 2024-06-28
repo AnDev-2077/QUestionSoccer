@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devapps.questionsoccer.adapters.CountryAdapter
@@ -117,7 +118,13 @@ class Countries : Fragment() {
                 CountriesFragmentResponse.clear()
                 CountriesFragmentResponse.addAll(countries)
                 adapter.notifyDataSetChanged()
-            } ?: showError()
+            } ?: run {
+                showError()
+                val noInternetImageView: ImageView = binding.ivNoInternet
+                binding.rvCountriesFragment.visibility = View.GONE
+                noInternetImageView.visibility = View.VISIBLE
+            }
+
         }
     }
 

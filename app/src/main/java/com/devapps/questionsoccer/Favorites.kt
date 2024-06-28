@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devapps.questionsoccer.adapters.SoccerAdapter
 import com.devapps.questionsoccer.databinding.FragmentFavoritesTestBinding
 import com.devapps.questionsoccer.items.ResponseItem
+import com.devapps.questionsoccer.items.StaticResponse
+import com.devapps.questionsoccer.items.fixtureResponse
 import com.google.common.reflect.TypeToken
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -23,7 +25,7 @@ private const val PREFS_NAME = "com.devapps.questionsoccer.PREFS"
 private const val FAVORITES_KEY = "com.devapps.questionsoccer.FAVORITES"
 
 
-class Favorites_Test : Fragment() {
+class Favorites : Fragment() {
 
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var binding: FragmentFavoritesTestBinding
@@ -32,7 +34,6 @@ class Favorites_Test : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
         }
     }
 
@@ -65,22 +66,6 @@ class Favorites_Test : Fragment() {
         binding.rvTeamsFavorites.adapter = teamsAdapter
         getFavorites()
     }
-
-    /*private fun getFavorites() {
-        val user = FirebaseAuth.getInstance().currentUser
-        if (user != null) {
-            val db = FirebaseFirestore.getInstance()
-            db.collection("users").document(user.uid).collection("favorites").get()
-                .addOnSuccessListener { documents ->
-                    for (document in documents) {
-                        val team = document.toObject(ResponseItem::class.java)
-                        favoritesTeamsList.add(team)
-                    }
-                    teamsAdapter.notifyDataSetChanged()
-                }
-        }
-
-    }*/
 
     private fun getFavorites() {
         if (isOnline()) {
@@ -128,6 +113,9 @@ class Favorites_Test : Fragment() {
         }
     }
 
+
+
+
     private fun isOnline(): Boolean {
         val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connectivityManager.activeNetworkInfo
@@ -142,7 +130,7 @@ class Favorites_Test : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance() =
-            Favorites_Test().apply {
+            Favorites().apply {
                 arguments = Bundle().apply {
 
                 }

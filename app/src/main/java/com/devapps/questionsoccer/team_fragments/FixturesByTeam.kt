@@ -116,17 +116,19 @@ class FixturesByTeam : Fragment() {
                         FixturesFragmentResponse.addAll(fixtures)
                         adapter.notifyDataSetChanged()
                     }
-                    saveFixturesToSharedPreferences(requireContext(), teamId, fixtures)
+                    //saveFixturesToSharedPreferences(requireContext(), teamId, fixtures)
                 } else {
                     showError()
                 }
             }
         } else {
-            loadFixturesFromSharedPreferences(requireContext(), teamId)?.let { fixtures ->
-                FixturesFragmentResponse.clear()
-                FixturesFragmentResponse.addAll(fixtures)
-                adapter.notifyDataSetChanged()
-            } ?: showError()
+            //loadFixturesFromSharedPreferences(requireContext(), teamId)?.let { fixtures ->
+            //    FixturesFragmentResponse.clear()
+            //    FixturesFragmentResponse.addAll(fixtures)
+            //    adapter.notifyDataSetChanged()
+            //} ?: showError()
+
+            showError()
         }
     }
 

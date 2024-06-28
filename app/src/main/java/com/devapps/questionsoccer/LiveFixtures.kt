@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devapps.questionsoccer.adapters.FixtureAdapter
@@ -132,7 +133,12 @@ class LiveFixtures : Fragment() {
                 FixturesFragmentResponse.clear()
                 FixturesFragmentResponse.addAll(fixtures)
                 adapter.notifyDataSetChanged()
-            } ?: showError()
+            } ?: run{
+                showError()
+                val noInternetImageView: ImageView = binding.ivNoInternet
+                binding.rvFixturesFragment.visibility = View.GONE
+                noInternetImageView.visibility = View.VISIBLE
+            }
         }
     }
 

@@ -2,19 +2,29 @@ package com.devapps.questionsoccer
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import com.devapps.questionsoccer.databinding.ActivityMainBinding
+import com.devapps.questionsoccer.interfaces.FixturesByTeamService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestoreSettings
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 enum class ProviderType{
@@ -23,8 +33,11 @@ enum class ProviderType{
 }
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
 
         FirebaseDatabase.getInstance().setPersistenceEnabled(true)
         val settings = firestoreSettings {
@@ -51,8 +64,45 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-    }
 
+
+        val user = FirebaseAuth.getInstance().currentUser
+        if(user != null){
+            // El usuario ha iniciado sesión
+            // Verificar si el usuario tiene equipos en sus favoritos
+            val db = FirebaseFirestore.getInstance()
+            db.collection("users").document(user.uid).collection("favorites").get()
+                .addOnSuccessListener { documents ->
+                    if(!documents.isEmpty){
+                        Log.d("Firestore", "Favoritos encontrados para el usuario: ${user.uid}")
+                        // El usuario tiene equipos en sus favoritos
+                        // Hacer peticiones a la API para obtener la información de los equipos, sus partidos y estadísticas
+                        for (document in documents){
+                            val teamId = document.id as? String
+                            val retrofit = getRetrofit()
+                            Log.d("TeamId", "El ID del equipo es: ${teamId}")
+
+
+                        }
+                    } else{
+                        Log.d("Firestore", "No se encontraron favoritos para el usuario: ${user.uid}")
+                    }
+                }.addOnFailureListener { exception ->
+                    Log.e("Firestore", "Error al obtener favoritos", exception)
+                }
+        }else{
+            // El usuario no ha iniciado sesión
+            // Mostrar un pop up que mencione que deves crear una cuenta o iniciar sesión para agregar a favoritos
+        }
+
+
+    }
+    private fun getRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl("https://v3.football.api-sports.io/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.top_navigation, menu)
 
@@ -90,7 +140,7 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.Favorites ->{
-                replaceFragment(Favorites_Test())
+                replaceFragment(Favorites())
                 true
             }
             else -> super.onOptionsItemSelected(item)
