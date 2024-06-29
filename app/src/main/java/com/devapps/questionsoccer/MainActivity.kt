@@ -23,6 +23,8 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import com.devapps.questionsoccer.databinding.ActivityMainBinding
 import com.devapps.questionsoccer.interfaces.FixturesByTeamService
+import com.devapps.questionsoccer.interfaces.LineupService
+import com.devapps.questionsoccer.items.LineupResponse
 import com.devapps.questionsoccer.items.fixtureResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -83,7 +85,9 @@ class MainActivity : AppCompatActivity() {
                     db.collection("users").document(user.uid).collection("favorites").get()
                         .addOnSuccessListener { documents ->
                             if(!documents.isEmpty){
+
                                 Log.d("Firestore", "Favoritos encontrados para el usuario: ${user.uid}")
+
                                 // El usuario tiene equipos en sus favoritos
                                 // Hacer peticiones a la API para obtener la información de los equipos, sus partidos y estadísticas
 
@@ -175,6 +179,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private suspend fun getLineupsByFixture(fixtureId: String): LineupResponse? {
+        val lineupService = getRetrofit().create(LineupService::class.java)
+        val lineupResponse = lineupService.getLineup(fixtureId)
+        return if (lineupResponse.isSuccessful) {
+            lineupResponse.body()
+        } else {
+            null
+        }
+    }
+
     private fun saveFixturesToFirestore(teamId: String, fixtures: List<fixtureResponse>) {
         val db = FirebaseFirestore.getInstance()
         val teamDocument = db.collection("teams").document(teamId)
@@ -187,10 +201,43 @@ class MainActivity : AppCompatActivity() {
             fixtureDocument.set(fixture)
                 .addOnSuccessListener {
                     Log.d("Firestore", "Fixture guardado con éxito")
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val lineup = getLineupsByFixture(fixture.fixture.id.toString())
+                        if (lineup != null) {
+                            // Guardar los lineups en Firestore
+                            withContext(Dispatchers.Main) {
+                                saveLineupsToFirestore(fixture.fixture.id.toString(), lineup)
+                            }
+                        } else {
+                            Log.e("API", "Error al obtener los lineups de la fixture: ${fixture.fixture.id}")
+                        }
+                    }
+
                 }
                 .addOnFailureListener { e ->
                     Log.e("Firestore", "Error al guardar fixture", e)
                 }
+        }
+    }
+
+    private fun saveLineupsToFirestore(fixtureId: String, lineup: LineupResponse) {
+        if (lineup.response.isNotEmpty()) {
+            val db = FirebaseFirestore.getInstance()
+            val fixtureDocument = db.collection("fixtures").document(fixtureId)
+            val lineupsCollection = fixtureDocument.collection("lineups")
+
+            // Aquí asumimos que cada lineup tiene un id único
+            val lineupDocument = lineupsCollection.document(lineup.response[0].team.id.toString())
+            Log.d("Firestore", "Guardando lineup para la fixture $fixtureId")
+            lineupDocument.set(lineup)
+                .addOnSuccessListener {
+                    Log.d("Firestore", "Lineup guardado con éxito")
+                }
+                .addOnFailureListener { e ->
+                    Log.e("Firestore", "Error al guardar lineup", e)
+                }
+        } else {
+            Log.e("Firestore", "La respuesta de la alineación está vacía para la fixture: $fixtureId")
         }
     }
 

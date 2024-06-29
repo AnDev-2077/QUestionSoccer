@@ -19,6 +19,7 @@ import com.devapps.questionsoccer.interfaces.FixtureService
 import com.devapps.questionsoccer.interfaces.FixturesByTeamService
 import com.devapps.questionsoccer.items.fixtureResponse
 import com.google.common.reflect.TypeToken
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -78,32 +79,6 @@ class FixturesByTeam : Fragment() {
             .build()
     }
 
-    /*private fun getFixtures(teamId: Int) {
-        if (isOnline()){
-            CoroutineScope(Dispatchers.IO).launch {
-                val call = getRetrofit().create(FixturesByTeamService::class.java).getFixtureByTeam(teamId, 2023)
-                val fixtureResponse = call.body()
-                if (call.isSuccessful){
-                    val fixtures = fixtureResponse?.response ?: emptyList()
-                    withContext(Dispatchers.Main){
-                        FixturesFragmentResponse.clear()
-                        FixturesFragmentResponse.addAll(fixtures)
-                        adapter.notifyDataSetChanged()
-                    }
-                }  else {
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "Error: Sin conexión a la API", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        } else{
-            FixturesFragmentResponse.clear()
-            adapter.notifyDataSetChanged()
-            showError()
-        }
-
-    }*/
-
     private fun getFixtures(teamId: Int) {
         if (isOnline()) {
             CoroutineScope(Dispatchers.IO).launch {
@@ -116,41 +91,29 @@ class FixturesByTeam : Fragment() {
                         FixturesFragmentResponse.addAll(fixtures)
                         adapter.notifyDataSetChanged()
                     }
-                    //saveFixturesToSharedPreferences(requireContext(), teamId, fixtures)
                 } else {
                     showError()
                 }
             }
         } else {
-            //loadFixturesFromSharedPreferences(requireContext(), teamId)?.let { fixtures ->
-            //    FixturesFragmentResponse.clear()
-            //    FixturesFragmentResponse.addAll(fixtures)
-            //    adapter.notifyDataSetChanged()
-            //} ?: showError()
-
-            showError()
+            loadFixturesFromFirestore(teamId)
         }
     }
 
-    private fun saveFixturesToSharedPreferences(context: Context, teamId: Int, fixtures: List<fixtureResponse>) {
-        val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        val gson = Gson()
-        val json = gson.toJson(fixtures)
-        editor.putString("$FIXTURES_KEY_PREFIX$teamId", json)
-        editor.apply()
-    }
-
-    private fun loadFixturesFromSharedPreferences(context: Context, teamId: Int): List<fixtureResponse>? {
-        val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val gson = Gson()
-        val json = sharedPreferences.getString("$FIXTURES_KEY_PREFIX$teamId", null)
-        return if (json != null) {
-            val type = object : TypeToken<List<fixtureResponse>>() {}.type
-            gson.fromJson(json, type)
-        } else {
-            null
-        }
+    private fun loadFixturesFromFirestore(teamId: Int) {
+        val db = FirebaseFirestore.getInstance()
+        val teamDocument = db.collection("teams").document(teamId.toString())
+        teamDocument.collection("fixtures").get()
+            .addOnSuccessListener { documents ->
+                val fixtures = documents.mapNotNull { it.toObject(fixtureResponse::class.java) }
+                FixturesFragmentResponse.clear()
+                FixturesFragmentResponse.addAll(fixtures)
+                adapter.notifyDataSetChanged()
+            }
+            .addOnFailureListener { exception ->
+                Log.e("Firestore", "Error al obtener fixtures", exception)
+                showError()
+            }
     }
 
     private fun showError() {

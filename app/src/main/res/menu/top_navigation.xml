@@ -14,7 +14,7 @@
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/Favorites"
-        android:icon="@drawable/ic_star_solid"
+        android:icon="@drawable/ic_star_solid_m"
         android:title="LogIn"
         app:showAsAction="ifRoom"/>
 </menu>

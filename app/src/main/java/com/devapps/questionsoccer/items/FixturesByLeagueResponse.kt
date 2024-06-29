@@ -9,18 +9,18 @@ data class FixturesByLeagueResponse(
     val results: Int,
     val paging: FixturePaging,
     val response: List<fixtureResponse>
-) : Serializable
+): Serializable
 
 data class FixtureParameters(
-    val date: String,
-    val league: String,
+    val date: String ,
+    val league: String ,
     val season: String
-) : Serializable
+): Serializable
 
 data class FixturePaging(
     val current: Int,
     val total: Int
-) : Serializable
+): Serializable
 
 data class fixtureResponse(
     val fixture: Fixture = Fixture(),

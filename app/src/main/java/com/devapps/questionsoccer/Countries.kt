@@ -70,28 +70,6 @@ class Countries : Fragment() {
             .build()
     }
 
-    /*private fun getCountries(){
-        if (isOnline()){
-            CoroutineScope(Dispatchers.IO).launch {
-                val call = getRetrofit().create(CountryService::class.java).getCountries()
-                val countriesResponse = call.body()
-                if(call.isSuccessful){
-                    val countries = countriesResponse?.response ?: emptyList()
-                    withContext(Dispatchers.Main){
-                        CountriesFragmentResponse.clear()
-                        CountriesFragmentResponse.addAll(countries)
-                        adapter.notifyDataSetChanged()
-                    }
-                    Log.d("MyFavorites", "JSON data: $countries")
-                }
-            }
-        } else{
-            CountriesFragmentResponse.clear()
-            adapter.notifyDataSetChanged()
-            showError()
-        }
-    }*/
-
     private fun getCountries() {
         if (isOnline()) {
             CoroutineScope(Dispatchers.IO).launch {
