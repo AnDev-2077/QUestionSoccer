@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
                 //R.id.players -> replaceFragment(Players())
                 R.id.favorites -> replaceFragment(LiveFixtures())
                 R.id.countries -> replaceFragment(Countries())
+                R.id.profile -> replaceFragment(Auth())
                 //R.id.favorites_test -> replaceFragment(Favorites_Test())
                 else ->{
                 }

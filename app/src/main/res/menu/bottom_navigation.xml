@@ -10,5 +10,8 @@
     <item android:title="Partidos"
         android:id="@+id/favorites"
         android:icon="@drawable/ic_soccer_field"/>
+    <item android:title="Perfil"
+        android:id="@+id/profile"
+        android:icon="@drawable/circle_user_regular"/>
 
 </menu>
