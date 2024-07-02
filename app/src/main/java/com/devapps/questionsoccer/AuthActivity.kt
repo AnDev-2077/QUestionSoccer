@@ -28,7 +28,7 @@ class AuthActivity : AppCompatActivity() {
     private fun setUp() {
         title = "Autenticación"
 
-        binding.btSingUp.setOnClickListener {
+        /*binding.btSingUp.setOnClickListener {
             if (binding.etEmailAddress.text.isNotEmpty() && binding.etPassword.text.isNotEmpty()) {
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(
                     binding.etEmailAddress.text.toString(),
@@ -58,7 +58,7 @@ class AuthActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
+        }*/
 
         binding.btGoogle.setOnClickListener {
             val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -71,14 +71,14 @@ class AuthActivity : AppCompatActivity() {
             startActivityForResult(googleClient.signInIntent, GOOGLE_SIGN_IN)
         }
 
-        binding.btLogOut.setOnClickListener {
+        /*binding.btLogOut.setOnClickListener {
             val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
             prefs.clear()
             prefs.apply()
 
             FirebaseAuth.getInstance().signOut()
             onBackPressed()
-        }
+        }*/
     }
 
     private fun showAlert() {

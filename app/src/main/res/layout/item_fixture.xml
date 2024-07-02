@@ -44,7 +44,7 @@
                     android:fontFamily="@font/rubik_medium"
                     android:maxWidth="60dp"
                     android:layout_toLeftOf="@+id/ivTeamLogoA"
-                    android:layout_marginRight="6dp"
+                    android:layout_marginRight="16dp"
                     android:layout_centerInParent="true"/>
                 <TextView
                     android:id="@+id/tvTeamNameB"
