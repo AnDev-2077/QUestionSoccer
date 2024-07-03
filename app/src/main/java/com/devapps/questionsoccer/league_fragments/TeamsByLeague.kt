@@ -40,7 +40,6 @@ class TeamsByLeague : Fragment() {
 
     private lateinit var binding: FragmentTeamsByLeagueBinding
     lateinit var adapter: SoccerAdapter
-    private lateinit var recyclerView: RecyclerView
     private var TeamsFragmentResponse = mutableListOf<ResponseItem>()
 
     private val db = Firebase.database
@@ -157,9 +156,6 @@ class TeamsByLeague : Fragment() {
 
     private fun showError() {
         Toast.makeText(requireContext(), "Error: Sin conección a internet", Toast.LENGTH_SHORT).show()
-    }
-    private fun showError0() {
-        Toast.makeText(requireContext(), "Error 0: Sin conección a internet, pasando a modo sin conección", Toast.LENGTH_SHORT).show()
     }
 
     companion object {

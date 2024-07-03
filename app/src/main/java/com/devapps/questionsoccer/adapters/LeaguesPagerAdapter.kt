@@ -20,7 +20,7 @@ class LeaguesPagerAdapter (
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> TeamsByLeague.newInstance(leagueId)
-            1 -> FixturesByLeague()
+            1 -> FixturesByLeague.newInstance(leagueId)
             else -> StandingsByLeague()
         }
     }
