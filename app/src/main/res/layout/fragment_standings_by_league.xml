@@ -16,6 +16,20 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvTeam"
+                android:text="Equipos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@id/tvSharp"/>
+            <TextView
+                android:id="@+id/tvSharp"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="#"/>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -24,26 +38,22 @@
                 android:layout_centerInParent="true"
                 android:layout_alignParentRight="true">
 
+
                 <TextView
-                    android:text="52"
+                    android:text="P"
                     android:gravity="center"
                     android:layout_width="52dp"
                     android:layout_height="32dp" />
                 <TextView
-                    android:text="52"
+                    android:text="DIFF"
                     android:gravity="center"
                     android:layout_width="52dp"
                     android:layout_height="32dp"/>
                 <TextView
-                    android:text="52"
+                    android:text="PTS"
                     android:gravity="center"
                     android:layout_width="52dp"
                     android:layout_height="32dp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="40dp"
-                android:layout_height="48dp">
-
             </LinearLayout>
 
 

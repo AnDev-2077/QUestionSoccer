@@ -21,7 +21,7 @@ class LeaguesPagerAdapter (
         return when (position) {
             0 -> TeamsByLeague.newInstance(leagueId)
             1 -> FixturesByLeague.newInstance(leagueId)
-            else -> StandingsByLeague()
+            else -> StandingsByLeague.newInstance(leagueId)
         }
     }
 

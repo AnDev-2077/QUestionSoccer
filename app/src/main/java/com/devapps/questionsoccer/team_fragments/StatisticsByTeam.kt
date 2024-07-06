@@ -77,32 +77,6 @@ class StatisticsByTeam : Fragment() {
             .build()
     }
 
-    /*private fun getStatistics(leagueId: Int, teamId: Int){
-        if(isOnline()){
-            CoroutineScope(Dispatchers.IO).launch {
-                val call = getRetrofit().create(StatisticsService::class.java).getStatistics(leagueId, teamId, 2023)
-                val statisticResponse = call.body()
-                if (call.isSuccessful){
-                    val statistics = statisticResponse?.response
-                    withContext(Dispatchers.Main){
-                        StatisticsFragmentResponse.clear()
-                        if (statistics != null) {
-                            StatisticsFragmentResponse.add(statistics)
-                        }
-                        adapter.notifyDataSetChanged()
-                    }
-                }else {
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "Error: Sin conexión a la API", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        }else{
-            StatisticsFragmentResponse.clear()
-            adapter.notifyDataSetChanged()
-            showError()
-        }
-    }*/
 
     private fun getStatistics(leagueId: Int, teamId: Int) {
         if (isOnline()) {
@@ -154,7 +128,7 @@ class StatisticsByTeam : Fragment() {
     }
 
     private fun showError() {
-        Toast.makeText(requireContext(), "Error: Sin coneccion a internet", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Error: Sin conexión a internet", Toast.LENGTH_SHORT).show()
     }
 
     private fun isOnline(): Boolean {

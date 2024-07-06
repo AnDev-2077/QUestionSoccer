@@ -11,8 +11,8 @@
         android:id="@+id/button_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:orientation="vertical"
@@ -20,27 +20,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btGoogle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:drawableLeft="@drawable/ic_google"
-                android:text="Iniciar secion con Google" />
-
-            <Button
+                android:text="Iniciar sesión con Google"
+                app:icon="@drawable/ic_google"
+                app:iconGravity="textStart"
+                app:cornerRadius="4dp"
+                android:backgroundTint="@color/orange" />
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btFacebook"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_facebook"
-                android:elevation="2dp"
+                android:layout_centerInParent="true"
                 android:text="Iniciar secion con Faceboock"
-                app:layout_constraintTop_toBottomOf="@+id/btGoogle" />
-
+                app:icon="@drawable/ic_facebook"
+                app:iconGravity="textStart"
+                app:cornerRadius="4dp"
+                android:backgroundTint="@color/orange" />
         </RelativeLayout>
 
     </LinearLayout>

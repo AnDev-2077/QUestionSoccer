@@ -59,6 +59,7 @@
                         android:text="Inicia sesión para poder sincronizar tus equipos favoritos" />
                 </LinearLayout>
                 <Button
+                    android:id="@+id/btStart"
                     android:layout_width="114dp"
                     android:layout_height="32dp"
                     android:layout_alignParentRight="true"
