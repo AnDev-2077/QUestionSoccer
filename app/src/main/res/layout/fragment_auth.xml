@@ -25,15 +25,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/ivProfile"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    tools:src="@tools:sample/avatars"
-
+                    app:srcCompat="@tools:sample/avatars"
                     android:layout_alignParentLeft="true"
                     android:layout_marginTop="8dp"
-                    android:layout_marginLeft="16dp"/>
+                    android:layout_marginLeft="16dp"
+                    app:shapeAppearanceOverlay="@style/CircularImageView"/>
 
                 <LinearLayout
                     android:id="@+id/llInformation"

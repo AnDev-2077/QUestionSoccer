@@ -248,14 +248,14 @@ class MainActivity : AppCompatActivity() {
         val search = menu?.findItem(R.id.svGeneral)
         val searchView = search?.actionView as SearchView
 
-        val authItem = menu?.findItem(R.id.Auth)
+        /*val authItem = menu?.findItem(R.id.Auth)
         val user = FirebaseAuth.getInstance().currentUser
 
         if (user != null) {
             val wrappedDrawable = authItem?.icon?.let { DrawableCompat.wrap(it) }
             wrappedDrawable?.let { DrawableCompat.setTint(it, ContextCompat.getColor(this, R.color.colorGreen)) }
             authItem?.icon = wrappedDrawable
-        }
+        }*/
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrEmpty()) {
@@ -274,10 +274,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId){
-            R.id.Auth ->{
-                navigateToAuthenticationActivity()
-                true
-            }
             R.id.Favorites ->{
                 replaceFragment(Favorites())
                 true
@@ -298,10 +294,5 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
-
-    private fun navigateToAuthenticationActivity(){
-        val intent = Intent(this, AuthActivity::class.java)
-        startActivity(intent)
-    }
 
 }

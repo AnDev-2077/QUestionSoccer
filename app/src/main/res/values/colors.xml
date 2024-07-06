@@ -20,5 +20,6 @@
     <!-- Tables -->
     <color name="colorGray">#ECECEC</color>
     <color name="colorGray2">#DEE2E6</color>
+    <color name="colorGray3">#CFD2D7</color>
 
 </resources>
