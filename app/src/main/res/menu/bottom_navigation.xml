@@ -4,12 +4,12 @@
     <item android:title="Ligas"
         android:id="@+id/leagues"
         android:icon="@drawable/ic_trophy_solid" />
-    <item android:title="Paises"
-        android:id="@+id/countries"
-        android:icon="@drawable/ic_countries"/>
     <item android:title="Partidos"
-        android:id="@+id/favorites"
+        android:id="@+id/live"
         android:icon="@drawable/ic_soccer_field"/>
+    <item android:title="Favoritos"
+        android:id="@+id/favorites"
+        android:icon="@drawable/ic_star_solid_m"/>
     <item android:title="Perfil"
         android:id="@+id/profile"
         android:icon="@drawable/circle_user_regular"/>

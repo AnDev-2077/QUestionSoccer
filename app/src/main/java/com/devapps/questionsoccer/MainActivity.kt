@@ -59,8 +59,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.leagues -> replaceFragment(Leagues())
                 //R.id.teams -> replaceFragment(Teams())
                 //R.id.players -> replaceFragment(Players())
-                R.id.favorites -> replaceFragment(LiveFixtures())
-                R.id.countries -> replaceFragment(Countries())
+                R.id.live -> replaceFragment(LiveFixtures())
+                R.id.favorites -> replaceFragment(Favorites())
                 R.id.profile -> replaceFragment(Auth())
                 //R.id.favorites_test -> replaceFragment(Favorites_Test())
                 else ->{
@@ -248,14 +248,6 @@ class MainActivity : AppCompatActivity() {
         val search = menu?.findItem(R.id.svGeneral)
         val searchView = search?.actionView as SearchView
 
-        /*val authItem = menu?.findItem(R.id.Auth)
-        val user = FirebaseAuth.getInstance().currentUser
-
-        if (user != null) {
-            val wrappedDrawable = authItem?.icon?.let { DrawableCompat.wrap(it) }
-            wrappedDrawable?.let { DrawableCompat.setTint(it, ContextCompat.getColor(this, R.color.colorGreen)) }
-            authItem?.icon = wrappedDrawable
-        }*/
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrEmpty()) {
@@ -272,15 +264,6 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId){
-            R.id.Favorites ->{
-                replaceFragment(Favorites())
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 
     private var leaguesFragment: Leagues? = null
     private fun replaceFragment(fragment: Fragment){

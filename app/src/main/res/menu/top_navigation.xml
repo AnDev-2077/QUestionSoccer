@@ -7,10 +7,5 @@
         android:title="Search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="ifRoom"/>
-    
-    <item
-        android:id="@+id/Favorites"
-        android:icon="@drawable/ic_star_solid_m"
-        android:title="LogIn"
-        app:showAsAction="ifRoom"/>
+
 </menu>

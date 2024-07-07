@@ -14,7 +14,6 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devapps.questionsoccer.FixtureDetailsActivity
 import com.devapps.questionsoccer.R
-import com.devapps.questionsoccer.adapters.CountryAdapter
 import com.devapps.questionsoccer.adapters.FixtureAdapter
 import com.devapps.questionsoccer.databinding.FragmentFixturesByLeagueBinding
 import com.devapps.questionsoccer.interfaces.FixturesByLeagueService

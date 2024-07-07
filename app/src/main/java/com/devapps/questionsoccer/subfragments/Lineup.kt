@@ -1,22 +1,25 @@
 package com.devapps.questionsoccer.subfragments
 
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridLayout
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import com.devapps.questionsoccer.R
 import com.devapps.questionsoccer.databinding.FragmentLineupBinding
 import com.devapps.questionsoccer.items.Coach
 import com.devapps.questionsoccer.items.LineupTeam
 import com.devapps.questionsoccer.items.Player
+import com.squareup.picasso.Picasso
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 class Lineup : Fragment() {
 
-    private var param1: String? = null
-    private var param2: String? = null
 
     private lateinit var binding: FragmentLineupBinding
     private var teamHome: LineupTeam? = null
@@ -48,9 +51,56 @@ class Lineup : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        inflateTables()
+        addPlayersToGridLayout(lineUpHome, binding.gridLayoutHome)
+        addPlayersToGridLayout(lineUpAway, binding.gridLayoutAway)
     }
-    private fun inflateTables(){
+
+    private fun addPlayersToGridLayout(players: ArrayList<Player>?, gridLayout: GridLayout) {
+        players?.let { playerList ->
+            val rowGroups = mutableMapOf<Int, LinearLayout>()
+
+            for (player in playerList) {
+                val view = LayoutInflater.from(context).inflate(R.layout.item_lineup, gridLayout, false)
+                val playerName: TextView = view.findViewById(R.id.tvPlayerName)
+                val playerNumber: TextView = view.findViewById(R.id.tvPlayerNumber)
+
+                playerName.text = player.player.name
+                playerNumber.text = player.player.number.toString()
+
+                val gridPosition = player.player.grid?.split(":")
+                if (gridPosition != null && gridPosition.size == 2) {
+                    val row = gridPosition[0].toIntOrNull()?.minus(1) ?: 0
+                    val col = gridPosition[1].toIntOrNull()?.minus(1) ?: 0
+
+                    val params = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    ).apply {
+                        gravity = Gravity.CENTER
+                    }
+
+                    val rowLayout = rowGroups.getOrPut(row) {
+                        LinearLayout(context).apply {
+                            orientation = LinearLayout.HORIZONTAL
+                            layoutParams = GridLayout.LayoutParams().apply {
+                                rowSpec = GridLayout.spec(row, GridLayout.FILL, 1f)
+                                columnSpec = GridLayout.spec(0, 5, GridLayout.FILL, 1f)
+                                width = GridLayout.LayoutParams.MATCH_PARENT
+                                height = GridLayout.LayoutParams.WRAP_CONTENT
+                                setGravity(android.view.Gravity.CENTER)
+                            }
+                            gravity = Gravity.CENTER
+                        }.also {
+                            gridLayout.addView(it)
+                        }
+                    }
+
+                    rowLayout.addView(view, params)
+                }
+            }
+        }
+    }
+    /*private fun inflateTables(){
         binding.tvHomeTeamName.text = teamHome?.name
         binding.tvAwayTeamName.text = teamAway?.name
         binding.tvHomeCoach.text = coachHome?.name
@@ -161,7 +211,7 @@ class Lineup : Fragment() {
             }
         }
 
-    }
+    }*/
     companion object {
         @JvmStatic
         fun newInstance(teamHome: LineupTeam,
