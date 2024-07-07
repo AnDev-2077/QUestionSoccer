@@ -38,7 +38,8 @@
                     android:layout_height="wrap_content"
                     android:text="Team Name"
                     android:layout_centerInParent="true"
-                    android:layout_toRightOf="@id/ivLogo"/>
+                    android:layout_toRightOf="@id/ivLogo"
+                    android:layout_marginLeft="8dp"/>
                 <LinearLayout
                     android:id="@+id/llNumber"
                     android:layout_width="40dp"

@@ -101,6 +101,7 @@ class Leagues : Fragment() {
             intent.putExtra("leagueType", onLeagueClick.league.type)
             intent.putExtra("leagueCountry", onLeagueClick.country.name)
             intent.putExtra("leagueLogo", onLeagueClick.league.logo)
+            intent.putExtra("leagueSeasons", ArrayList(onLeagueClick.seasons))
             startActivity(intent)
         }
         binding.rvLeaguesFragment.layoutManager = LinearLayoutManager(context)

@@ -24,7 +24,7 @@ class SoccerAdapter (var responseTeamsByLeague: List<ResponseItem>, private val 
             if (!responseItem.team.teamLogo.isNullOrEmpty()) {
                 Picasso.get().load(responseItem.team.teamLogo).into(binding.ivTeamLogo)
             } else {
-                Picasso.get().load(R.drawable.enfrentamiento).into(binding.ivTeamLogo)
+
             }
             Picasso.get().load(responseItem.team.teamLogo).into(binding.ivTeamLogo)
             binding.LinearLayoutTeams.setOnClickListener {

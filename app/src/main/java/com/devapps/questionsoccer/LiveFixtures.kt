@@ -118,7 +118,6 @@ class LiveFixtures : Fragment() {
                             FixturesFragmentResponse.addAll(fixtures)
                             adapter.notifyDataSetChanged()
                         }
-                        saveFixturesToSharedPreferences(requireContext(), fixtures)
                     } else {
                         showError()
                     }
@@ -129,39 +128,13 @@ class LiveFixtures : Fragment() {
                 }
             }
         } else {
-            loadFixturesFromSharedPreferences(requireContext())?.let { fixtures ->
-                FixturesFragmentResponse.clear()
-                FixturesFragmentResponse.addAll(fixtures)
-                adapter.notifyDataSetChanged()
-            } ?: run{
-                showError()
-                val noInternetImageView: ImageView = binding.ivNoInternet
-                binding.rvFixturesFragment.visibility = View.GONE
-                noInternetImageView.visibility = View.VISIBLE
-            }
+            showError()
+            val noInternetImageView: ImageView = binding.ivNoInternet
+            binding.rvFixturesFragment.visibility = View.GONE
+            noInternetImageView.visibility = View.VISIBLE
         }
     }
 
-    private fun saveFixturesToSharedPreferences(context: Context, fixtures: List<fixtureResponse>) {
-        val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        val gson = Gson()
-        val json = gson.toJson(fixtures)
-        editor.putString(FIXTURES_KEY, json)
-        editor.apply()
-    }
-
-    private fun loadFixturesFromSharedPreferences(context: Context): List<fixtureResponse>? {
-        val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val gson = Gson()
-        val json = sharedPreferences.getString(FIXTURES_KEY, null)
-        return if (json != null) {
-            val type = object : TypeToken<List<fixtureResponse>>() {}.type
-            gson.fromJson(json, type)
-        } else {
-            null
-        }
-    }
 
 
     private fun showError() {

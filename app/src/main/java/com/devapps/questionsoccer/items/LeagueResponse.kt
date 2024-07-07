@@ -43,7 +43,7 @@ data class Season(
     val end: String = "",
     val current: Boolean = false,
     val coverage: Coverage = Coverage()
-)
+): Serializable
 
 data class Coverage(
     val fixtures: Fixtures = Fixtures(),
@@ -55,11 +55,11 @@ data class Coverage(
     val injuries: Boolean = false,
     val predictions: Boolean = false,
     val odds: Boolean = false
-)
+): Serializable
 
 data class Fixtures(
     val events: Boolean = false,
     val lineups: Boolean = false,
     val statistics_fixtures: Boolean = false,
     val statistics_players: Boolean = false
-)
+): Serializable
