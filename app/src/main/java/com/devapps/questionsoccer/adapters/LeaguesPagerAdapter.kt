@@ -11,7 +11,8 @@ import com.devapps.questionsoccer.league_fragments.TeamsByLeague
 class LeaguesPagerAdapter (
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
-    private val leagueId: Int
+    private val leagueId: Int,
+    private val year: Int
 ) : FragmentStateAdapter(fragmentManager, lifecycle){
     override fun getItemCount(): Int {
         return 3
@@ -19,9 +20,9 @@ class LeaguesPagerAdapter (
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> TeamsByLeague.newInstance(leagueId)
-            1 -> FixturesByLeague.newInstance(leagueId)
-            else -> StandingsByLeague.newInstance(leagueId)
+            0 -> TeamsByLeague.newInstance(leagueId, year)
+            1 -> FixturesByLeague.newInstance(leagueId, year)
+            else -> StandingsByLeague.newInstance(leagueId, year)
         }
     }
 

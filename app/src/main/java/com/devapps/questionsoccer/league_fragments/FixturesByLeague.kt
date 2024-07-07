@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.text.style.TtsSpan.ARG_YEAR
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -30,6 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class FixturesByLeague : Fragment() {
 
     private var leagueId: Int? = null
+    private var year: Int? = null
 
     private lateinit var binding: FragmentFixturesByLeagueBinding
     private lateinit var adapter: FixtureAdapter
@@ -39,6 +41,7 @@ class FixturesByLeague : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             leagueId = it.getInt("leagueId")
+            leagueId = it.getInt(ARG_YEAR)
             Log.d("FixturesByLeague", "League ID: $leagueId")
         }
     }
@@ -56,7 +59,7 @@ class FixturesByLeague : Fragment() {
         adapter = FixtureAdapter(FixturesFragmentResponse){}
         binding.rvFixturesFragment.layoutManager = LinearLayoutManager(context)
         binding.rvFixturesFragment.adapter = adapter
-        getFixtures(leagueId ?: 0)
+        getFixtures(leagueId ?: 0, year ?: 0)
     }
 
     private fun getRetrofit(): Retrofit {
@@ -70,10 +73,10 @@ class FixturesByLeague : Fragment() {
             .build()
     }
 
-    private fun getFixtures(leagueId: Int) {
+    private fun getFixtures(leagueId: Int, year: Int) {
         if(isOnline()){
             CoroutineScope(Dispatchers.IO).launch {
-                val call = getRetrofit().create(FixturesByLeagueService::class.java).getFixtureByLeague(leagueId, 2023)
+                val call = getRetrofit().create(FixturesByLeagueService::class.java).getFixtureByLeague(leagueId, year)
                 val fixtureResponse = call.body()
                 if (call.isSuccessful){
                     val fixtures = fixtureResponse?.response ?: emptyList()
@@ -102,10 +105,11 @@ class FixturesByLeague : Fragment() {
     companion object {
 
         @JvmStatic
-        fun newInstance(leagueId: Int) =
+        fun newInstance(leagueId: Int, year: Int) =
             FixturesByLeague().apply {
                 arguments = Bundle().apply {
                     putInt("leagueId", leagueId)
+                    putInt(ARG_YEAR, year)
                 }
             }
     }

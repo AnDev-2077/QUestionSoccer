@@ -3,6 +3,7 @@ package com.devapps.questionsoccer.league_fragments
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.text.style.TtsSpan.ARG_YEAR
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -26,15 +27,19 @@ import retrofit2.converter.gson.GsonConverterFactory
 class StandingsByLeague : Fragment() {
 
     private var leagueId: Int? = null
+    private var year: Int? = null
 
     private lateinit var binding: FragmentStandingsByLeagueBinding
     private lateinit var adapter: StandingsAdapter
     private var StandingsByLeague = mutableListOf<Standing>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             leagueId = it.getInt("leagueId")
+            year = it.getInt(ARG_YEAR)
             Log.d("StatisticsByTeam", "Received leagueId: $leagueId")
+            Log.d("StatisticsByTeam", "Received year: $year")
         }
     }
 
@@ -51,7 +56,7 @@ class StandingsByLeague : Fragment() {
         adapter = StandingsAdapter(StandingsByLeague)
         binding.rvStandingsFragment.layoutManager = LinearLayoutManager(context)
         binding.rvStandingsFragment.adapter = adapter
-        getStandings(leagueId ?: 0)
+        getStandings(leagueId ?: 0, year ?: 0)
 
     }
 
@@ -67,10 +72,11 @@ class StandingsByLeague : Fragment() {
             .build()
     }
 
-    private fun getStandings(leagueId: Int){
+    private fun getStandings(leagueId: Int, year: Int){
+        Log.d("StandingsByLeague", "Inside getStandings with year: $year")
         if(isOnline()){
             CoroutineScope(Dispatchers.IO).launch {
-                val call = getRetrofit().create(StandingsByLeagueService::class.java).getStandingsByLeague(leagueId, 2023)
+                val call = getRetrofit().create(StandingsByLeagueService::class.java).getStandingsByLeague(leagueId, year)
                 val standingsResponse = call.body()
                 if (call.isSuccessful && standingsResponse != null){
                     val standings = standingsResponse.response
@@ -105,10 +111,11 @@ class StandingsByLeague : Fragment() {
     companion object {
 
         @JvmStatic
-        fun newInstance(leagueId: Int) =
+        fun newInstance(leagueId: Int, year: Int) =
             StandingsByLeague().apply {
                 arguments = Bundle().apply {
                     putInt("leagueId", leagueId)
+                    putInt(ARG_YEAR, year)
                 }
             }
     }

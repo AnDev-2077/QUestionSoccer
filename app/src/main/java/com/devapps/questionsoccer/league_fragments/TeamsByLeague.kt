@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.content.Context
 import android.net.ConnectivityManager
+import android.text.style.TtsSpan.ARG_YEAR
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.devapps.questionsoccer.TeamsDetailsActivity
 import com.devapps.questionsoccer.adapters.SoccerAdapter
 import com.devapps.questionsoccer.databinding.FragmentTeamsByLeagueBinding
@@ -37,6 +39,7 @@ private const val TEAMS_KEY_PREFIX = "com.devapps.questionsoccer.TEAMS"
 class TeamsByLeague : Fragment() {
 
     private var leagueId: Int? = null
+    private var year: Int? = null
 
     private lateinit var binding: FragmentTeamsByLeagueBinding
     lateinit var adapter: SoccerAdapter
@@ -48,6 +51,8 @@ class TeamsByLeague : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             leagueId = it.getInt("leagueId")
+            year = it.getInt(ARG_YEAR)
+            Log.d("TeamsByLeague", "Received year in onCreate: $year")
             Log.d("TeamsByLeague", "Received leagueId in onCreate: $leagueId")
         }
     }
@@ -86,7 +91,8 @@ class TeamsByLeague : Fragment() {
         }
         binding.rvTeamsFragment.layoutManager = LinearLayoutManager(context)
         binding.rvTeamsFragment.adapter = adapter
-        getTeams(leagueId ?: 0)
+        Log.d("TeamsByLeague", "Calling getTeams with leagueId: $leagueId and year: $year")
+        getTeams(leagueId ?: 0, year ?: 0)
     }
 
     private fun getRetrofit(): Retrofit {
@@ -101,10 +107,10 @@ class TeamsByLeague : Fragment() {
             .build()
     }
 
-    private fun getTeams(leagueId: Int) {
-        if (isOnline()) {
+    private fun getTeams(leagueId: Int, year: Int) {
+        /*if (isOnline()) {
             CoroutineScope(Dispatchers.IO).launch {
-                val call = getRetrofit().create(SoccerService::class.java).getTeamsByLeague(leagueId, 2023)
+                val call = getRetrofit().create(SoccerService::class.java).getTeamsByLeague(leagueId, year)
                 val teamsByLeagueResponse = call.body()
                 if (call.isSuccessful) {
                     val teams = teamsByLeagueResponse?.response ?: emptyList()
@@ -124,6 +130,48 @@ class TeamsByLeague : Fragment() {
                 TeamsFragmentResponse.addAll(teams)
                 adapter.notifyDataSetChanged()
             } ?: showError()
+        }*/
+        Log.d("TeamsByLeague", "Inside getTeams with year: $year")
+        if (isOnline()) {
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                try {
+                    val call = getRetrofit().create(SoccerService::class.java).getTeamsByLeague(leagueId, year)
+                    val teamsByLeagueResponse = call.body()
+                    if (call.isSuccessful) {
+                        val teams = teamsByLeagueResponse?.response ?: emptyList()
+                        withContext(Dispatchers.Main) {
+                            if (isAdded) { // Verifica si el fragmento está adjunto
+                                TeamsFragmentResponse.clear()
+                                TeamsFragmentResponse.addAll(teams)
+                                adapter.notifyDataSetChanged()
+                            }
+                        }
+                        context?.let { ctx -> // Utiliza el contexto de forma segura
+                            saveTeamsToSharedPreferences(ctx, leagueId, teams)
+                        }
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            if (isAdded) showError()
+                        }
+                    }
+                } catch (e: Exception) {
+                    withContext(Dispatchers.Main) {
+                        if (isAdded) showError()
+                    }
+                }
+            }
+        } else {
+            context?.let { ctx ->
+                loadTeamsFromSharedPreferences(ctx, leagueId)?.let { teams ->
+                    TeamsFragmentResponse.clear()
+                    TeamsFragmentResponse.addAll(teams)
+                    if (isAdded) {
+                        adapter.notifyDataSetChanged()
+                    }
+                } ?: run{
+                    if (isAdded) showError()
+                }
+            }
         }
     }
 
@@ -160,10 +208,11 @@ class TeamsByLeague : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(leagueId: Int) =
+        fun newInstance(leagueId: Int, year: Int) =
             TeamsByLeague().apply {
                 arguments = Bundle().apply {
                     putInt("leagueId", leagueId)
+                    putInt(ARG_YEAR, year)
                 }
             }
     }

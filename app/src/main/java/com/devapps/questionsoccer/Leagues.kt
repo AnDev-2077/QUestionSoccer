@@ -63,6 +63,8 @@ class Leagues : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -163,15 +165,6 @@ class Leagues : Fragment() {
         }
     }
 
-    /*private fun saveLeaguesToSharedPreferences(context: Context, leagues: List<LeagueResponseItem>) {
-        val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        val gson = Gson()
-        val json = gson.toJson(leagues)
-        editor.putString(LEAGUES_KEY, json)
-        editor.apply()
-    }*/
-
     private fun saveLeaguesToSharedPreferences(context: Context, leagues: List<LeagueResponseItem>) {
         val limitedLeagues = leagues.take(30)
         val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -226,55 +219,3 @@ class Leagues : Fragment() {
     }
 }
 
-
-/*private fun getLeagues() {
-        if(isOnline()){
-            CoroutineScope(Dispatchers.IO).launch {
-                try{
-                    val call = getRetrofit().create(LeagueService::class.java).getLeagues()
-                    val leaguesResponse = call.body()
-                    if (call.isSuccessful){
-                        val leagues = leaguesResponse?.response ?: emptyList()
-                        withContext(Dispatchers.Main) {
-                            LeaguesFragmentResponse.clear()
-                            LeaguesFragmentResponse.addAll(leagues)
-                            adapter.notifyDataSetChanged()
-                        }
-                        saveLeaguesToRealtimeDatabase(leagues)
-                    } else{
-                        showError()
-                    }
-                }catch (e: Exception){
-                    Log.d("Leagues", "Error: ${e.message}")
-                }
-
-            }
-        } else{
-            loadLeaguesFromRealtimeDatabase()
-            showError0()
-        }
-    }*/
-
-/*private suspend fun saveLeaguesToRealtimeDatabase(leagues: List<LeagueResponseItem>) {
-    try {
-        val limitedLeagues = leagues.take(20)
-        Firebase.database.reference.child("leagues").setValue(limitedLeagues)
-    } catch (e: Exception) {
-        withContext(Dispatchers.Main) {
-            showError()
-        }
-    }
-}
-
-private fun loadLeaguesFromRealtimeDatabase() {
-    Firebase.database.reference.child("leagues").get().addOnSuccessListener { dataSnapshot ->
-        val leagues = dataSnapshot.getValue(object : GenericTypeIndicator<ArrayList<LeagueResponseItem>>() {})
-        if (leagues != null) {
-            LeaguesFragmentResponse.clear()
-            LeaguesFragmentResponse.addAll(leagues)
-            adapter.notifyDataSetChanged()
-        }
-    }.addOnFailureListener {
-        showError()
-    }
-}*/
