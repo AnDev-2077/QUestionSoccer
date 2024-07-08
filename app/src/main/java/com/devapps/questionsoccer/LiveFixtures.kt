@@ -26,11 +26,8 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-private const val PREFS_NAME = "com.devapps.questionsoccer.PREFS"
-private const val FIXTURES_KEY = "com.devapps.questionsoccer.FIXTURES"
+
 
 class LiveFixtures : Fragment() {
 
@@ -44,8 +41,6 @@ class LiveFixtures : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
         }
     }
 
@@ -79,32 +74,6 @@ class LiveFixtures : Fragment() {
             .build()
     }
 
-    /*private fun getFixtures(){
-        if (isOnline()){
-            CoroutineScope(Dispatchers.IO).launch {
-                val call = getRetrofit().create(FixtureService::class.java).getFixtureByLeague()
-                val fixtureResponse = call.body()
-                if (call.isSuccessful){
-                    val fixtures = fixtureResponse?.response ?: emptyList()
-                    withContext(Dispatchers.Main){
-                        FixturesFragmentResponse.clear()
-                        FixturesFragmentResponse.addAll(fixtures)
-                        adapter.notifyDataSetChanged()
-                    }
-                }  else {
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "Error: En la consulta a la API", Toast.LENGTH_SHORT).show()
-
-                    }
-                }
-            }
-        }else{
-            FixturesFragmentResponse.clear()
-            adapter.notifyDataSetChanged()
-            showError()
-        }
-
-    }*/
     private fun getFixtures(){
         if (isOnline()){
             CoroutineScope(Dispatchers.IO).launch {
@@ -152,8 +121,7 @@ class LiveFixtures : Fragment() {
         fun newInstance(param1: String, param2: String) =
             LiveFixtures().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
                 }
             }
     }
