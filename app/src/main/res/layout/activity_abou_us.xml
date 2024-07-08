@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="8dp"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginBottom="24dp"
+        android:src="@drawable/ic_login"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="@font/rubik_medium"
+        android:text="Versión de la Aplicación: 1.0.0"
+        android:textColor="#222226"
+        app:layout_constraintTop_toBottomOf="@id/logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/email_button"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:fontFamily="@font/rubik_medium"
+        android:backgroundTint="@android:color/white"
+        android:text="support@QuestionSoccer"
+        android:textColor="#222226"
+        app:cornerRadius="8dp"
+        app:iconGravity="textStart"
+        app:iconTint="@null"
+        app:strokeColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/version"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/visit_site"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:fontFamily="@font/rubik_medium"
+        android:backgroundTint="@android:color/white"
+        android:text="Visita nuestra web"
+        android:textColor="#222226"
+        app:cornerRadius="8dp"
+        app:iconGravity="textStart"
+        app:iconTint="@null"
+        app:strokeColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/email_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/terms_conditions_button"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:fontFamily="@font/rubik_medium"
+        android:backgroundTint="@android:color/white"
+        android:text="Politicas de privacidad"
+        android:textColor="#222226"
+        app:cornerRadius="8dp"
+        app:iconGravity="textStart"
+        app:iconTint="@null"
+        app:strokeColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/visit_site"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

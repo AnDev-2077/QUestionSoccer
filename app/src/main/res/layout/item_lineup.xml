@@ -39,6 +39,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Player Name"
+            android:fontFamily="@font/rubik_medium"
+            android:textColor="@color/white"
             android:textSize="12sp"
             android:gravity="center"
             android:layout_marginTop="28dp"

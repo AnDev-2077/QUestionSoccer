@@ -22,4 +22,8 @@
     <color name="colorGray2">#DEE2E6</color>
     <color name="colorGray3">#CFD2D7</color>
 
+    <color name="homeTeamColor">#00529E</color>
+    <color name="awayTeamColor">#A40048</color>
+    <color name="lineupBackgroundColor">#109D58</color>
+
 </resources>

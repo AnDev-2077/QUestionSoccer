@@ -1,6 +1,8 @@
 package com.devapps.questionsoccer.subfragments
 
+import android.graphics.PorterDuff
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +12,7 @@ import android.widget.GridLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.devapps.questionsoccer.R
 import com.devapps.questionsoccer.databinding.FragmentLineupBinding
 import com.devapps.questionsoccer.items.Coach
@@ -51,43 +54,59 @@ class Lineup : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        addPlayersToGridLayout(lineUpHome, binding.gridLayoutHome)
-        addPlayersToGridLayout(lineUpAway, binding.gridLayoutAway)
+
+        val homeTeamName = teamHome?.name
+        val awayTeamName = teamAway?.name
+        val homeCoachName = coachHome?.name
+        val awayCoachName = coachAway?.name
+
+        binding.tvTeamNameA.text = homeTeamName
+        binding.tvTeamNameB.text = awayTeamName
+        binding.tvCoachNameA.text = homeCoachName
+        binding.tvCoachNameB.text = awayCoachName
+
+        val homeTeamColor = ContextCompat.getColor(requireContext(), R.color.homeTeamColor)
+        val awayTeamColor = ContextCompat.getColor(requireContext(), R.color.awayTeamColor)
+
+        addPlayersToGridLayout(lineUpHome, binding.gridLayoutHome, homeTeamColor)
+        addPlayersToGridLayout(lineUpAway, binding.gridLayoutAway, awayTeamColor)
+
     }
 
-    private fun addPlayersToGridLayout(players: ArrayList<Player>?, gridLayout: GridLayout) {
+    private fun addPlayersToGridLayout(players: ArrayList<Player>?, gridLayout: GridLayout,teamColor: Int) {
         players?.let { playerList ->
+
             val rowGroups = mutableMapOf<Int, LinearLayout>()
 
             for (player in playerList) {
                 val view = LayoutInflater.from(context).inflate(R.layout.item_lineup, gridLayout, false)
                 val playerName: TextView = view.findViewById(R.id.tvPlayerName)
                 val playerNumber: TextView = view.findViewById(R.id.tvPlayerNumber)
+                val playerIcon: ImageView = view.findViewById(R.id.ivPlayerIcon)
 
                 playerName.text = player.player.name
                 playerNumber.text = player.player.number.toString()
+
+                playerIcon.setColorFilter(teamColor, PorterDuff.Mode.SRC_IN)
+
 
                 val gridPosition = player.player.grid?.split(":")
                 if (gridPosition != null && gridPosition.size == 2) {
                     val row = gridPosition[0].toIntOrNull()?.minus(1) ?: 0
                     val col = gridPosition[1].toIntOrNull()?.minus(1) ?: 0
 
-                    val params = LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                    ).apply {
-                        gravity = Gravity.CENTER
-                    }
+                    Log.d("Lineup", "Player: ${player.player.name}, Row: $row, Col: $col")
 
                     val rowLayout = rowGroups.getOrPut(row) {
                         LinearLayout(context).apply {
                             orientation = LinearLayout.HORIZONTAL
                             layoutParams = GridLayout.LayoutParams().apply {
-                                rowSpec = GridLayout.spec(row, GridLayout.FILL, 1f)
-                                columnSpec = GridLayout.spec(0, 5, GridLayout.FILL, 1f)
+                                rowSpec = GridLayout.spec(row, 1)
+                                columnSpec = GridLayout.spec(0, 1)
                                 width = GridLayout.LayoutParams.MATCH_PARENT
                                 height = GridLayout.LayoutParams.WRAP_CONTENT
-                                setGravity(android.view.Gravity.CENTER)
+                                setMargins(0, 16, 0, 16)
+                                setGravity(Gravity.CENTER)
                             }
                             gravity = Gravity.CENTER
                         }.also {
@@ -95,11 +114,21 @@ class Lineup : Fragment() {
                         }
                     }
 
+                    val params = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    ).apply {
+                        setMargins(16, 8, 16, 8)
+                    }
                     rowLayout.addView(view, params)
                 }
             }
         }
     }
+
+
+
+
     /*private fun inflateTables(){
         binding.tvHomeTeamName.text = teamHome?.name
         binding.tvAwayTeamName.text = teamAway?.name
@@ -221,14 +250,14 @@ class Lineup : Fragment() {
                         coachHome: Coach,
                         coachAway: Coach
         ) = Lineup().apply {
-                arguments = Bundle().apply {
-                    putParcelable("teamHome", teamHome)
-                    putParcelable("teamAway", teamAway)
-                    putParcelableArrayList("lineUpHome", ArrayList(lineUpHome))
-                    putParcelableArrayList("lineUpAway", ArrayList(lineUpAway))
-                    putParcelable("coachHome", coachHome)
-                    putParcelable("coachAway", coachAway)
-                }
+            arguments = Bundle().apply {
+                putParcelable("teamHome", teamHome)
+                putParcelable("teamAway", teamAway)
+                putParcelableArrayList("lineUpHome", ArrayList(lineUpHome))
+                putParcelableArrayList("lineUpAway", ArrayList(lineUpAway))
+                putParcelable("coachHome", coachHome)
+                putParcelable("coachAway", coachAway)
             }
+        }
     }
 }

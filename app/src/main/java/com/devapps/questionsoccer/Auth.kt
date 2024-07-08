@@ -53,6 +53,20 @@ class Auth : Fragment() {
         val user = firebaseAuth.currentUser
         updateUI(user)
 
+        binding.llValueUs.setOnClickListener {
+            val intent = Intent(activity, CommentsActivity::class.java)
+            startActivity(intent)}
+
+        binding.llAboutUs.setOnClickListener {
+            val intent = Intent(activity, AbouUsActivity::class.java)
+            startActivity(intent)
+        }
+        binding.llShare.setOnClickListener{
+            shareLink()
+        }
+
+
+
         binding.ivProfile.setOnClickListener{
             clickCount++
             Log.w("Egg", "Click count: $clickCount")
@@ -89,6 +103,7 @@ class Auth : Fragment() {
         binding.btEnd.setOnClickListener{
             logoutConfirmationDialog()
         }
+
     }
 
     override fun onStart() {
@@ -131,6 +146,18 @@ class Auth : Fragment() {
             .show()
     }
 
+
+    private fun shareLink() {
+        val link = "https://668b791e350370c5a2e59eea--lucky-valkyrie-732076.netlify.app/"
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, link)
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
+    }
 
     companion object {
         @JvmStatic

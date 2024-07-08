@@ -1,3 +1,4 @@
+
 package com.devapps.questionsoccer
 
 import android.content.Context
@@ -23,8 +24,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 
-private const val PREFS_NAME = "com.devapps.questionsoccer.PREFS"
-private const val FAVORITES_KEY = "com.devapps.questionsoccer.FAVORITES"
 
 
 class Favorites : Fragment() {
@@ -52,18 +51,18 @@ class Favorites : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         teamsAdapter = SoccerAdapter(favoritesTeamsList) { onTeamClick ->
-                val intent = Intent(activity, TeamsDetailsActivity::class.java)
-                intent.putExtra("teamId", onTeamClick.team.teamId.toInt())
-                intent.putExtra("teamLogo", onTeamClick.team.teamLogo)
-                intent.putExtra("teamName", onTeamClick.team.teamName)
-                intent.putExtra("teamCode", onTeamClick.team.teamCode)
-                intent.putExtra("teamCountry", onTeamClick.team.teamCountry)
-                intent.putExtra("venueName", onTeamClick.venue.venueName)
-                intent.putExtra("venueAddress", onTeamClick.venue.venueAddress)
-                intent.putExtra("venueCity", onTeamClick.venue.venueCity)
-                intent.putExtra("venueCapacity", onTeamClick.venue.venueCapacity)
-                intent.putExtra("venueImage", onTeamClick.venue.venueImage)
-                startActivity(intent)
+            val intent = Intent(activity, TeamsDetailsActivity::class.java)
+            intent.putExtra("teamId", onTeamClick.team.teamId.toInt())
+            intent.putExtra("teamLogo", onTeamClick.team.teamLogo)
+            intent.putExtra("teamName", onTeamClick.team.teamName)
+            intent.putExtra("teamCode", onTeamClick.team.teamCode)
+            intent.putExtra("teamCountry", onTeamClick.team.teamCountry)
+            intent.putExtra("venueName", onTeamClick.venue.venueName)
+            intent.putExtra("venueAddress", onTeamClick.venue.venueAddress)
+            intent.putExtra("venueCity", onTeamClick.venue.venueCity)
+            intent.putExtra("venueCapacity", onTeamClick.venue.venueCapacity)
+            intent.putExtra("venueImage", onTeamClick.venue.venueImage)
+            startActivity(intent)
 
         }
         binding.rvTeamsFavorites.layoutManager = LinearLayoutManager(context)
@@ -107,7 +106,9 @@ class Favorites : Fragment() {
     }
 
     private fun showError() {
-        Toast.makeText(requireContext(), "Error: Sin conexión a internet", Toast.LENGTH_SHORT).show()
+        if (isAdded) {
+            Toast.makeText(requireContext(), "Error: Sin conexión a internet", Toast.LENGTH_SHORT).show()
+        }
     }
 
 

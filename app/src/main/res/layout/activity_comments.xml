@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Envíe sus comentarios"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"
+        android:layout_centerHorizontal="true"/>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editTextEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Su correo electrónico"
+        android:paddingStart="12dp"
+        android:background="@drawable/edittext_backgound"
+        android:minLines="2"
+        android:layout_below="@id/textViewTitle"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/textViewEmailRequired"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Este campo es obligatorio"
+        android:textSize="11sp"
+        android:layout_below="@id/editTextEmail"
+        android:layout_marginBottom="16dp"/>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editTextFeedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="12dp"
+        android:background="@drawable/edittext_backgound"
+        android:hint="Describa su problema o sugerencia"
+        android:minLines="5"
+        android:layout_below="@id/textViewEmailRequired"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/textViewInstructions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Introduzca al menos 10 caracteres"
+        android:textSize="11sp"
+        android:layout_below="@id/editTextFeedback"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/buttonSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ENVIAR"
+        android:layout_marginBottom="16dp"
+        android:layout_below="@id/textViewInstructions"
+        android:backgroundTint="@color/green_light"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/textViewRecommend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="¿En qué podemos ayudarle? Consulte nuestras preguntas frecuentes"
+        android:textSize="11sp"
+        android:layout_below="@id/buttonSubmit"
+        android:layout_marginBottom="16dp"/>
+
+</RelativeLayout>

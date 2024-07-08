@@ -31,13 +31,26 @@ class SoccerAdapter (var responseTeamsByLeague: List<ResponseItem>, private val 
                 onTeamClick(responseItem)
             }
 
+            val user = FirebaseAuth.getInstance().currentUser
+            if (user != null) {
+                val db = FirebaseFirestore.getInstance()
+                db.collection("users").document(user.uid).collection("favorites")
+                    .document(responseItem.team.teamId)
+                    .get()
+                    .addOnSuccessListener { document ->
+                        if (document.exists()) {
+                            binding.ivFavorites.isChecked = true
+                        } else {
+                            binding.ivFavorites.isChecked = false
+                        }
+                    }
+            }
 
             binding.ivFavorites.setOnCheckedChangeListener{checkBox, isChecked ->
                 if(isChecked){
                     addToFavorites(responseItem)
-                    showAlert("Equipo añadido a favoritos")
                 }else{
-                    showAlert("Equipo eliminado de favoritos")
+                    removeFromFavorites(responseItem)
                 }
             }
 
@@ -51,7 +64,31 @@ class SoccerAdapter (var responseTeamsByLeague: List<ResponseItem>, private val 
             if (user != null) {
                 val db = FirebaseFirestore.getInstance()
                 db.collection("users").document(user.uid).collection("favorites").document(team.team.teamId).set(team)
-            }else {
+                    .addOnSuccessListener {
+                        showAlert("Equipo añadido a favoritos")
+                    }
+                    .addOnFailureListener {
+                        showAlert("Error al añadir equipo a favoritos")
+                    }
+            } else {
+                Toast.makeText(itemView.context, "Funcion disponible cuando inicies sesión", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
+        private fun removeFromFavorites(team: ResponseItem) {
+            val user = FirebaseAuth.getInstance().currentUser
+            if (user != null) {
+                val db = FirebaseFirestore.getInstance()
+                db.collection("users").document(user.uid).collection("favorites").document(team.team.teamId)
+                    .delete()
+                    .addOnSuccessListener {
+                        showAlert("Equipo eliminado de favoritos")
+                    }
+                    .addOnFailureListener {
+                        showAlert("Error al eliminar equipo de favoritos")
+                    }
+            } else {
                 Toast.makeText(itemView.context, "Funcion disponible cuando inicies sesión", Toast.LENGTH_SHORT)
                     .show()
             }

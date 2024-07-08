@@ -5,40 +5,103 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".subfragments.Lineup">
-
-    <GridLayout
-        android:id="@+id/gridLayoutHome"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:columnCount="5"
-        android:rowCount="5"
-        android:padding="16dp"
-        android:layout_gravity="center" />
-
-    <GridLayout
-        android:id="@+id/gridLayoutAway"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:columnCount="5"
-        android:rowCount="5"
-        android:padding="16dp"
-        android:layout_gravity="center" />
-    
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:gravity="center">
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"/>
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"/>
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"/>
+        android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical"
+        android:background="@drawable/bg_stadium">
+
+        <GridLayout
+            android:id="@+id/gridLayoutHome"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:columnCount="7"
+            android:rowCount="7"
+            android:padding="8dp"
+            android:layout_gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="start|top">
+
+                <TextView
+                    android:id="@+id/tvTeamNameA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Equipo Local"
+                    android:fontFamily="@font/rubik_medium"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/tvCoachNameA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Formation"
+                    android:fontFamily="@font/rubik_medium"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:layout_gravity="end|top"/>
+
+            </LinearLayout>
+
+        </GridLayout>
+        <GridLayout
+            android:id="@+id/gridLayoutAway"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:columnCount="7"
+            android:rowCount="7"
+            android:padding="8dp"
+            android:layout_gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="start|top">
+
+                <TextView
+                    android:id="@+id/tvTeamNameB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Equipo Local"
+                    android:fontFamily="@font/rubik_medium"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+/>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/tvCoachNameB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Formation"
+                    android:fontFamily="@font/rubik_medium"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:layout_gravity="end|top"/>
+            </LinearLayout>
+
+
+        </GridLayout>
     </LinearLayout>
 
 
