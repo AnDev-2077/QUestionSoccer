@@ -74,10 +74,6 @@ class TeamsDetailsActivity : AppCompatActivity() {
                 tabLayout.selectTab(tabLayout.getTabAt(position))
             }
         })
-        //binding.tvVenueName.text= venueName
-        //binding.tvVenueAddress.text = venueAddress
-        //binding.tvVenueCity.text = venueCity
-        //binding.tvVenueCapacity.text = venueCapacity.toString()
 
     }
 }
