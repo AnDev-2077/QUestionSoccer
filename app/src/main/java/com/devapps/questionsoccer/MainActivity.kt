@@ -1,8 +1,6 @@
 package com.devapps.questionsoccer
 
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -11,20 +9,18 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import com.devapps.questionsoccer.databinding.ActivityMainBinding
 import com.devapps.questionsoccer.interfaces.FixturesByTeamService
 import com.devapps.questionsoccer.interfaces.LineupService
+import com.devapps.questionsoccer.interfaces.SoccerService
+import com.devapps.questionsoccer.interfaces.TeamName
 import com.devapps.questionsoccer.items.LineupResponse
+import com.devapps.questionsoccer.items.Team
 import com.devapps.questionsoccer.items.fixtureResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -57,12 +53,10 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.leagues -> replaceFragment(Leagues())
-                //R.id.teams -> replaceFragment(Teams())
-                //R.id.players -> replaceFragment(Players())
                 R.id.live -> replaceFragment(LiveFixtures())
                 R.id.favorites -> replaceFragment(Favorites())
                 R.id.profile -> replaceFragment(Auth())
-                //R.id.favorites_test -> replaceFragment(Favorites_Test())
+
                 else ->{
                 }
             }
@@ -86,12 +80,9 @@ class MainActivity : AppCompatActivity() {
                     db.collection("users").document(user.uid).collection("favorites").get()
                         .addOnSuccessListener { documents ->
                             if(!documents.isEmpty){
-
                                 Log.d("Firestore", "Favoritos encontrados para el usuario: ${user.uid}")
-
                                 // El usuario tiene equipos en sus favoritos
                                 // Hacer peticiones a la API para obtener la información de los equipos, sus partidos y estadísticas
-
                                 for (document in documents){
                                     val teamId = document.id as? String
                                     if (teamId != null) {
@@ -120,7 +111,6 @@ class MainActivity : AppCompatActivity() {
                         }
                 }else{
                     // El usuario no ha iniciado sesión
-                    // Mostrar un pop up que mencione que deves crear una cuenta o iniciar sesión para agregar a favoritos
                 }
             } else {
                 showError()
@@ -250,6 +240,8 @@ class MainActivity : AppCompatActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
+
+
                 if (!query.isNullOrEmpty()) {
                     leaguesFragment?.adapter?.filter(query.toLowerCase())
                 }
@@ -263,6 +255,7 @@ class MainActivity : AppCompatActivity() {
         })
         return super.onCreateOptionsMenu(menu)
     }
+
 
 
     private var leaguesFragment: Leagues? = null

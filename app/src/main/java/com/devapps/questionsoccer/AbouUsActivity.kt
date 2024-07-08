@@ -33,7 +33,7 @@ class AbouUsActivity : AppCompatActivity() {
         }
 
         binding.visitSite.setOnClickListener{
-            val url = "https://668b791e350370c5a2e59eea--lucky-valkyrie-732076.netlify.app/"
+            val url = "https://668b8db2f28330cfc64ba89a--kaleidoscopic-eclair-e478a3.netlify.app/"
             val webIntent = Intent(Intent.ACTION_VIEW).apply {
                 data = Uri.parse(url)
             }

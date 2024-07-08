@@ -37,18 +37,23 @@
                     android:id="@+id/tvTeamName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Equipo" />
+                    android:fontFamily="@font/rubik_medium"
+                    android:text="Equipo"
+                    android:textSize="20sp"/>
 
                 <TextView
                     android:id="@+id/tvTeamCountry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/rubik_medium"
                     android:text="Pais" />
 
                 <TextView
                     android:id="@+id/tvTeamCode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/rubik_regular"
                     android:text="Codigo" />
 
             </LinearLayout>

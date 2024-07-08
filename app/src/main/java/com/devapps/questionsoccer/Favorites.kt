@@ -15,20 +15,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devapps.questionsoccer.adapters.SoccerAdapter
 import com.devapps.questionsoccer.databinding.FragmentFavoritesTestBinding
 import com.devapps.questionsoccer.items.ResponseItem
-import com.devapps.questionsoccer.items.StaticResponse
-import com.devapps.questionsoccer.items.fixtureResponse
-import com.google.common.reflect.TypeToken
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.gson.Gson
+
 
 
 
 class Favorites : Fragment() {
 
-    private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var binding: FragmentFavoritesTestBinding
     private lateinit var teamsAdapter: SoccerAdapter
     var favoritesTeamsList = mutableListOf<ResponseItem>()

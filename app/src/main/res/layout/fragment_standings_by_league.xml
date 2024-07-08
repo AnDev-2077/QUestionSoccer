@@ -40,7 +40,6 @@
 
 
                 <TextView
-                    android:text="P"
                     android:gravity="center"
                     android:layout_width="52dp"
                     android:layout_height="32dp" />

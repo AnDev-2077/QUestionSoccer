@@ -25,7 +25,7 @@
                 android:id="@+id/ivLeagueLogo"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <LinearLayout
@@ -38,18 +38,23 @@
                     android:id="@+id/tvLeagueName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/rubik_medium"
+                    android:textSize="20sp"
                     android:text="Liga" />
 
                 <TextView
                     android:id="@+id/tvLeagueCountry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/rubik_medium"
+                    android:textSize="16sp"
                     android:text="Pais" />
 
                 <TextView
                     android:id="@+id/tvLeagueType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/rubik_regular"
                     android:text="Tipo" />
 
                 <Spinner

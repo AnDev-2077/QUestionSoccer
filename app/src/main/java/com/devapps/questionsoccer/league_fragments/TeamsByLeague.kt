@@ -108,29 +108,6 @@ class TeamsByLeague : Fragment() {
     }
 
     private fun getTeams(leagueId: Int, year: Int) {
-        /*if (isOnline()) {
-            CoroutineScope(Dispatchers.IO).launch {
-                val call = getRetrofit().create(SoccerService::class.java).getTeamsByLeague(leagueId, year)
-                val teamsByLeagueResponse = call.body()
-                if (call.isSuccessful) {
-                    val teams = teamsByLeagueResponse?.response ?: emptyList()
-                    withContext(Dispatchers.Main) {
-                        TeamsFragmentResponse.clear()
-                        TeamsFragmentResponse.addAll(teams)
-                        adapter.notifyDataSetChanged()
-                    }
-                    saveTeamsToSharedPreferences(requireContext(), leagueId, teams)
-                } else {
-                    showError()
-                }
-            }
-        } else {
-            loadTeamsFromSharedPreferences(requireContext(), leagueId)?.let { teams ->
-                TeamsFragmentResponse.clear()
-                TeamsFragmentResponse.addAll(teams)
-                adapter.notifyDataSetChanged()
-            } ?: showError()
-        }*/
         Log.d("TeamsByLeague", "Inside getTeams with year: $year")
         if (isOnline()) {
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {

@@ -148,7 +148,7 @@ class Auth : Fragment() {
 
 
     private fun shareLink() {
-        val link = "https://668b791e350370c5a2e59eea--lucky-valkyrie-732076.netlify.app/"
+        val link = "https://668b8db2f28330cfc64ba89a--kaleidoscopic-eclair-e478a3.netlify.app/"
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, link)

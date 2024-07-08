@@ -40,8 +40,9 @@ class FixturesByLeague : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             leagueId = it.getInt("leagueId")
-            leagueId = it.getInt(ARG_YEAR)
-            Log.d("FixturesByLeague", "League ID: $leagueId")
+            year = it.getInt(ARG_YEAR)
+            Log.w("FixturesByLeague", "League ID: $leagueId")
+            Log.w("FixturesByLeague", "Year: $year")
         }
     }
 
