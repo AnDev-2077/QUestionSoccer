@@ -28,38 +28,6 @@ class AuthActivity : AppCompatActivity() {
     private fun setUp() {
         title = "Autenticación"
 
-        /*binding.btSingUp.setOnClickListener {
-            if (binding.etEmailAddress.text.isNotEmpty() && binding.etPassword.text.isNotEmpty()) {
-                FirebaseAuth.getInstance().createUserWithEmailAndPassword(
-                    binding.etEmailAddress.text.toString(),
-                    binding.etPassword.text.toString()
-                ).addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val user = FirebaseAuth.getInstance().currentUser
-                        showHome(user?.email ?: "", ProviderType.BASIC)
-                    } else {
-                        showAlert()
-                    }
-                }
-            }
-        }
-
-        binding.btLogIn.setOnClickListener {
-            if (binding.etEmailAddress.text.isNotEmpty() && binding.etPassword.text.isNotEmpty()) {
-                FirebaseAuth.getInstance().signInWithEmailAndPassword(
-                    binding.etEmailAddress.text.toString(),
-                    binding.etPassword.text.toString()
-                ).addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val user = FirebaseAuth.getInstance().currentUser
-                        showHome(user?.email ?: "", ProviderType.BASIC)
-                    } else {
-                        showAlert()
-                    }
-                }
-            }
-        }*/
-
         binding.btGoogle.setOnClickListener {
             val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -71,14 +39,6 @@ class AuthActivity : AppCompatActivity() {
             startActivityForResult(googleClient.signInIntent, GOOGLE_SIGN_IN)
         }
 
-        /*binding.btLogOut.setOnClickListener {
-            val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
-            prefs.clear()
-            prefs.apply()
-
-            FirebaseAuth.getInstance().signOut()
-            onBackPressed()
-        }*/
     }
 
     private fun showAlert() {
